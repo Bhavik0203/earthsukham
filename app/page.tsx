@@ -8,6 +8,7 @@ import ProjectGallery from "../app/components/ProjectGallery";
 import FAQ from "../app/components/FAQ";
 import ExploreByLocation from "../app/components/ExploreByLocation";
 import DeveloperPartners from "../app/components/DeveloperPartners";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
         <ExploreByLocation />
         <DeveloperPartners />
       </main>
+      <Footer/>
     </div>
   );
 }

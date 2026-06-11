@@ -65,10 +65,11 @@ export default function OngoingProjects() {
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-6 md:px-12 py-12 border-t border-gray-200/60">
+    <section className="max-w-7xl mx-auto px-6 md:px-12  border-t border-gray-200/60">
       <div className="space-y-2 mb-6">
-        <span className="text-xs uppercase tracking-widest font-semibold text-[#B58A3D]">Projects Status</span>
-        <h2 className="text-3xl font-serif text-[#2C2C2C]">Ongoing & Upcoming Projects</h2>
+         <span className="text-sm font-serif uppercase tracking-widest font-semibold text-[#C19B54]">Projects Status</span>
+          <h2 className="text-5xl lg:text-6xl font-serif text-[#2C2C2C] leading-[1.15]">
+             Ongoing & Upcoming Projects</h2>
       </div>
 
       {/* Filter Tabs */}
@@ -90,7 +91,7 @@ export default function OngoingProjects() {
 
       {/* Interactive Carousel Block Layout */}
       {filteredProjects.length > 0 ? (
-        <div className="relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-[#FAF7F0] p-6 md:p-10 rounded-lg">
+        <div className="relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center  p-6 md:p-10 rounded-lg">
           
           {/* Left Arrow */}
           <button 
@@ -102,7 +103,7 @@ export default function OngoingProjects() {
 
           {/* Content Block */}
           <div className="md:col-span-5 space-y-4 md:pl-8">
-            <h3 className="text-3xl font-serif text-[#C49A45]">{currentProject.title}</h3>
+            <h3 className="text-5xl lg:text-6xl font-serif text-[#C49A45]">{currentProject.title}</h3>
             <div className="flex items-center gap-1.5 text-xs text-gray-600 uppercase font-semibold tracking-wider">
               <MapPin size={14} className="text-[#C49A45]" /> {currentProject.location}
             </div>

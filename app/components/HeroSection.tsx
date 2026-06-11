@@ -1,14 +1,19 @@
-"use test";
+"use client";
 import { X } from "lucide-react";
 
 export default function HeroSection() {
   return (
     <section className="relative min-h-[90vh] md:min-h-screen flex items-center bg-black">
-      {/* Background Image Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-40" 
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1600')" }}
-      />
+      {/* Background Video Overlay */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-40"
+      >
+        <source src="/images/hero.mp4" type="video/mp4" />
+      </video>
       
       <div className="relative max-w-7xl mx-auto w-full px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-24 pb-12">
         {/* Left Copy */}
@@ -38,14 +43,36 @@ export default function HeroSection() {
           </div>
 
           <form className="space-y-3">
-            <select className="w-full bg-white/20 border border-white/30 rounded px-3 py-2 text-white text-sm focus:outline-none placeholder-gray-300">
-              <option className="text-black">Choose Project</option>
+            <select required defaultValue="" className="w-full bg-white/20 border border-white/30 rounded px-3 py-2 text-white text-sm focus:outline-none placeholder-gray-300">
+              <option value="" disabled className="text-black">Choose Project</option>
+              <option value="pune-projects" className="text-black">Pune Projects</option>
+              <option value="delhi-ncr-projects" className="text-black">Delhi NCR Projects</option>
+              <option value="godrej-township" className="text-black">Godrej Township</option>
+              <option value="other" className="text-black">Other</option>
             </select>
             <input type="text" placeholder="Name*" className="w-full bg-white/20 border border-white/30 rounded px-3 py-2 text-white text-sm focus:outline-none placeholder-white/70" required />
-            <input type="email" placeholder="Email*" className="w-full bg-white/20 border border-white/30 rounded px-3 py-2 text-white text-sm focus:outline-none placeholder-white/70" required />
+            <input 
+              type="email" 
+              placeholder="Email*" 
+              className="w-full bg-white/20 border border-white/30 rounded px-3 py-2 text-white text-sm focus:outline-none placeholder-white/70" 
+              pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+              title="Please enter a valid email address"
+              required 
+            />
             <div className="flex gap-2">
               <span className="bg-white/20 border border-white/30 rounded px-2 py-2 text-white text-sm flex items-center">+91</span>
-              <input type="tel" placeholder="Mobile Number*" className="w-full bg-white/20 border border-white/30 rounded px-3 py-2 text-white text-sm focus:outline-none placeholder-white/70" required />
+              <input 
+                type="tel" 
+                placeholder="Mobile Number*" 
+                className="w-full bg-white/20 border border-white/30 rounded px-3 py-2 text-white text-sm focus:outline-none placeholder-white/70" 
+                pattern="[0-9]{10}"
+                maxLength={10}
+                title="Please enter exactly 10 digits"
+                onInput={(e) => {
+                  e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+                }}
+                required 
+              />
             </div>
             <textarea placeholder="Message" rows={2} className="w-full bg-white/20 border border-white/30 rounded px-3 py-2 text-white text-sm focus:outline-none placeholder-white/70" />
             

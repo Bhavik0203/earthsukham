@@ -42,7 +42,7 @@ export default function NewlyLaunched() {
   const activeIndex = hoveredIndex !== null ? hoveredIndex : 2;
 
   return (
-    <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
+    <section className="max-w-7xl mx-auto px-6 md:px-12 ">
       {/* Title Header */}
       <div className="space-y-2 mb-10">
         <span className="text-xs uppercase tracking-widest font-semibold text-[#B58A3D]">New Projects</span>

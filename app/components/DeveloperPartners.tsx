@@ -1,17 +1,10 @@
 import Image from "next/image";
 
 export default function DeveloperPartners() {
-  // Placeholder branding paths. Replace src with your exact local assets
-  const partners = [
-    { id: 1, name: "Kolte Patil", logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=200", positionClass: "bottom-0 left-[20%] -translate-x-1/2 translate-y-1/2" },
-    { id: 2, name: "Godrej Properties", logo: "https://images.unsplash.com/photo-1516880711640-ef7db81be3e1?q=80&w=200", positionClass: "top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" },
-    { id: 3, name: "Trade Centre", logo: "https://images.unsplash.com/photo-1542744094-2ab25be78b90?q=80&w=200", positionClass: "bottom-0 right-[20%] translate-x-1/2 translate-y-1/2" },
-  ];
-
   return (
-    <section className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-24 overflow-hidden">
+    <section className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-20 bg-[#FBF9F4]">
       {/* Section Headings */}
-      <div className="space-y-2 mb-16">
+      <div className="space-y-2 mb-12">
         <span className="text-xs uppercase tracking-widest font-semibold text-[#B58A3D]">
           DEVELOPER PARTNERS
         </span>
@@ -20,38 +13,146 @@ export default function DeveloperPartners() {
         </h2>
       </div>
 
-      {/* Concentric Arcs Arena */}
-      <div className="relative max-w-2xl mx-auto h-[240px] md:h-[300px] border-b border-[#B58A3D]/40 mt-12">
+      {/* Concentric Arcs Container */}
+      <div className="relative max-w-3xl mx-auto h-[260px] md:h-[320px] border-b border-[#B58A3D]/30 mt-16 [clip-path:polygon(-100%_-100%,_200%_-100%,_200%_100%,_-100%_100%)]">
         
-        {/* Outer Ring Arc */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90%] aspect-square rounded-full border-2 border-[#B58A3D]/40 flex items-center justify-center">
-          {/* Partner 1 (Kolte Patil Position placement left edge arc) */}
-          <div className="absolute top-[30%] left-[6%] -translate-x-1/2 bg-white rounded-full p-2 w-16 h-16 md:w-20 md:h-20 shadow-md border border-gray-100 flex items-center justify-center z-20">
-            <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden text-[9px] font-bold text-center text-gray-600">
-              KOLTE PATIL
-            </div>
-          </div>
-
-          {/* Partner 3 (Trade Centre Position placement right edge arc) */}
-          <div className="absolute top-[30%] right-[6%] translate-x-1/2 bg-white rounded-full p-2 w-16 h-16 md:w-20 md:h-20 shadow-md border border-gray-100 flex items-center justify-center z-20">
-            <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden text-[9px] font-bold text-center text-gray-600">
-              TRADE CTR
-            </div>
-          </div>
-
-          {/* Mid Ring Arc */}
-          <div className="w-[70%] aspect-square rounded-full border-2 border-[#B58A3D]/50 flex items-center justify-center relative">
-            {/* Partner 2 (Godrej Position placement dead top center) */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2 w-14 h-14 md:w-16 md:h-16 shadow-md border border-gray-100 flex items-center justify-center z-20">
-              <div className="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden text-[9px] font-bold text-[#E53935] tracking-tight">
-                Godrej
+        {/* --- ARC 1: OUTER LARGE RING - Clockwise --- */}
+        <div className="absolute bottom-0 left-1/2 w-[85%] aspect-square -translate-x-1/2 translate-y-1/2 z-10 pointer-events-none">
+          <div className="w-full h-full rounded-full border-2 border-[#D4AF37] animate-[spin_40s_linear_infinite] group/ring hover:[animation-play-state:paused]">
+            {/* Partner 1 */}
+            <div className="absolute top-[0%] left-[50%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
+              <div className="animate-[spin_40s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                  <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <Image src="/images/partner (1).png" alt="Kolte Patil" fill className="object-contain p-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
+                  Kolte Patil
+                </div>
               </div>
             </div>
-
-            {/* Inner Base Arc */}
-            <div className="w-[55%] aspect-square rounded-full border border-[#B58A3D]/30" />
+            {/* Partner 2 */}
+            <div className="absolute top-[75%] left-[6.7%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
+              <div className="animate-[spin_40s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                  <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <Image src="/images/partner (2).png" alt="Developer Partner 2" fill className="object-contain p-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
+                  Developer Partner 2
+                </div>
+              </div>
+            </div>
+            {/* Partner 3 */}
+            <div className="absolute top-[75%] left-[93.3%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
+              <div className="animate-[spin_40s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                  <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <Image src="/images/partner (3).png" alt="Developer Partner 3" fill className="object-contain p-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
+                  Developer Partner 3
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* --- ARC 2: MIDDLE RING - Anti-Clockwise --- */}
+        <div className="absolute bottom-0 left-1/2 w-[60%] aspect-square -translate-x-1/2 translate-y-1/2 z-10 pointer-events-none">
+          <div className="w-full h-full rounded-full border-2 border-[#D4AF37] animate-[spin_30s_linear_infinite_reverse] group/ring hover:[animation-play-state:paused]">
+            {/* Partner 4 */}
+            <div className="absolute top-[11.7%] left-[17.9%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
+              <div className="animate-[spin_30s_linear_infinite] group-hover/ring:[animation-play-state:paused]">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                  <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <Image src="/images/partner (4).png" alt="Trade Centre" fill className="object-contain p-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
+                  Trade Centre
+                </div>
+              </div>
+            </div>
+            {/* Partner 5 */}
+            <div className="absolute top-[97%] left-[32.9%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
+              <div className="animate-[spin_30s_linear_infinite] group-hover/ring:[animation-play-state:paused]">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                  <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <Image src="/images/partner (5).png" alt="Developer Partner 5" fill className="object-contain p-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
+                  Developer Partner 5
+                </div>
+              </div>
+            </div>
+            {/* Partner 6 */}
+            <div className="absolute top-[41.3%] left-[99.2%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
+              <div className="animate-[spin_30s_linear_infinite] group-hover/ring:[animation-play-state:paused]">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                  <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <Image src="/images/partner (6).png" alt="Developer Partner 6" fill className="object-contain p-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
+                  Developer Partner 6
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* --- ARC 3: INNER RING - Clockwise --- */}
+        <div className="absolute bottom-0 left-1/2 w-[38%] aspect-square -translate-x-1/2 translate-y-1/2 z-10 pointer-events-none">
+          <div className="w-full h-full rounded-full border-2 border-[#D4AF37] animate-[spin_20s_linear_infinite] group/ring hover:[animation-play-state:paused]">
+            {/* Partner 7 */}
+            <div className="absolute top-[11.7%] left-[82.1%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
+              <div className="animate-[spin_20s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                  <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <Image src="/images/partner (7).png" alt="Godrej" fill className="object-contain p-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
+                  Godrej
+                </div>
+              </div>
+            </div>
+            {/* Partner 8 */}
+            <div className="absolute top-[41.3%] left-[0.8%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
+              <div className="animate-[spin_20s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                  <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <Image src="/images/partner (8).png" alt="Developer Partner 8" fill className="object-contain p-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
+                  Developer Partner 8
+                </div>
+              </div>
+            </div>
+            {/* Partner 9 */}
+            <div className="absolute top-[97%] left-[67.1%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
+              <div className="animate-[spin_20s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                  <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <Image src="/images/partner (9).png" alt="Developer Partner 9" fill className="object-contain p-1" />
+                  </div>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
+                  Developer Partner 9
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* --- SMALL BASE ARCH (Center Core) --- */}
+        <div className="absolute bottom-0 left-1/2 w-[18%] aspect-square -translate-x-1/2 translate-y-1/2 rounded-full border border-[#B58A3D]/40 z-10 pointer-events-none" />
 
       </div>
     </section>
