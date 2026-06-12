@@ -8,6 +8,7 @@ import ProjectGallery from "../app/components/ProjectGallery";
 import FAQ from "../app/components/FAQ";
 import ExploreByLocation from "../app/components/ExploreByLocation";
 import DeveloperPartners from "../app/components/DeveloperPartners";
+import CallToAction from "../app/components/CallToAction";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -18,12 +19,14 @@ export default function Home() {
         <HeroSection />
         <FeaturedProjects />
         <OngoingProjects />
-        <NewlyLaunched />
-        <Testimonials />
-        <ProjectGallery />
-        <FAQ />
+      
+         <DeveloperPartners />
         <ExploreByLocation />
-        <DeveloperPartners />
+        <NewlyLaunched />
+         <Testimonials />
+        {/* <ProjectGallery /> */}
+        <FAQ />
+        <CallToAction />
       </main>
       <Footer/>
     </div>

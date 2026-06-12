@@ -4,11 +4,11 @@ import { FiFacebook, FiTwitter, FiInstagram, FiYoutube } from "react-icons/fi";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#FBF9F4] text-[#2C2C2C] pt-20 pb-12 overflow-hidden border-t border-gray-200/50">
+    <footer className="relative bg-[#FBF9F4] text-[#2C2C2C] pt-12 pb-12 overflow-hidden border-t border-gray-200/50">
       
       {/* 1. MASSIVE BACKGROUND WATERMARK TEXT */}
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none z-0">
-        <h1 className="text-[10vw] font-black tracking-widest text-[#E8E4D9]/50 uppercase leading-none">
+      <div className="w-full text-center pointer-events-none select-none z-0 mb-6 mt-4">
+        <h1 className="text-[12vw] font-black tracking-normal text-[#EDEAE1] uppercase leading-none">
           EARTH SUKHAM
         </h1>
       </div>
@@ -16,22 +16,15 @@ export default function Footer() {
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 z-10">
         
         {/* 2. CENTERED LOGO & DIVIDER LINE ACCENT */}
-        <div className="flex items-center justify-between gap-6 mb-12 w-full">
-          <div className="hidden sm:block h-[1px] bg-[#B58A3D]/40 flex-grow" />
+        <div className="flex items-center justify-between gap-8 mb-16 w-full">
+          <div className="hidden sm:block h-[1px] bg-[#D4C3A3] flex-grow" />
           
           {/* Main Structural Logo Mark */}
           <div className="flex flex-col items-center shrink-0 mx-auto sm:mx-0">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 bg-[#B58A3D] rounded-full flex items-center justify-center text-white font-bold text-xs">
-                ES
-              </div>
-              <span className="font-serif font-bold text-[#2C2C2C] text-base leading-tight">
-                Earth<br /><span className="text-[#B58A3D]">Sukham</span>
-              </span>
-            </div>
+            <img src="/images/Logo.png" alt="Earth Sukham" className="h-20 w-auto object-contain" />
           </div>
           
-          <div className="hidden sm:block h-[1px] bg-[#B58A3D]/40 flex-grow" />
+          <div className="hidden sm:block h-[1px] bg-[#D4C3A3] flex-grow" />
         </div>
 
         {/* 3. TRIPLE COLUMN CONTENT GRID */}
