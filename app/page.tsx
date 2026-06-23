@@ -14,7 +14,7 @@ import Footer from "./components/Footer";
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#FBF9F4] text-[#2C2C2C] font-sans antialiased">
-      <Navbar />
+      {/* <Navbar /> */}
       <main>
         <HeroSection />
         <FeaturedProjects />
@@ -28,7 +28,7 @@ export default function Home() {
         <FAQ />
         <CallToAction />
       </main>
-      <Footer/>
+      
     </div>
   );
 }

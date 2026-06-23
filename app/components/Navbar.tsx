@@ -49,11 +49,9 @@ export default function Navbar() {
 
         {/* Navigation Links (White) */}
         <nav className="hidden md:flex items-center gap-8 text-white font-medium text-sm">
-          <Link href="#" className="text-[#D4A373]">Home</Link>
-          <Link href="#" className="hover:text-[#D4A373] transition">Properties</Link>
-          <Link href="#" className="hover:text-[#D4A373] transition">Pune Projects</Link>
-          <Link href="#" className="hover:text-[#D4A373] transition">Delhi NCR Projects</Link>
-          <Link href="#" className="hover:text-[#D4A373] transition">Blogs</Link>
+          <Link href="/about-us" className="hover:text-[#D4A373] transition">About</Link>
+          <Link href="/properties" className="hover:text-[#D4A373] transition">Properties</Link>
+          <Link href="/blogs" className="hover:text-[#D4A373] transition">Blogs</Link>
         </nav>
 
         {/* CTA Button */}
@@ -78,11 +76,9 @@ export default function Navbar() {
 
         {/* Navigation Links (Dark) */}
         <nav className="hidden md:flex items-center gap-8 text-[#2C2C2C] font-medium text-sm">
-          <Link href="#" className="text-[#C19B54]">Home</Link>
-          <Link href="#" className="hover:text-[#C19B54] transition">Properties</Link>
-          <Link href="#" className="hover:text-[#C19B54] transition">Pune Projects</Link>
-          <Link href="#" className="hover:text-[#C19B54] transition">Delhi NCR Projects</Link>
-          <Link href="#" className="hover:text-[#C19B54] transition">Blogs</Link>
+          <Link href="/about-us" className="hover:text-[#C19B54] transition">About</Link>
+          <Link href="/properties" className="hover:text-[#C19B54] transition">Properties</Link>
+          <Link href="/blogs" className="hover:text-[#C19B54] transition">Blogs</Link>
         </nav>
 
         {/* CTA Button */}

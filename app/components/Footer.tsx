@@ -8,7 +8,7 @@ export default function Footer() {
       
       {/* 1. MASSIVE BACKGROUND WATERMARK TEXT */}
       <div className="w-full text-center pointer-events-none select-none z-0 mb-6 mt-4">
-        <h1 className="text-[12vw] font-black tracking-normal text-[#EDEAE1] uppercase leading-none">
+        <h1 className="text-[10vw] font-black tracking-normal text-[#EDEAE1] uppercase leading-none">
           EARTH SUKHAM
         </h1>
       </div>
@@ -61,11 +61,11 @@ export default function Footer() {
               Quick Links
             </h4>
             <ul className="space-y-2.5 text-xs text-gray-700 font-medium">
-              <li><Link href="#" className="hover:text-[#B58A3D] transition">Home</Link></li>
-              <li><Link href="#" className="hover:text-[#B58A3D] transition">About Us</Link></li>
-              <li><Link href="#" className="hover:text-[#B58A3D] transition">Privacy Policy</Link></li>
-              <li><Link href="#" className="hover:text-[#B58A3D] transition">Terms & Condition</Link></li>
-              <li><Link href="#" className="hover:text-[#B58A3D] transition">Contact Us</Link></li>
+              <li><Link href="/about-us" className="hover:text-[#B58A3D] transition">About Us</Link></li>
+              <li><Link href="/properties" className="hover:text-[#B58A3D] transition">Properties</Link></li>
+              <li><Link href="/blogs" className="hover:text-[#B58A3D] transition">Blogs</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-[#B58A3D] transition">Privacy Policy</Link></li>
+              <li><Link href="/terms-conditions" className="hover:text-[#B58A3D] transition">Terms & Condition</Link></li>
             </ul>
           </div>
 
