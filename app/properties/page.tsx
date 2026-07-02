@@ -1,5 +1,8 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Search, ChevronDown, IndianRupee, Home, BarChart2 } from 'lucide-react';
 
 // --- Mock Data ---
 const MAIN_PROPERTIES = [
@@ -71,6 +74,16 @@ const SIDEBAR_PROPERTIES = [
 ];
 
 export default function PropertyPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredProperties = MAIN_PROPERTIES.filter(property => {
+    const query = searchQuery.toLowerCase();
+    return (
+      property.title.toLowerCase().includes(query) || 
+      property.location.toLowerCase().includes(query)
+    );
+  });
+
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-800 pb-12">
       
@@ -103,6 +116,60 @@ export default function PropertyPage() {
                </div>
              </section>
 
+      {/* --- SEARCH COMPONENT --- */}
+      <div className="max-w-5xl mx-auto px-4 relative z-10 -mt-20 mb-8">
+        <div className="bg-white rounded-xl shadow-[0_4px_20px_rgb(0,0,0,0.08)] p-4 md:p-5 w-full border border-gray-100">
+          {/* Top Row: Search Input & Button */}
+          <div className="flex flex-col md:flex-row gap-3 mb-3">
+            <div className="flex-1 relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400 stroke-[1.5]" />
+              </div>
+              <input 
+                type="text" 
+                placeholder="Search by Location, Projects or Builders" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-4 py-3 bg-[#f8f9fa] border-0 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#b38e41]/30 focus:outline-none transition-all"
+              />
+            </div>
+            <button className="bg-[#a37f37] text-white px-8 py-3 rounded-lg text-sm font-semibold shadow-sm hover:bg-[#8f6f2e] transition-colors whitespace-nowrap">
+              Search
+            </button>
+          </div>
+
+          {/* Bottom Row: Filters */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Budget Filter */}
+            <button className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-[13px] text-gray-600 hover:border-gray-300 transition-colors min-w-[120px]">
+              <div className="flex items-center gap-1.5">
+                <IndianRupee className="h-3.5 w-3.5 text-[#d4af37]" />
+                <span>Budget</span>
+              </div>
+              <ChevronDown className="h-3.5 w-3.5 text-gray-500" />
+            </button>
+
+            {/* Property Type Filter */}
+            <button className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-[13px] text-gray-600 hover:border-gray-300 transition-colors min-w-[140px]">
+              <div className="flex items-center gap-1.5">
+                <Home className="h-3.5 w-3.5 text-[#d4af37]" />
+                <span>Property Type</span>
+              </div>
+              <ChevronDown className="h-3.5 w-3.5 text-gray-500" />
+            </button>
+
+            {/* Project Status Filter */}
+            <button className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-[13px] text-gray-600 hover:border-gray-300 transition-colors min-w-[140px]">
+              <div className="flex items-center gap-1.5">
+                <BarChart2 className="h-3.5 w-3.5 text-[#d4af37]" />
+                <span>Project Status</span>
+              </div>
+              <ChevronDown className="h-3.5 w-3.5 text-gray-500" />
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* --- MAIN CONTENT CONTAINER --- */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 mt-12">
         <h2 className="text-2xl md:text-3xl font-serif text-zinc-800 mb-8">
@@ -113,11 +180,13 @@ export default function PropertyPage() {
           
           {/* LEFT: MAIN LISTINGS CONTAINER (2 Columns wide) */}
           <div className="lg:col-span-2 space-y-6">
-            {MAIN_PROPERTIES.map((property) => (
-              <div 
-                key={property.id} 
-                className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 flex flex-col md:flex-row gap-6 transition-all hover:shadow-md"
-              >
+            {filteredProperties.length > 0 ? (
+              filteredProperties.map((property) => (
+                <Link 
+                  href={`/properties/${property.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                  key={property.id} 
+                  className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 flex flex-col md:flex-row gap-6 transition-all hover:shadow-md hover:border-[#b38e41]/30 block group"
+                >
                 {/* Property Image */}
                 <div className="relative w-full md:w-[240px] h-[200px] md:h-[270px] shrink-0 rounded-xl overflow-hidden shadow-sm">
                   <Image 
@@ -157,13 +226,58 @@ export default function PropertyPage() {
 
                   {/* Action Button */}
                   <div>
-                    <button className="bg-gradient-to-r from-[#c49a45] to-[#785921] hover:brightness-105 text-white text-sm font-semibold px-8 py-3 rounded-lg shadow-md transition-all active:scale-[0.98]">
+                    <span className="inline-block bg-gradient-to-r from-[#c49a45] to-[#785921] group-hover:brightness-105 text-white text-sm font-semibold px-8 py-3 rounded-lg shadow-md transition-all active:scale-[0.98]">
                       Enquire Now
-                    </button>
+                    </span>
                   </div>
                 </div>
+              </Link>
+              ))
+            ) : (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-8 flex flex-col items-center justify-center text-center">
+                <div className="w-16 h-16 bg-[#b38e41]/10 rounded-full flex items-center justify-center mb-4">
+                  <Search className="h-8 w-8 text-[#b38e41]" />
+                </div>
+                <h3 className="text-2xl font-serif text-gray-900 mb-2">Couldn't find your property?</h3>
+                <p className="text-sm text-gray-500 mb-8 max-w-md">
+                  Don't worry! Leave your details below and our experts will contact you with properties matching <strong>"{searchQuery}"</strong> or similar nearby options.
+                </p>
+                
+                <form className="w-full max-w-md space-y-4" onSubmit={(e) => e.preventDefault()}>
+                  <div className="text-left">
+                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Full Name</label>
+                    <input 
+                      type="text" 
+                      placeholder="John Doe" 
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#b38e41]/30 focus:border-[#b38e41] transition-all outline-none"
+                      required
+                    />
+                  </div>
+                  <div className="text-left">
+                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Phone Number</label>
+                    <input 
+                      type="tel" 
+                      placeholder="+91 98765 43210" 
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#b38e41]/30 focus:border-[#b38e41] transition-all outline-none"
+                      required
+                    />
+                  </div>
+                  <button 
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-[#c49a45] to-[#785921] hover:brightness-105 text-white font-semibold py-3.5 rounded-lg shadow-md transition-all active:scale-[0.98] mt-2"
+                  >
+                    Request a Callback
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setSearchQuery("")}
+                    className="mt-4 text-sm text-gray-500 hover:text-[#b38e41] transition-colors underline block mx-auto"
+                  >
+                    Or clear search and try again
+                  </button>
+                </form>
               </div>
-            ))}
+            )}
           </div>
 
           {/* RIGHT: SIDEBAR WIDGETS (1 Column wide) */}

@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import EnquiryModal from "./EnquiryModal";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -51,12 +53,14 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center gap-8 text-white font-medium text-sm">
           <Link href="/about-us" className="hover:text-[#D4A373] transition">About</Link>
           <Link href="/properties" className="hover:text-[#D4A373] transition">Properties</Link>
+          <Link href="/services" className="hover:text-[#D4A373] transition">Services</Link>
           <Link href="/blogs" className="hover:text-[#D4A373] transition">Blogs</Link>
+          <Link href="/contact-us" className="hover:text-[#D4A373] transition">Contact</Link>
         </nav>
 
         {/* CTA Button */}
-        <button className="bg-[#B58A3D] text-white px-6 py-2 rounded text-sm font-semibold hover:bg-[#967132] transition shadow-md">
-          Contact Us
+        <button onClick={() => setIsModalOpen(true)} className="bg-[#B58A3D] text-white px-6 py-2 rounded text-sm font-semibold hover:bg-[#967132] transition shadow-md">
+          Enquiry Now
         </button>
       </header>
 
@@ -78,14 +82,18 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center gap-8 text-[#2C2C2C] font-medium text-sm">
           <Link href="/about-us" className="hover:text-[#C19B54] transition">About</Link>
           <Link href="/properties" className="hover:text-[#C19B54] transition">Properties</Link>
+          <Link href="/services" className="hover:text-[#C19B54] transition">Services</Link>
           <Link href="/blogs" className="hover:text-[#C19B54] transition">Blogs</Link>
+          <Link href="/contact-us" className="hover:text-[#C19B54] transition">Contact</Link>
         </nav>
 
         {/* CTA Button */}
-        <button className="bg-[#C19B54] text-white px-6 py-2.5 rounded text-sm font-semibold hover:bg-[#A88648] transition">
-          Contact Us
+        <button onClick={() => setIsModalOpen(true)} className="bg-[#C19B54] text-white px-6 py-2.5 rounded text-sm font-semibold hover:bg-[#A88648] transition">
+          Enquiry Now
         </button>
       </header>
+      
+      <EnquiryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 }
