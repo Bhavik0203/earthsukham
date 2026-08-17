@@ -1,20 +1,21 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+
+const DUMMY_IMAGES = [
+  "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1200",
+  "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200",
+  "https://images.unsplash.com/photo-1554469384-e58fac16e23a?q=80&w=1200",
+  "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1200",
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200",
+  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200"
+];
 
 export default function ProjectGallery() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [images, setImages] = useState<string[]>(DUMMY_IMAGES);
+  const [loading, setLoading] = useState(false);
 
-  // Expanded array of images so the lightbox has a few extras to scroll through
-  const images = [
-    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1200", // large
-    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200", // topRight
-    "https://images.unsplash.com/photo-1554469384-e58fac16e23a?q=80&w=1200", // bottomRight1
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1200", // bottomRight2
-    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200", // extra
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200", // extra
-    "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=1200", // extra
-  ];
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -44,53 +45,58 @@ export default function ProjectGallery() {
       </div>
 
       {/* Structural Grid Area */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-        
-        {/* Left Side Large Landscape Feature Block */}
-        <div 
-          onClick={() => setSelectedIndex(0)}
-          className="md:col-span-6 h-[320px] md:h-[420px] rounded-lg overflow-hidden shadow-xs cursor-pointer group relative"
-        >
-          <img src={images[0]} alt="Project Exterior View" className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-500" />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-        </div>
-
-        {/* Right Side Nested Grid Array */}
-        <div className="md:col-span-6 flex flex-col gap-4">
-          {/* Top Wide Card */}
+      {loading ? (
+        <div className="h-[420px] flex items-center justify-center text-gray-400">Loading gallery...</div>
+      ) : images.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+          
+          {/* Left Side Large Landscape Feature Block */}
           <div 
-            onClick={() => setSelectedIndex(1)}
-            className="h-[150px] md:h-[200px] rounded-lg overflow-hidden shadow-xs cursor-pointer group relative"
+            onClick={() => setSelectedIndex(0)}
+            className="md:col-span-6 h-[320px] md:h-[420px] rounded-lg overflow-hidden shadow-xs cursor-pointer group relative"
           >
-            <img src={images[1]} alt="Facade details" className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-500" />
+            <img src={images[0]} alt="Project Exterior View" className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-500" />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
 
-          {/* Bottom Row Twin Cards Split */}
-          <div className="grid grid-cols-2 gap-4 flex-1">
+          {/* Right Side Nested Grid Array */}
+          <div className="md:col-span-6 flex flex-col gap-4">
+            {/* Top Wide Card */}
             <div 
-              onClick={() => setSelectedIndex(2)}
-              className="h-[150px] md:h-[204px] rounded-lg overflow-hidden shadow-xs cursor-pointer group relative"
+              onClick={() => setSelectedIndex(1)}
+              className="h-[150px] md:h-[200px] rounded-lg overflow-hidden shadow-xs cursor-pointer group relative"
             >
-              <img src={images[2]} alt="Tower Structure" className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-500" />
+              <img src={images[1]} alt="Facade details" className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-500" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
             </div>
 
-            {/* Final Image tile with transparent count overlay block */}
-            <div 
-              onClick={() => setSelectedIndex(3)}
-              className="h-[150px] md:h-[204px] rounded-lg overflow-hidden shadow-xs relative group cursor-pointer"
-            >
-              <img src={images[3]} alt="Additional views" className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-500" />
-              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center" />
-              <span className="absolute inset-0 flex items-center justify-center text-white text-3xl font-serif font-medium tracking-wide drop-shadow-md">
-                10+
-              </span>
+            {/* Bottom Row Twin Cards Split */}
+            <div className="grid grid-cols-2 gap-4 flex-1">
+              <div 
+                onClick={() => setSelectedIndex(2)}
+                className="h-[150px] md:h-[204px] rounded-lg overflow-hidden shadow-xs cursor-pointer group relative"
+              >
+                <img src={images[2]} alt="Tower Structure" className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-500" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+              </div>
+
+              {/* Final Image tile with transparent count overlay block */}
+              <div 
+                onClick={() => setSelectedIndex(3)}
+                className="h-[150px] md:h-[204px] rounded-lg overflow-hidden shadow-xs relative group cursor-pointer"
+              >
+                <img src={images[3]} alt="Additional views" className="w-full h-full object-cover group-hover:scale-[1.02] transition duration-500" />
+                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center" />
+                {images.length > 4 && (
+                  <span className="absolute inset-0 flex items-center justify-center text-white text-3xl font-serif font-medium tracking-wide drop-shadow-md">
+                    {images.length - 4}+
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
-
-      </div>
+      ) : null}
 
       {/* Lightbox Modal */}
       {selectedIndex !== null && (

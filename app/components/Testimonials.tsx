@@ -2,64 +2,63 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const REVIEWS = [
-  {
-    id: 1,
-    date: "22 January 2025",
-    text: "Clear claim transferred my physical shares within given time,professional, very prompt, overall a hassle-free experience, I highly recommend I highly recommend.",
-    name: "Yash Kale",
-  },
-  {
-    id: 2,
-    date: "22 January 2025",
-    text: "Very reliable, gives personal attention & above all, very reasonable charges. I have given them shares which are in IEPF for transferring into my demat account. At present after completing all documentation by them the matter is with IEPF for their clearance. My Best Wishes to Shrikant and his team.",
-    name: "Vinayak Gaitonde",
-  },
-  {
-    id: 3,
-    date: "12 January 2025",
-    text: "Clear claim transferred my physical shares within given time,professional, very prompt, overall a hassle-free experience, I highly recommend I highly recommend.",
-    name: "Samraj Gaitonde",
-  },
+interface Testimonial {
+  id: string;
+  date: string;
+  text: string;
+  name: string;
+  isActive?: boolean;
+}
+
+const DUMMY_REVIEWS: Testimonial[] = [
+  { id: "1", date: "15 August 2026", text: "Earth Sukham helped me find the perfect home. The entire process was seamless and transparent.", name: "Rahul Sharma" },
+  { id: "2", date: "02 July 2026", text: "Exceptional service and beautiful properties. Highly recommended for anyone looking to invest in real estate.", name: "Priya Patel" },
+  { id: "3", date: "20 June 2026", text: "The team was very professional. They understood my requirements and showed me the best options available.", name: "Amit Kumar" }
 ];
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
+  const [reviews, setReviews] = useState<Testimonial[]>(DUMMY_REVIEWS);
 
-  // Auto-scroll every 5 seconds, paused on hover
+
+  // Auto-scroll every 8 seconds, paused on hover
   useEffect(() => {
-    if (isPaused) return;
-    
+    if (isPaused || reviews.length <= 1) return;
+
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % REVIEWS.length);
-    }, 5000);
-    
+      setActiveIndex((prev) => (prev + 1) % reviews.length);
+    }, 8000);
+
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isPaused, reviews.length]);
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + REVIEWS.length) % REVIEWS.length);
+    if (reviews.length <= 1) return;
+    setActiveIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
   };
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % REVIEWS.length);
+    if (reviews.length <= 1) return;
+    setActiveIndex((prev) => (prev + 1) % reviews.length);
   };
 
   const getVisibleReviews = () => {
-    const prevIndex = (activeIndex - 1 + REVIEWS.length) % REVIEWS.length;
-    const nextIndex = (activeIndex + 1) % REVIEWS.length;
+    if (reviews.length === 0) return [];
     
+    const prevIndex = (activeIndex - 1 + reviews.length) % reviews.length;
+    const nextIndex = (activeIndex + 1) % reviews.length;
+
     // Always return 3 items: previous, active, next
     return [
-      { ...REVIEWS[prevIndex], isActive: false },
-      { ...REVIEWS[activeIndex], isActive: true },
-      { ...REVIEWS[nextIndex], isActive: false },
+      { ...reviews[prevIndex], isActive: false },
+      { ...reviews[activeIndex], isActive: true },
+      { ...reviews[nextIndex], isActive: false },
     ];
   };
 
   return (
-    <section 
+    <section
       className="max-w-7xl mx-auto px-6 md:px-12 py-16 bg-[#FBF9F4]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -72,9 +71,9 @@ export default function Testimonials() {
 
       {/* Main Row Assembly */}
       <div className="flex items-center justify-between gap-4 max-w-5xl mx-auto">
-        
+
         {/* Left Arrow Trigger */}
-        <button 
+        <button
           onClick={handlePrev}
           className="bg-[#CC9A3B] hover:bg-[#B38530] text-white p-2.5 rounded-full transition shadow-md shrink-0"
           aria-label="Previous testimonial"
@@ -84,45 +83,49 @@ export default function Testimonials() {
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full items-center">
-          {getVisibleReviews().map((rev) => {
+          {reviews.length > 0 ? getVisibleReviews().map((rev, idx) => {
             const isActive = rev.isActive;
             return (
               <div
-                key={rev.id}
-                className={`rounded-xl p-6 transition-all duration-300 flex flex-col justify-between h-full min-h-[250px] shadow-xl ${
-                  isActive
+                key={`${rev.id}-${idx}`}
+                className={`rounded-xl p-6 transition-all duration-300 flex flex-col justify-between h-full min-h-[250px] shadow-xl ${isActive
                     ? "bg-gradient-to-b from-[#CC9A3B] to-[#5C4314] text-white md:scale-105 z-10 border border-amber-600/20"
                     : "bg-white text-gray-700 hidden md:flex border border-gray-100"
-                }`}
+                  }`}
               >
                 {/* Card Meta Content */}
                 <div>
                   <span className={`block text-right text-[10px] font-medium mb-3 transition-colors duration-300 ${isActive ? "text-white/80" : "text-gray-400"}`}>
                     {rev.date}
                   </span>
-                  <p className={`text-xs leading-relaxed font-light transition-colors duration-300 ${isActive ? "text-white" : "text-gray-600"}`}>
+
+                  <p className={`text-[13px] md:text-[14px] leading-relaxed transition-colors duration-300 italic mb-6 line-clamp-6 ${isActive ? "text-white/95" : "text-gray-600"}`}>
                     "{rev.text}"
                   </p>
                 </div>
 
-                {/* Author Footer Identity */}
-                <div className="flex items-center gap-3 mt-6 pt-4 border-t transition-colors duration-300 border-black/5 dark:border-white/10">
-                  <div className="w-8 h-8 rounded-full bg-gray-300 overflow-hidden shrink-0">
-                    <div className="w-full h-full bg-slate-400 flex items-center justify-center text-white text-[10px] font-bold uppercase">
-                      {rev.name.charAt(0)}
-                    </div>
+                {/* Author Info */}
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-[13px] transition-colors duration-300 ${isActive ? "bg-white/20 text-white" : "bg-gray-100 text-gray-600"}`}>
+                    {rev.name.charAt(0)}
                   </div>
-                  <span className={`text-xs font-semibold tracking-wide transition-colors duration-300 ${isActive ? "text-white" : "text-gray-800"}`}>
-                    {rev.name}
-                  </span>
+                  <div>
+                    <h4 className={`text-[13px] font-bold transition-colors duration-300 ${isActive ? "text-white" : "text-[#2C2C2C]"}`}>
+                      {rev.name}
+                    </h4>
+                  </div>
                 </div>
               </div>
             );
-          })}
+          }) : (
+            <div className="col-span-3 text-center py-10 text-gray-500">
+              No testimonials available at the moment.
+            </div>
+          )}
         </div>
 
         {/* Right Arrow Trigger */}
-        <button 
+        <button
           onClick={handleNext}
           className="bg-[#CC9A3B] hover:bg-[#B38530] text-white p-2.5 rounded-full transition shadow-md shrink-0"
           aria-label="Next testimonial"

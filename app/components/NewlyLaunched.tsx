@@ -1,61 +1,48 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 
-const PROJECTS = [
-  {
-    id: 1,
-    title: "LODHA SPLENDORA",
-    type: "3 & 4 Bed Residences",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800",
-  },
-  {
-    id: 2,
-    title: "PRESTIGE CITY",
-    type: "2 & 3 Bed Residences",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800",
-  },
-  {
-    id: 3,
-    title: "GODREJ TOWNSHIP",
-    type: "2 & 3 Bed Residences",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800",
-  },
-  {
-    id: 4,
-    title: "MAHINDRA HAPPINEST",
-    type: "1 & 2 Bed Residences",
-    image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=800",
-  },
-  {
-    id: 5,
-    title: "TATA PROMONT",
-    type: "3 & 4 Bed Residences",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800",
-  },
+import Link from "next/link";
+
+interface Project {
+  id: string;
+  title: string;
+  type: string;
+  image: string;
+  slug: string;
+}
+
+const DUMMY_PROJECTS: Project[] = [
+  { id: "1", title: "Earth Sapphire", type: "4 BHK Premium", image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800", slug: "#" },
+  { id: "2", title: "Shaligram Prestige", type: "3 BHK Apartment", image: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?q=80&w=800", slug: "#" },
+  { id: "3", title: "Dev The Galaxy", type: "3 BHK Apartment", image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800", slug: "#" },
+  { id: "4", title: "Ashapura Samarpan", type: "3 BHK Apartment", image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=800", slug: "#" },
+  { id: "5", title: "Sukham Residency", type: "5 BHK Villa", image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800", slug: "#" }
 ];
 
 export default function NewlyLaunched() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [projects, setProjects] = useState<Project[]>(DUMMY_PROJECTS);
 
   // If nothing is hovered, default to the center one (index 2)
-  const activeIndex = hoveredIndex !== null ? hoveredIndex : 2;
+  const activeIndex = hoveredIndex !== null ? hoveredIndex : Math.min(2, Math.max(0, projects.length - 1));
 
   return (
     <section className="max-w-7xl mx-auto px-6 md:px-12 ">
       {/* Title Header */}
       <div className="space-y-2 mb-10">
-        <span className="text-xs uppercase tracking-widest font-semibold text-[#B58A3D]">New Projects</span>
-        <h2 className="text-3xl font-serif text-[#2C2C2C]">Newly Launched Projects</h2>
+        <span className="text-xs uppercase tracking-widest font-semibold text-[#B58A3D]">New Properties</span>
+        <h2 className="text-3xl font-serif text-[#2C2C2C]">Newly Launched Properties</h2>
       </div>
 
       {/* Accordion Layout */}
       <div className="flex flex-col md:flex-row gap-2 md:gap-3 h-[600px] md:h-[400px]">
-        {PROJECTS.map((project, idx) => {
+        {projects.length > 0 ? projects.map((project, idx) => {
           const isActive = activeIndex === idx;
           
           return (
-            <div
+            <Link
+              href={`/properties/${project.slug}`}
               key={project.id}
               onMouseEnter={() => setHoveredIndex(idx)}
               onMouseLeave={() => setHoveredIndex(null)}
@@ -98,17 +85,21 @@ export default function NewlyLaunched() {
                 </h4>
               </div>
               
-              {/* Horizontal Title for inactive state on mobile */}
+              {/* Mobile text visibility when not active */}
               <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 pointer-events-none md:hidden
                 ${!isActive ? 'opacity-100' : 'opacity-0'}
               `}>
-                <h4 className="font-serif tracking-widest text-xs font-semibold text-white whitespace-nowrap">
+                <h4 className="font-serif tracking-widest text-xs font-semibold text-white bg-black/40 px-3 py-1 rounded">
                   {project.title}
                 </h4>
               </div>
-            </div>
+            </Link>
           );
-        })}
+        }) : (
+          <div className="col-span-full py-20 text-center text-gray-500">
+            No newly launched properties found.
+          </div>
+        )}
       </div>
     </section>
   );

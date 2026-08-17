@@ -1,80 +1,50 @@
-import { ArrowUpRight } from "lucide-react";
+"use client";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useMemo } from "react";
+import FeaturedCarousel from "./FeaturedCarousel";
 
-export default function FeaturedProjects() {
-  const cards = [
-    { id: 1, size: "large", title: "GODREJ TOWNSHIP", desc: "2 & 3 Bed Residences", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=600" },
-    { id: 2, size: "small", title: "GODREJ TOWNSHIP", desc: "2 & 3 Bed Residences", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600" },
-    { id: 3, size: "small", title: "GODREJ TOWNSHIP", desc: "2 & 3 Bed Residences", img: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?q=80&w=600" },
-    { id: 4, size: "tall", title: "GODREJ TOWNSHIP", desc: "2 & 3 Bed Residences", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600" },
+const CARDS = [
+    { id: "fallback-1", title: "Sadhna Obsidian", location: "Jagatpur, Ahmedabad", price: "₹ 1.9 Cr Onwards", config: "4,5 BHK Apartment | 3375 - 5544 sq ft", builder: "By Sadhna Reality", status: "Under Construction", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=600", slug: "#" },
+    { id: "fallback-2", title: "Dev The Galaxy", location: "Opp Orchid Sky, Club 07 Road, Shela...", price: "₹ 1.11 Cr Onwards", config: "3 BHK Apartment | 2010 sq ft", builder: "By Dev Infinity Buildcon", status: "Launch", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600", slug: "#" },
+    { id: "fallback-3", title: "Shaligram Prestige", location: "Shela, Ahmedabad", price: "₹ 1.03 Cr Onwards", config: "3 BHK Apartment | Area on request", builder: "By Shaligram Developers", status: "Launch", img: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?q=80&w=600", slug: "#" },
+    { id: "fallback-4", title: "Ashapura Samarpan", location: "Shela, Ahmedabad", price: "₹ 90 Lac Onwards", config: "3 BHK Apartment | Area on request", builder: "By Ashapura buildspace", status: "Launch", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", slug: "#" },
+    { id: "fallback-5", title: "Earth Sapphire", location: "Bopal, Ahmedabad", price: "₹ 1.5 Cr Onwards", config: "4 BHK Premium | 4200 sq ft", builder: "By Earth Builders", status: "Launch", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", slug: "#" },
+    { id: "fallback-6", title: "Sukham Residency", location: "SG Highway, Ahmedabad", price: "₹ 2.2 Cr Onwards", config: "5 BHK Villa | 6000 sq ft", builder: "By Sukham Developers", status: "Under Construction", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=600", slug: "#" },
   ];
 
-  return (
-    <section className="max-w-7xl mx-auto px-6 md:px-12 py-20">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
-        
-        {/* Left Heading Info Block */}
-        <div className="lg:col-span-4 flex flex-col justify-center space-y-8">
-          <div className="space-y-4">
-            <span className="text-sm font-serif uppercase tracking-widest font-semibold text-[#C19B54]">Featured Projects</span>
-            <h2 className="text-5xl lg:text-6xl font-serif text-[#2C2C2C] leading-[1.15]">
-              SPACES <br />That Define <br />Excellence
-            </h2>
-          </div>
-          <button className="self-start border border-[#C19B54]/50 text-[#2C2C2C] bg-white px-6 py-3 text-sm font-semibold flex items-center gap-3 hover:bg-[#FBF9F4] transition shadow-sm">
-            View All Projects <ArrowUpRight size={16} className="text-[#C19B54]" />
-          </button>
-        </div>
+function FeaturedProjectsContent() {
+  const searchParams = useSearchParams();
+  
+  const filteredCards = useMemo(() => {
+    const query = searchParams.get('query')?.toLowerCase() || "";
+    const type = searchParams.get('type') || "";
+    const status = searchParams.get('status') || "";
 
-        {/* Right Complex Structural Grid */}
-        <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {/* Main Large Card */}
-          <div className="md:col-span-1 h-[420px] relative group overflow-hidden rounded-md shadow-sm">
-            <div className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${cards[0].img})` }} />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#111]/90 via-[#111]/20 to-transparent" />
-            <span className="absolute top-4 right-4 bg-white/30 backdrop-blur-sm rounded-full p-2 text-white shadow-sm"><ArrowUpRight size={16} /></span>
-            <div className="absolute bottom-5 left-5 right-5 text-white">
-              <h4 className="font-serif font-bold text-lg tracking-wide mb-1 shadow-sm">{cards[0].title}</h4>
-              <div className="flex items-center gap-3">
-                <p className="text-[11px] font-medium text-gray-200 tracking-wider uppercase">{cards[0].desc}</p>
-                <div className="h-[1px] flex-grow bg-[#C19B54]"></div>
-              </div>
-            </div>
-          </div>
+    let filtered = [...CARDS];
+    
+    if (query) {
+      filtered = filtered.filter(c => c.title.toLowerCase().includes(query) || c.location.toLowerCase().includes(query) || c.builder.toLowerCase().includes(query));
+    }
+    if (type && type !== "Property Type") {
+      filtered = filtered.filter(c => c.config.includes(type));
+    }
+    if (status && status !== "Property Status") {
+      if (status === "Newly Launched") {
+        filtered = filtered.filter(c => c.status.includes("Launch"));
+      } else {
+        filtered = filtered.filter(c => c.status === status);
+      }
+    }
+    return filtered;
+  }, [searchParams]);
 
-          {/* Center Column: Two Stacked Row Cards */}
-          <div className="md:col-span-1 flex flex-col gap-4">
-            {[cards[1], cards[2]].map((card) => (
-              <div key={card.id} className="h-[202px] relative group overflow-hidden rounded-md shadow-sm">
-                <div className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${card.img})` }} />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#111]/90 via-[#111]/20 to-transparent" />
-                <span className="absolute top-4 right-4 bg-white/30 backdrop-blur-sm rounded-full p-2 text-white shadow-sm"><ArrowUpRight size={16} /></span>
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <h4 className="font-serif font-bold text-base tracking-wide mb-1 shadow-sm">{card.title}</h4>
-                  <div className="flex items-center gap-3">
-                    <p className="text-[9px] font-medium text-gray-200 tracking-wider uppercase">{card.desc}</p>
-                    <div className="h-[1px] flex-grow bg-[#C19B54]"></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Right Column: Tall Card */}
-          <div className="md:col-span-1 h-[420px] relative group overflow-hidden rounded-md shadow-sm">
-            <div className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105" style={{ backgroundImage: `url(${cards[3].img})` }} />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#111]/90 via-[#111]/20 to-transparent" />
-            <span className="absolute top-4 right-4 bg-white/30 backdrop-blur-sm rounded-full p-2 text-white shadow-sm"><ArrowUpRight size={16} /></span>
-            <div className="absolute bottom-5 left-5 right-5 text-white">
-              <h4 className="font-serif font-bold text-lg tracking-wide mb-1 shadow-sm">{cards[3].title}</h4>
-              <div className="flex items-center gap-3">
-                <p className="text-[11px] font-medium text-gray-200 tracking-wider uppercase">{cards[3].desc}</p>
-                <div className="h-[1px] flex-grow bg-[#C19B54]"></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  );
+  return <FeaturedCarousel cards={filteredCards} />;
 }
+
+export default function FeaturedProjects() {
+  return (
+    <Suspense fallback={<div className="py-16 text-center text-gray-500">Loading featured projects...</div>}>
+      <FeaturedProjectsContent />
+    </Suspense>
+  );
+}

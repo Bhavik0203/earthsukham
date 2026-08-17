@@ -62,7 +62,7 @@ export default function ExploreByLocation() {
         
         {/* Title Area */}
         <div className="space-y-2 mb-8">
-          <span className="text-sm font-serif uppercase tracking-widest font-semibold text-[#C19B54]">Projects Status</span>
+          <span className="text-sm font-serif uppercase tracking-widest font-semibold text-[#C19B54]">Property Status</span>
           <h2 className="text-4xl md:text-[3.5rem] font-serif text-[#2C2C2C] leading-tight">
             Explore by Location
           </h2>
@@ -95,7 +95,7 @@ export default function ExploreByLocation() {
             >
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="text-[2.5rem] font-serif font-bold text-gray-900 leading-none">{loc.count}</span>
-                <span className="text-[11px] font-bold tracking-widest text-gray-800 uppercase">Projects</span>
+                <span className="text-[11px] font-bold tracking-widest text-gray-800 uppercase">Properties</span>
               </div>
               
               <div className="flex items-center gap-2 mb-auto">

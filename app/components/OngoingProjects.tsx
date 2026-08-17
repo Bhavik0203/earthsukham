@@ -1,51 +1,80 @@
 "use client";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, MapPin, Heart, Share2, Construction, Rocket } from "lucide-react";
 
-const PROJECTS = [
-  {
-    id: 1,
-    title: "Godrej Township",
-    location: "Pune",
-    type: "2 & 3 Bed Residences",
-    category: "Residences & Townships",
-    price: "₹60L-₹2Cr",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800",
-    status: "New Launches"
-  },
-  {
-    id: 2,
-    title: "Lodha Splendora",
-    location: "Thane",
-    type: "3 & 4 Bed Residences",
-    category: "Luxury Apartments",
-    price: "₹1.5Cr-₹3.5Cr",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800",
-    status: "Ready Possession"
-  },
-  {
-    id: 3,
-    title: "Prestige City",
-    location: "Bangalore",
-    type: "1, 2 & 3 Bed Residences",
-    category: "Smart Township",
-    price: "₹45L-₹1.2Cr",
-    image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=800",
-    status: "New Launches"
-  }
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+
+interface Project {
+  id: string;
+  title: string;
+  location: string;
+  type: string;
+  category: string;
+  price: string;
+  image: string;
+  status: string;
+  slug: string;
+}
+
+const TABS = ["View All Properties", "New Launches", "Ready Possession"];
+
+const DUMMY_PROJECTS: Project[] = [
+  { id: "1", title: "Sadhna Obsidian", location: "Jagatpur, Ahmedabad", type: "4,5 BHK Apartment", category: "Township", price: "₹ 1.9 Cr Onwards", image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800", status: "Ready Possession", slug: "#" },
+  { id: "2", title: "Dev The Galaxy", location: "Shela", type: "3 BHK Apartment", category: "Residences", price: "₹ 1.11 Cr Onwards", image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800", status: "New Launches", slug: "#" },
+  { id: "3", title: "Sukham Residency", location: "SG Highway", type: "5 BHK Villa", category: "Villas", price: "₹ 2.2 Cr Onwards", image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800", status: "Ready Possession", slug: "#" }
 ];
 
-const TABS = ["View All Projects", "New Launches", "Ready Possession"];
-
-export default function OngoingProjects() {
-  const [activeTab, setActiveTab] = useState("View All Projects");
+function OngoingProjectsContent() {
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState("View All Properties");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [projects, setProjects] = useState<Project[]>(DUMMY_PROJECTS);
 
-  const filteredProjects = PROJECTS.filter(p => 
-    activeTab === "View All Projects" ? true : p.status === activeTab
+  useEffect(() => {
+    const query = searchParams.get('query')?.toLowerCase() || "";
+    const type = searchParams.get('type') || "";
+    const status = searchParams.get('status') || "";
+
+    let filtered = [...DUMMY_PROJECTS];
+    
+    if (query) {
+      filtered = filtered.filter(p => p.title.toLowerCase().includes(query) || p.location.toLowerCase().includes(query));
+    }
+    if (type && type !== "Property Type") {
+      filtered = filtered.filter(p => p.type.includes(type));
+    }
+    if (status && status !== "Property Status") {
+      // The search filter uses exact status, which might match our tabs or data.
+      // DUMMY_PROJECTS status: "New Launches", "Ready Possession".
+      // Status dropdown uses: "Newly Launched", "Under Construction", "Ready Possession"
+      // We can map them or just use string includes.
+      if (status === "Newly Launched") {
+        filtered = filtered.filter(p => p.status.includes("Launch"));
+      } else {
+        filtered = filtered.filter(p => p.status === status);
+      }
+    }
+    
+    setProjects(filtered);
+    setCurrentIndex(0);
+  }, [searchParams]);
+
+  const filteredProjects = projects.filter(p => 
+    activeTab === "View All Properties" ? true : p.status === activeTab
   );
 
-  const currentProject = filteredProjects[currentIndex] || filteredProjects[0];
+  let visibleProjects = [];
+  if (filteredProjects.length > 0) {
+    visibleProjects.push(filteredProjects[currentIndex]);
+    if (filteredProjects.length > 1) {
+      visibleProjects.push(filteredProjects[(currentIndex + 1) % filteredProjects.length]);
+    }
+    if (filteredProjects.length > 2) {
+      visibleProjects.push(filteredProjects[(currentIndex + 2) % filteredProjects.length]);
+    }
+  }
 
   const handleNext = () => {
     if (filteredProjects.length > 0) {
@@ -64,15 +93,42 @@ export default function OngoingProjects() {
     setCurrentIndex(0);
   };
 
+  const handleShare = async (e: React.MouseEvent, project: Project) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const url = `${window.location.origin}/properties/${project.slug}`;
+    const shareData = {
+      title: project.title,
+      text: `Check out ${project.title} in ${project.location} on Earth Sukham!`,
+      url: url,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.log("Error sharing:", err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        alert("Link copied to clipboard!");
+      } catch (err) {
+        console.log("Failed to copy:", err);
+      }
+    }
+  };
+
   return (
     <section className="bg-[#FAF8F5] py-16">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Title area */}
         <div className="space-y-2 mb-10">
-           <span className="text-sm font-serif uppercase tracking-widest font-semibold text-[#C19B54]">Projects Status</span>
+           <span className="text-sm font-serif uppercase tracking-widest font-semibold text-[#C19B54]">Property Status</span>
             <h2 className="text-5xl lg:text-6xl font-serif text-[#2C2C2C] leading-[1.15]">
-               Ongoing & Upcoming Projects</h2>
+               Ongoing & Upcoming Properties</h2>
         </div>
 
         {/* Filter Tabs */}
@@ -105,39 +161,51 @@ export default function OngoingProjects() {
             </button>
 
             {/* Content Block */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center w-full">
-              
-              {/* Text Content */}
-              <div className="space-y-6 md:pl-4">
-                <h3 className="text-[2.8rem] md:text-[3.5rem] font-serif text-[#C89B4A] leading-[1.1]">
-                  {currentProject.title}
-                </h3>
-                
-                <div className="flex items-center gap-2 text-[#2C2C2C] font-bold tracking-widest uppercase">
-                  <MapPin size={22} className="text-[#C89B4A] fill-[#C89B4A]" strokeWidth={2} /> 
-                  {currentProject.location}
-                </div>
-                
-                <div className="pt-2 space-y-1">
-                  <div className="flex items-center gap-8 md:gap-12">
-                    <p className="text-[1.15rem] md:text-[1.25rem] font-bold text-gray-900">{currentProject.type}</p>
-                    <p className="text-[1.15rem] md:text-[1.25rem] font-bold text-gray-900">{currentProject.price}</p>
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch w-full">
+              {visibleProjects.map((project, idx) => (
+                <Link href={`/properties/${project.slug}`} key={`${project.id}-${idx}`} className="block h-fit bg-white rounded-xl overflow-hidden border border-gray-100 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] hover:shadow-lg transition duration-300 group">
+                  {/* Image Container */}
+                  <div className="relative h-[200px] w-full overflow-hidden">
+                    <div 
+                      className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-105"
+                      style={{ backgroundImage: `url(${project.image})` }}
+                    />
+                    
+                    {/* Top Right Icons */}
+                    <div className="absolute top-3 right-3 flex gap-2">
+                   
+                      <div 
+                        onClick={(e) => handleShare(e, project)}
+                        className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition cursor-pointer"
+                      >
+                        <Share2 size={14} />
+                      </div>
+                    </div>
+                    
+                    {/* Bottom Right Badge */}
+                    <div className="absolute bottom-3 right-3 bg-[#0a192f] text-white text-[11px] font-medium px-3 py-1.5 rounded flex items-center gap-1.5 shadow-md">
+                      {project.status === "Under Construction" ? <Construction size={12} /> : <Rocket size={12} />}
+                      <span>{project.status}</span>
+                    </div>
                   </div>
-                  <p className="text-[1.05rem] text-[#9CA3AF] font-medium">
-                    {currentProject.category}
-                  </p>
-                </div>
-              </div>
-
-              {/* Dynamic Showcase Feature Image */}
-              <div className="overflow-hidden rounded-[20px] h-[280px] md:h-[360px] w-full">
-                <img 
-                  key={currentProject.id}
-                  src={currentProject.image} 
-                  alt={`${currentProject.title} Showcase View`} 
-                  className="w-full h-full object-cover transition-opacity duration-500"
-                />
-              </div>
+                  
+                  {/* Content */}
+                  <div className="p-4 flex flex-col h-full">
+                    <h3 className="font-bold text-[#0a192f] text-[17px] mb-1 truncate">{project.title}</h3>
+                    <p className="text-gray-500 text-[13px] mb-3 truncate">{project.location}</p>
+                    
+                    <p className="text-[#B58A3D] font-bold text-lg mb-2">{project.price}</p>
+                    
+                    <div className="text-gray-600 text-[13px] flex items-center gap-2 truncate mb-4">
+                      <span>{project.type}</span>
+                    </div>
+                    
+                    <div className="pt-3 border-t border-gray-100 mt-auto">
+                      <p className="text-gray-400 text-[12px]">{project.category}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
             </div>
 
             {/* Mobile Arrows */}
@@ -166,10 +234,18 @@ export default function OngoingProjects() {
           </div>
         ) : (
           <div className="text-center py-12 text-gray-500">
-            No projects found in this category.
+            No properties found in this category.
           </div>
         )}
       </div>
     </section>
+  );
+}
+
+export default function OngoingProjects() {
+  return (
+    <Suspense fallback={<div className="py-16 text-center text-gray-500">Loading properties...</div>}>
+      <OngoingProjectsContent />
+    </Suspense>
   );
 }

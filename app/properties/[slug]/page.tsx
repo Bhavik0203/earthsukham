@@ -64,11 +64,67 @@ const SIMILAR_PROPERTIES = [
   }
 ];
 
+import { useParams } from 'next/navigation';
+
 export default function PropertyDetailsPage() {
+  const params = useParams<{ slug: string }>();
   const [isProsOpen, setIsProsOpen] = useState(false);
   const [isConsOpen, setIsConsOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeTab, setActiveTab] = useState('Overview');
+  const [property, setProperty] = useState<any>(null);
+  const [similarProperties, setSimilarProperties] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    const loadData = async () => {
+      try {
+        if (!params?.slug) return;
+        
+        // Construct dummy property based on slug
+        const propertyName = params.slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        
+        const mockProperty = {
+          propertyName: propertyName,
+          city: "Pune",
+          location: "Kharadi, Pune",
+          tentativeBudget: "₹75 Lakhs Onwards",
+          propertyType: "Premium Residences",
+          developerName: "Earth Sukham Developers",
+          multipleImages: [
+            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&auto=format&fit=crop&q=60",
+            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=60",
+            "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&auto=format&fit=crop&q=60"
+          ],
+          updatedAt: new Date().toISOString()
+        };
+
+        if (isMounted) {
+          setProperty(mockProperty);
+          
+          // Use the SIMILAR_PROPERTIES constant for the similar properties section
+          const simProps = SIMILAR_PROPERTIES.slice(0, 4).map(p => ({
+            id: p.id,
+            propertyName: p.title,
+            propertyType: p.type,
+            location: p.location,
+            tentativeBudget: p.price,
+            multipleImages: [p.image],
+            slug: p.title.toLowerCase().replace(/\s+/g, '-')
+          }));
+          setSimilarProperties(simProps);
+        }
+      } catch (error) {
+        console.error("Failed to load property details:", error);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+    loadData();
+    return () => { isMounted = false; };
+  }, [params?.slug]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,13 +170,34 @@ export default function PropertyDetailsPage() {
     }
   };
 
+  if (loading) {
+    return <div className="min-h-screen bg-gray-50 flex items-center justify-center">Loading property details...</div>;
+  }
+
+  if (!property) {
+    return <div className="min-h-screen bg-gray-50 flex items-center justify-center">Property not found.</div>;
+  }
+
+  const mainImage = property.multipleImages && property.multipleImages.length > 0 
+    ? property.multipleImages[0] 
+    : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80";
+
+  const galleryImages = property.multipleImages && property.multipleImages.length > 1 
+    ? property.multipleImages.slice(1, 5) 
+    : [
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&auto=format&fit=crop&q=60"
+      ];
+
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Banner Section */}
       <div className="w-full h-[40vh] md:h-[50vh] relative">
         <Image 
-          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80" 
-          alt="Property Banner" 
+          src={mainImage} 
+          alt={property.propertyName} 
           fill 
           className="object-cover"
           priority
@@ -138,16 +215,12 @@ export default function PropertyDetailsPage() {
             <div className="flex items-center flex-wrap gap-1">
               <span className="hover:text-purple-600 cursor-pointer transition-colors">Home</span>
               <span>/</span>
-              <span className="hover:text-purple-600 cursor-pointer transition-colors">Pune</span>
+              <span className="hover:text-purple-600 cursor-pointer transition-colors">{property.city || 'Pune'}</span>
               <span>/</span>
-              <span className="hover:text-purple-600 cursor-pointer transition-colors">Baner</span>
-              <span>/</span>
-              <span className="hover:text-purple-600 cursor-pointer transition-colors">House for Sale in Baner</span>
-              <span>/</span>
-              <span className="text-gray-800">4.5 BHK Independent House</span>
+              <span className="text-gray-800">{property.propertyName}</span>
              
             </div>
-            <div>Last updated: Jun 26, 2026</div>
+            <div>Last updated: {new Date(property.updatedAt).toLocaleDateString()}</div>
           </div>
 
           {/* Main Header Content */}
@@ -157,7 +230,7 @@ export default function PropertyDetailsPage() {
             <div className="flex-1 pr-4">
               <div className="flex items-center flex-wrap gap-4 mb-2">
                 <h1 className="text-2xl md:text-[28px] font-semibold text-gray-900 leading-tight">
-                  4.5 BHK Independent House
+                  {property.propertyName}
                 </h1>
                 <div className="flex items-center gap-1.5 text-[#6c2bd9]">
                   <button className="hover:bg-purple-50 p-1.5 rounded-full transition-colors">
@@ -167,21 +240,20 @@ export default function PropertyDetailsPage() {
                 </div>
               </div>
               <p className="text-[13px] text-gray-900 mb-2 font-medium">
-                By <span className="text-[#6c2bd9] uppercase tracking-wide cursor-pointer hover:underline">PARANJAPE SCHEMES CONSTRUCTION LTD.</span>
+                By <span className="text-[#6c2bd9] uppercase tracking-wide cursor-pointer hover:underline">{property.developerName || 'Developer Partner'}</span>
               </p>
               <p className="text-[14px] text-gray-500">
-                Paranjape Vasant Vihar, Vasant Vihar, Baner, Pune
+                {property.location || property.city}
               </p>
             </div>
             
             {/* Right Column */}
             <div className="mt-6 md:mt-0 flex flex-col items-start md:items-end w-full md:w-auto">
               <div className="flex items-end gap-3 mb-1">
-                <span className="text-[28px] md:text-[32px] font-bold text-gray-900 leading-none tracking-tight">₹10.0 Cr</span>
-                <span className="text-[14px] text-[#6c2bd9] font-medium mb-1">EMI starts at ₹4.96 Lacs</span>
+                <span className="text-[28px] md:text-[32px] font-bold text-gray-900 leading-none tracking-tight">{property.tentativeBudget || 'Price on request'}</span>
               </div>
               <div className="text-[13px] text-gray-500 mb-4 w-full md:text-right">
-                ₹22.22 K/sq.ft
+                {property.propertyType}
               </div>
               <button className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[#6c2bd9] hover:bg-[#5b21b6] text-white text-[15px] font-medium rounded-md shadow-sm transition-colors w-full md:w-auto">
                 <Phone className="w-4 h-4" />
@@ -198,7 +270,7 @@ export default function PropertyDetailsPage() {
             {/* Main Image */}
             <div className="lg:w-[58%] h-[300px] lg:h-full relative rounded-lg overflow-hidden shadow-sm">
               <Image 
-                src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80" 
+                src={mainImage} 
                 alt="Property Main View" 
                 fill 
                 className="object-cover hover:scale-105 transition-transform duration-500"
@@ -207,18 +279,16 @@ export default function PropertyDetailsPage() {
             
             {/* Right Grid */}
             <div className="lg:w-[42%] grid grid-cols-2 grid-rows-2 gap-3 h-[400px] lg:h-full">
-              <div className="relative rounded-lg overflow-hidden shadow-sm">
-                <Image src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=60" alt="Gallery 1" fill className="object-cover hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="relative rounded-lg overflow-hidden shadow-sm">
-                <Image src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&auto=format&fit=crop&q=60" alt="Gallery 2" fill className="object-cover hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="relative rounded-lg overflow-hidden shadow-sm">
-                <Image src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=60" alt="Gallery 3" fill className="object-cover hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="relative rounded-lg overflow-hidden shadow-sm">
-                <Image src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&auto=format&fit=crop&q=60" alt="Gallery 4" fill className="object-cover hover:scale-105 transition-transform duration-500" />
-              </div>
+              {galleryImages.map((img: string, idx: number) => (
+                <div key={idx} className="relative rounded-lg overflow-hidden shadow-sm">
+                  <Image src={img} alt={`Gallery ${idx + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                </div>
+              ))}
+              {galleryImages.length < 4 && Array.from({ length: 4 - galleryImages.length }).map((_, idx) => (
+                <div key={`empty-${idx}`} className="relative rounded-lg overflow-hidden shadow-sm bg-gray-100 flex items-center justify-center">
+                  <span className="text-gray-400 text-xs">No Image</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -246,7 +316,7 @@ export default function PropertyDetailsPage() {
           {/* Overview Card */}
           <div id="overview" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">KP Life Republic Township Overview</h2>
+              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} Overview</h2>
               <button className="flex items-center gap-2 px-5 py-2 bg-[#15803d] text-white text-[14px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors">
                 Brochure <Download className="w-4 h-4" />
               </button>
@@ -319,7 +389,7 @@ export default function PropertyDetailsPage() {
           {/* Location Card */}
           <div id="location" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100">
-              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">KP Life Republic Township Location</h2>
+              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} Location</h2>
             </div>
             <div className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -358,7 +428,7 @@ export default function PropertyDetailsPage() {
           {/* Pros & Cons Card */}
           <div id="pros-and-cons" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100">
-              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">KP Life Republic Township Pro & Cons</h2>
+              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} Pros & Cons</h2>
             </div>
             <div className="p-6 space-y-4">
               <div 
@@ -400,7 +470,7 @@ export default function PropertyDetailsPage() {
           {/* Pricing & Unit Plan Card */}
           <div id="pricing-and-unit-plans" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">KP Life Republic Township Pricing & Unit Plan</h2>
+              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} Pricing & Unit Plan</h2>
               <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#15803d] text-white text-[13px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors">
                 Price Sheet <Download className="w-3.5 h-3.5" />
               </button>
@@ -452,7 +522,7 @@ export default function PropertyDetailsPage() {
           {/* Amenities Card */}
           <div id="amenities" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100">
-              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">KP Life Republic Township Amenities</h2>
+              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} Amenities</h2>
             </div>
             <div className="p-6">
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -482,7 +552,7 @@ export default function PropertyDetailsPage() {
           {/* QR Codes Card */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100">
-              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">KP Life Republic Township QR Codes</h2>
+              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} QR Codes</h2>
             </div>
             <div className="p-6 space-y-4">
               <div className="w-24 h-24 bg-white border border-gray-200 p-1 rounded-md">
@@ -614,23 +684,23 @@ export default function PropertyDetailsPage() {
         <h2 className="text-[28px] font-serif text-gray-900 font-semibold mb-8 text-center md:text-left">Similar Properties in Pune</h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {SIMILAR_PROPERTIES.slice(0, 4).map((property) => (
-            <a href={`/properties/${property.id}`} key={property.id} className="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow flex flex-col">
+          {similarProperties.slice(0, 4).map((property: any) => (
+            <a href={`/properties/${property.slug}`} key={property.id} className="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow flex flex-col">
               <div className="relative h-48 w-full overflow-hidden">
-                <Image src={property.image} alt={property.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                <Image src={property.multipleImages && property.multipleImages.length > 0 ? property.multipleImages[0] : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=60"} alt={property.propertyName} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-1.5 rounded-full shadow-sm text-gray-400 hover:text-red-500 transition-colors">
                   <Heart className="w-4 h-4" />
                 </div>
               </div>
               <div className="p-5 flex-1 flex flex-col">
-                <h3 className="font-bold text-gray-900 text-lg leading-tight mb-2 line-clamp-1">{property.title}</h3>
-                <div className="text-[13px] font-medium text-[#b38e41] mb-1">{property.type}</div>
-                <div className="text-[13px] text-gray-500 mb-4">{property.location}</div>
+                <h3 className="font-bold text-gray-900 text-lg leading-tight mb-2 line-clamp-1">{property.propertyName}</h3>
+                <div className="text-[13px] font-medium text-[#b38e41] mb-1">{property.propertyType || 'Residences'}</div>
+                <div className="text-[13px] text-gray-500 mb-4">{property.location || property.city}</div>
                 
                 <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                   <div>
                     <div className="text-[11px] text-gray-500 font-medium">Starting at</div>
-                    <div className="font-bold text-gray-900">{property.price}</div>
+                    <div className="font-bold text-gray-900">{property.tentativeBudget || 'Price on request'}</div>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-[#fbf9f4] flex items-center justify-center text-[#b38e41] group-hover:bg-[#b38e41] group-hover:text-white transition-colors">
                     <ArrowUp className="w-4 h-4 rotate-45" />

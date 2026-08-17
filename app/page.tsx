@@ -10,6 +10,8 @@ import ExploreByLocation from "../app/components/ExploreByLocation";
 import DeveloperPartners from "../app/components/DeveloperPartners";
 import CallToAction from "../app/components/CallToAction";
 import Footer from "./components/Footer";
+import KuberXBanner from "../app/components/KuberXBanner";
+import PropertyLinksSection from "./components/PropertyLinksSection";
 
 export default function Home() {
   return (
@@ -18,15 +20,21 @@ export default function Home() {
       <main>
         <HeroSection />
         <FeaturedProjects />
+        <DeveloperPartners />
+        <KuberXBanner />
+  
+
+         <ExploreByLocation />
         <OngoingProjects />
-      
-         <DeveloperPartners />
-        <ExploreByLocation />
+    
+        
+       
         <NewlyLaunched />
          <Testimonials />
         {/* <ProjectGallery /> */}
         <FAQ />
         <CallToAction />
+        <PropertyLinksSection/>
       </main>
       
     </div>

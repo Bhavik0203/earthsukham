@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, notFound } from 'next/navigation';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { notFound } from 'next/navigation';
+import { fetchApi } from '../../lib/api';
 
 interface BlogApiItem {
   _id: string;
@@ -69,16 +69,7 @@ export default function BlogDetailPage() {
 
     const fetchBlogs = async () => {
       try {
-        const response = await fetch(
-          'https://sunbrilo-dashboard.onrender.com/api/blogs/',
-          { cache: 'no-store' }
-        );
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch blogs');
-        }
-
-        const data: BlogApiItem[] = await response.json();
+        const data: BlogApiItem[] = await fetchApi('/blogs', { cache: 'no-store' });
 
         if (!isMounted || !Array.isArray(data)) return;
 

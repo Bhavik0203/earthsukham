@@ -1,8 +1,24 @@
+"use client";
 import Image from "next/image";
-
+import { useState } from "react";
 export default function DeveloperPartners() {
+  const [partners, setPartners] = useState<any[]>([]);
+
+  const getPartnerData = (index: number) => {
+    if (partners[index]) {
+      return {
+        name: partners[index].name || partners[index].company || `Developer Partner ${index + 1}`,
+        image: partners[index].photoUrl || `/images/partner (${index + 1}).png`
+      };
+    }
+    return {
+      name: index === 0 ? "Kolte Patil" : index === 3 ? "Trade Centre" : index === 6 ? "Godrej" : `Developer Partner ${index + 1}`,
+      image: `/images/partner (${index + 1}).png`
+    };
+  };
+
   return (
-    <section className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-20 bg-[#FBF9F4]">
+    <section className="max-w-7xl mx-auto px-6 md:px-12 bg-[#FBF9F4]">
       {/* Section Headings */}
       <div className="space-y-2 mb-12">
         <span className="text-xs uppercase tracking-widest font-semibold text-[#B58A3D]">
@@ -24,11 +40,11 @@ export default function DeveloperPartners() {
               <div className="animate-[spin_40s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
                 <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <Image src="/images/partner (1).png" alt="Kolte Patil" fill className="object-contain p-1" />
+                    <Image src={getPartnerData(0).image} alt={getPartnerData(0).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
-                  Kolte Patil
+                  {getPartnerData(0).name}
                 </div>
               </div>
             </div>
@@ -37,11 +53,11 @@ export default function DeveloperPartners() {
               <div className="animate-[spin_40s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
                 <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <Image src="/images/partner (2).png" alt="Developer Partner 2" fill className="object-contain p-1" />
+                    <Image src={getPartnerData(1).image} alt={getPartnerData(1).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
-                  Developer Partner 2
+                  {getPartnerData(1).name}
                 </div>
               </div>
             </div>
@@ -50,11 +66,11 @@ export default function DeveloperPartners() {
               <div className="animate-[spin_40s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
                 <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <Image src="/images/partner (3).png" alt="Developer Partner 3" fill className="object-contain p-1" />
+                    <Image src={getPartnerData(2).image} alt={getPartnerData(2).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
-                  Developer Partner 3
+                  {getPartnerData(2).name}
                 </div>
               </div>
             </div>
@@ -69,11 +85,11 @@ export default function DeveloperPartners() {
               <div className="animate-[spin_30s_linear_infinite] group-hover/ring:[animation-play-state:paused]">
                 <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <Image src="/images/partner (4).png" alt="Trade Centre" fill className="object-contain p-1" />
+                    <Image src={getPartnerData(3).image} alt={getPartnerData(3).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
-                  Trade Centre
+                  {getPartnerData(3).name}
                 </div>
               </div>
             </div>
@@ -82,11 +98,11 @@ export default function DeveloperPartners() {
               <div className="animate-[spin_30s_linear_infinite] group-hover/ring:[animation-play-state:paused]">
                 <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <Image src="/images/partner (5).png" alt="Developer Partner 5" fill className="object-contain p-1" />
+                    <Image src={getPartnerData(4).image} alt={getPartnerData(4).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
-                  Developer Partner 5
+                  {getPartnerData(4).name}
                 </div>
               </div>
             </div>
@@ -95,11 +111,11 @@ export default function DeveloperPartners() {
               <div className="animate-[spin_30s_linear_infinite] group-hover/ring:[animation-play-state:paused]">
                 <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <Image src="/images/partner (6).png" alt="Developer Partner 6" fill className="object-contain p-1" />
+                    <Image src={getPartnerData(5).image} alt={getPartnerData(5).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
-                  Developer Partner 6
+                  {getPartnerData(5).name}
                 </div>
               </div>
             </div>
@@ -114,11 +130,11 @@ export default function DeveloperPartners() {
               <div className="animate-[spin_20s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
                 <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <Image src="/images/partner (7).png" alt="Godrej" fill className="object-contain p-1" />
+                    <Image src={getPartnerData(6).image} alt={getPartnerData(6).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
-                  Godrej
+                  {getPartnerData(6).name}
                 </div>
               </div>
             </div>
@@ -127,11 +143,11 @@ export default function DeveloperPartners() {
               <div className="animate-[spin_20s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
                 <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <Image src="/images/partner (8).png" alt="Developer Partner 8" fill className="object-contain p-1" />
+                    <Image src={getPartnerData(7).image} alt={getPartnerData(7).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
-                  Developer Partner 8
+                  {getPartnerData(7).name}
                 </div>
               </div>
             </div>
@@ -140,11 +156,11 @@ export default function DeveloperPartners() {
               <div className="animate-[spin_20s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
                 <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <Image src="/images/partner (9).png" alt="Developer Partner 9" fill className="object-contain p-1" />
+                    <Image src={getPartnerData(8).image} alt={getPartnerData(8).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 group-hover/logo:mb-8 opacity-0 group-hover/logo:opacity-100 transition-all duration-300 whitespace-nowrap bg-white border border-[#D4AF37]/50 text-[#2C2C2C] text-xs font-bold px-3 py-1 rounded shadow-lg pointer-events-none">
-                  Developer Partner 9
+                  {getPartnerData(8).name}
                 </div>
               </div>
             </div>

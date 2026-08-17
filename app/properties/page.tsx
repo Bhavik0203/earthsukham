@@ -4,85 +4,95 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Search, ChevronDown, IndianRupee, Home, BarChart2 } from 'lucide-react';
 
-// --- Mock Data ---
-const MAIN_PROPERTIES = [
-  {
-    id: 1,
-    title: "Godrej Township, VTP Blue Waters Township",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=60",
-    type: "3 & 4 BHK Apartments",
-    location: "Pimple Nilakh, Pune",
-    price: "₹1.75Cr* Onwards"
-  },
-  {
-    id: 2,
-    title: "Godrej Township, VTP Blue Waters Township",
-    image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&auto=format&fit=crop&q=60",
-    type: "3 & 4 BHK Apartments",
-    location: "Pimple Nilakh, Pune",
-    price: "₹1.75Cr* Onwards"
-  },
-  {
-    id: 3,
-    title: "Godrej Township, VTP Blue Waters Township",
-    image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&auto=format&fit=crop&q=60",
-    type: "3 & 4 BHK Apartments",
-    location: "Pimple Nilakh, Pune",
-    price: "₹1.75Cr* Onwards"
-  },
-  {
-    id: 4,
-    title: "Shapoorji Pallonji Joyville, Sensorium",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&auto=format&fit=crop&q=60",
-    type: "2 & 3 BHK Smart Homes",
-    location: "Hinjawadi, Pune",
-    price: "₹85L* Onwards"
-  },
-  {
-    id: 5,
-    title: "Kolte Patil Life Republic",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=60",
-    type: "1, 2 & 3 BHK Apartments",
-    location: "Marunji, Hinjawadi, Pune",
-    price: "₹45L - 1.2Cr* Onwards"
-  },
-  {
-    id: 6,
-    title: "Kharadi Premium Towers, Kohinoor Presidential",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=60",
-    type: "3 & 4.5 BHK Ultra-Luxury",
-    location: "Kharadi, Pune",
-    price: "₹2.45Cr* Onwards"
-  },
-  {
-    id: 7,
-    title: "Lush Meadows Villas, Sobha Elite",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&auto=format&fit=crop&q=60",
-    type: "4 BHK Duplex Villas",
-    location: "Undri, Pune",
-    price: "₹3.80Cr* Onwards"
-  }
-];
 
-const SIDEBAR_PROPERTIES = [
-  { id: 1, price: "₹ 99.0L - 1.56Cr", title: "Godrej Township,", location: "Wakad, Pune" },
-  { id: 2, price: "₹ 99.0L - 1.56Cr", title: "Godrej Township,", location: "Wakad, Pune" },
-  { id: 3, price: "₹ 1.25L - 1.56Cr", title: "Godrej Township,", location: "Wakad, Pune" },
-  { id: 4, price: "₹ 1.10Cr - 2.10Cr", title: "Lupine Vista Apartments", location: "Baner, Pune" },
-  { id: 5, price: "₹ 75.0L - 1.30Cr", title: "Pride World City, Kingsbury", location: "Charholi Budruk, Pune" },
-  { id: 6, price: "₹ 1.65Cr - 3.20Cr", title: "Gera World of Joy", location: "Kharadi, Pune" }
+interface PropertyItem {
+  id: string;
+  title: string;
+  image: string;
+  type: string;
+  location: string;
+  price: string;
+  slug: string;
+  description: string;
+}
+
+const DUMMY_PROPERTIES: PropertyItem[] = [
+  {
+    id: "1",
+    title: "Earth Sukham - Phase 1",
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=60",
+    type: "2 & 3 BHK Apartments",
+    location: "Kharadi, Pune",
+    price: "₹75 Lakhs Onwards",
+    slug: "earth-sukham-phase-1",
+    description: "Experience luxurious living with world-class amenities in the heart of Kharadi."
+  },
+  {
+    id: "2",
+    title: "Sukham Elite",
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=60",
+    type: "3 & 4 BHK Villas",
+    location: "Wakad, Pune",
+    price: "₹1.5 Cr Onwards",
+    slug: "sukham-elite",
+    description: "Premium villas designed for those who appreciate the finer things in life."
+  },
+  {
+    id: "3",
+    title: "Earth Meadows",
+    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=600&auto=format&fit=crop&q=60",
+    type: "1 & 2 BHK Apartments",
+    location: "Hinjewadi, Pune",
+    price: "₹45 Lakhs Onwards",
+    slug: "earth-meadows",
+    description: "Smart homes with beautiful landscapes, perfect for the modern professional."
+  },
+  {
+    id: "4",
+    title: "Sukham Signature",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&auto=format&fit=crop&q=60",
+    type: "4 BHK Penthouse",
+    location: "Baner, Pune",
+    price: "₹3.2 Cr Onwards",
+    slug: "sukham-signature",
+    description: "Exclusive penthouses offering panoramic city views and private pools."
+  },
+  {
+    id: "5",
+    title: "Earth Residency",
+    image: "https://images.unsplash.com/photo-1600566753086-00f18efc2297?w=600&auto=format&fit=crop&q=60",
+    type: "2 BHK Apartments",
+    location: "Viman Nagar, Pune",
+    price: "₹85 Lakhs Onwards",
+    slug: "earth-residency",
+    description: "Comfortable and spacious living in one of Pune's most vibrant neighborhoods."
+  },
+  {
+    id: "6",
+    title: "Sukham Heights",
+    image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&auto=format&fit=crop&q=60",
+    type: "3 BHK Apartments",
+    location: "Kothrud, Pune",
+    price: "₹1.2 Cr Onwards",
+    slug: "sukham-heights",
+    description: "High-rise living that combines luxury, convenience, and tranquility."
+  }
 ];
 
 export default function PropertyPage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [properties, setProperties] = useState<PropertyItem[]>(DUMMY_PROPERTIES);
 
-  const filteredProperties = MAIN_PROPERTIES.filter(property => {
+  const filteredProperties = properties.filter(property => {
     const query = searchQuery.toLowerCase();
     return (
       property.title.toLowerCase().includes(query) || 
-      property.location.toLowerCase().includes(query)
+      property.location.toLowerCase().includes(query) ||
+      property.type.toLowerCase().includes(query)
     );
   });
+
+  const sidebarProperties = properties.slice(0, 6);
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-800 pb-12">
@@ -183,7 +193,7 @@ export default function PropertyPage() {
             {filteredProperties.length > 0 ? (
               filteredProperties.map((property) => (
                 <Link 
-                  href={`/properties/${property.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                  href={`/properties/${property.slug}`}
                   key={property.id} 
                   className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 flex flex-col md:flex-row gap-6 transition-all hover:shadow-md hover:border-[#b38e41]/30 block group"
                 >
@@ -203,8 +213,8 @@ export default function PropertyPage() {
                     <h3 className="text-xl md:text-[22px] font-serif font-medium text-zinc-900 leading-snug mb-3">
                       {property.title}
                     </h3>
-                    <p className="text-[13px] text-gray-500 leading-relaxed mb-5">
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem is simply dummytheprintinglorem Ipsum is simply dummy text of the printing and typesetting industry Lorem ipsum simply dummy text.
+                    <p className="text-[13px] text-gray-500 leading-relaxed mb-5 line-clamp-2">
+                      {property.description}
                     </p>
                   </div>
 
@@ -316,35 +326,38 @@ export default function PropertyPage() {
             </div>
 
             {/* Compact Mini-Listings */}
-            {SIDEBAR_PROPERTIES.map((item) => (
-              <div 
-                key={item.id} 
-                className="bg-white rounded-lg shadow-sm border border-gray-100 p-3 flex items-center justify-between gap-3 hover:border-amber-200 transition-colors"
+            {sidebarProperties.map((property) => (
+              <Link 
+                href={`/properties/${property.slug}`}
+                key={property.id} 
+                className="flex flex-col gap-1 p-3 rounded-xl hover:bg-[#b38e41]/5 border border-transparent hover:border-[#b38e41]/20 transition-all cursor-pointer block"
               >
-                <div className="flex items-center gap-3">
-                  <div className="relative w-14 h-14 rounded overflow-hidden shrink-0">
-                    <Image 
-                      src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=150&auto=format&fit=crop&q=60" 
-                      alt="Thumbnail" 
-                      fill
-                      className="object-cover"
-                    />
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-3">
+                    <div className="relative w-14 h-14 rounded overflow-hidden shrink-0">
+                      <Image 
+                        src={property.image} 
+                        alt={property.title} 
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-800">{property.price}</p>
+                      <p className="text-[11px] text-gray-500 line-clamp-1 max-w-[120px]">{property.title}</p>
+                      <p className="text-[10px] text-gray-400">{property.location}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xs font-bold text-zinc-800">{item.price}</p>
-                    <p className="text-[11px] text-gray-500">{item.title}</p>
-                    <p className="text-[10px] text-gray-400">{item.location}</p>
-                  </div>
+                  
+                  {/* Arrow Action Icon */}
+                  <button 
+                    className="w-7 h-7 rounded-full border border-amber-200 flex items-center justify-center text-[#b38e41] hover:bg-amber-50 text-sm transition-colors"
+                    aria-label="View Info"
+                  >
+                    ↗
+                  </button>
                 </div>
-                
-                {/* Arrow Action Icon */}
-                <button 
-                  className="w-7 h-7 rounded-full border border-amber-200 flex items-center justify-center text-[#b38e41] hover:bg-amber-50 text-sm transition-colors"
-                  aria-label="View Info"
-                >
-                  ↗
-                </button>
-              </div>
+              </Link>
             ))}
 
           </div>

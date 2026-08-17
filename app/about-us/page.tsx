@@ -156,7 +156,7 @@ export default function AboutUsPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12 text-center ">
             <CounterItem target={10} label="Years of Experience" />
             <CounterItem target={500} suffix="+" label="Happy Families" />
-            <CounterItem target={15} suffix="+" label="Completed Projects" />
+            <CounterItem target={15} suffix="+" label="Completed Properties" />
             <CounterItem target={100} suffix="%" label="Commitment to Quality" />
           </div>
 

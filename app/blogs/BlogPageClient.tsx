@@ -1,9 +1,8 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { dummyJobs } from './dummyJobs';
+import { fetchApi } from '../lib/api';
 
 interface BlogApiItem {
   _id: string;
@@ -71,10 +70,44 @@ const formatDate = (value?: string) => {
 };
 
 export default function BlogsPage() {
-  const [blogs, setBlogs] = useState<BlogPost[]>(dummyJobs);
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('All Categories');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    const loadBlogs = async () => {
+      try {
+        const data = await fetchApi('/blogs');
+        if (!isMounted || !Array.isArray(data)) return;
+
+        const formatted = data.map((post: BlogApiItem) => {
+          const apiTags = normalizeTags(post.tags || post.categories || []);
+          const tag = apiTags[0] || 'General';
+          const excerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]+>/g, '').slice(0, 180) : '');
+
+          return {
+            id: post._id || post.slug,
+            title: post.title,
+            slug: post.slug,
+            image: post.uploadImage || post.coverImage || '/images/blogimage/blog.png',
+            excerpt,
+            tag,
+            date: formatDate(post.createdAt),
+            readTime: post.readTime ? `${post.readTime} min read` : '5 min read',
+          };
+        });
+        setBlogs(formatted);
+      } catch (error) {
+        console.error('Failed to load blogs:', error);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+    loadBlogs();
+    return () => { isMounted = false; };
+  }, []);
 
   const topics = ['All Categories', ...Array.from(new Set(blogs.map((post) => post.tag)))];
 
