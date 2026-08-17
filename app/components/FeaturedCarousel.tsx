@@ -134,10 +134,10 @@ export default function FeaturedCarousel({ cards }: { cards: any[] }) {
                 </div>
                 
                 {/* Bottom Right Badge */}
-                <div className="absolute bottom-3 right-3 bg-[#0a192f] text-white text-[11px] font-medium px-3 py-1.5 rounded flex items-center gap-1.5 shadow-md">
+                {/* <div className="absolute bottom-3 right-3 bg-[#0a192f] text-white text-[11px] font-medium px-3 py-1.5 rounded flex items-center gap-1.5 shadow-md">
                   {card.status === "Under Construction" ? <Construction size={12} /> : <Rocket size={12} />}
                   <span>{card.status}</span>
-                </div>
+                </div> */}
               </div>
               
               {/* Content */}
@@ -151,9 +151,9 @@ export default function FeaturedCarousel({ cards }: { cards: any[] }) {
                   <span>{card.config}</span>
                 </div>
                 
-                <div className="pt-3 border-t border-gray-100">
+                {/* <div className="pt-3 border-t border-gray-100">
                   <p className="text-gray-400 text-[12px]">{card.builder}</p>
-                </div>
+                </div> */}
               </div>
             </Link>
           ))
