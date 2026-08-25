@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { Heart, Share2, Rocket, ChevronLeft, ChevronRight, Construction, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { usePropertyActions } from "../hooks/usePropertyActions";
 
 export default function FeaturedCarousel({ cards }: { cards: any[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [filter, setFilter] = useState("All");
+  const { isSaved, isCompared, toggleSave, toggleCompare } = usePropertyActions();
 
   const filters = ["All", "Apartment", "Villa"];
   const filteredCards = filter === "All" ? cards : cards.filter((c: any) => c.config && c.config.includes(filter));
@@ -123,8 +125,25 @@ export default function FeaturedCarousel({ cards }: { cards: any[] }) {
                 />
                 
                 {/* Top Right Icons */}
-                <div className="absolute top-3 right-3 flex gap-2">
-                  
+                <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
+                  <button 
+                    onClick={(e) => { e.preventDefault(); toggleSave(card.id.toString()); }}
+                    className={`w-8 h-8 rounded-full backdrop-blur-md flex items-center justify-center transition cursor-pointer ${isSaved(card.id.toString()) ? 'bg-red-500 text-white' : 'bg-black/40 text-white hover:bg-black/60'}`}
+                  >
+                    <Heart size={14} fill={isSaved(card.id.toString()) ? "currentColor" : "none"} />
+                  </button>
+                  <label 
+                    className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition cursor-pointer"
+                    onClick={(e) => e.stopPropagation()}
+                    title="Compare Property"
+                  >
+                    <input 
+                      type="checkbox" 
+                      checked={isCompared(card.id.toString())}
+                      onChange={() => toggleCompare(card.id.toString())}
+                      className="w-4 h-4 cursor-pointer accent-[#B58A3D]"
+                    />
+                  </label>
                   <div 
                     onClick={(e) => handleShare(e, card)}
                     className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition cursor-pointer"

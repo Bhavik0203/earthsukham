@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useMemo } from "react";
+import { Suspense, useMemo, useState, useEffect } from "react";
 import FeaturedCarousel from "./FeaturedCarousel";
 
 const CARDS = [
@@ -14,13 +14,36 @@ const CARDS = [
 
 function FeaturedProjectsContent() {
   const searchParams = useSearchParams();
+  const [cards, setCards] = useState<any[]>(CARDS);
   
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'}/properties`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.properties && data.properties.length > 0) {
+          const mapped = data.properties.map((p: any) => ({
+            id: p.id,
+            title: p.propertyName,
+            location: `${p.location ? p.location + ', ' : ''}${p.city || ''}`.trim(),
+            price: p.tentativeBudget || 'Price on Request',
+            config: `${p.configuration || p.propertyType || 'Apartments'} | ${p.carpetArea ? p.carpetArea + ' sq ft' : 'Area on request'}`,
+            builder: p.builder ? `By ${p.builder}` : '',
+            status: p.possession ? `Possession: ${p.possession}` : 'Launch',
+            img: p.multipleImages?.[0] ? `http://localhost:8000${p.multipleImages[0]}` : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=600",
+            slug: p.slug
+          }));
+          setCards(mapped);
+        }
+      })
+      .catch(console.error);
+  }, []);
+
   const filteredCards = useMemo(() => {
     const query = searchParams.get('query')?.toLowerCase() || "";
     const type = searchParams.get('type') || "";
     const status = searchParams.get('status') || "";
 
-    let filtered = [...CARDS];
+    let filtered = [...cards];
     
     if (query) {
       filtered = filtered.filter(c => c.title.toLowerCase().includes(query) || c.location.toLowerCase().includes(query) || c.builder.toLowerCase().includes(query));
@@ -36,7 +59,7 @@ function FeaturedProjectsContent() {
       }
     }
     return filtered;
-  }, [searchParams]);
+  }, [searchParams, cards]);
 
   return <FeaturedCarousel cards={filteredCards} />;
 }

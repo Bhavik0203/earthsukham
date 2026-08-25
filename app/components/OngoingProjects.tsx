@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, MapPin, Heart, Share2, Construction, Rocket 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { usePropertyActions } from "../hooks/usePropertyActions";
 
 interface Project {
   id: string;
@@ -31,13 +32,38 @@ function OngoingProjectsContent() {
   const [activeTab, setActiveTab] = useState("View All Properties");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [projects, setProjects] = useState<Project[]>(DUMMY_PROJECTS);
+  const [allData, setAllData] = useState<Project[]>(DUMMY_PROJECTS);
+  const { isSaved, isCompared, toggleSave, toggleCompare } = usePropertyActions();
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'}/properties`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.properties && data.properties.length > 0) {
+          const mapped = data.properties.map((p: any) => ({
+            id: p.id,
+            title: p.propertyName,
+            location: `${p.location ? p.location + ', ' : ''}${p.city || ''}`.trim(),
+            type: p.propertyType || "Apartment",
+            category: p.propertyCategory || "Residences",
+            price: p.tentativeBudget || 'Price on Request',
+            image: p.multipleImages?.[0] ? `http://localhost:8000${p.multipleImages[0]}` : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800",
+            status: p.possession ? `Possession: ${p.possession}` : 'New Launches',
+            slug: p.slug
+          }));
+          setAllData(mapped);
+          setProjects(mapped);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     const query = searchParams.get('query')?.toLowerCase() || "";
     const type = searchParams.get('type') || "";
     const status = searchParams.get('status') || "";
 
-    let filtered = [...DUMMY_PROJECTS];
+    let filtered = [...allData];
     
     if (query) {
       filtered = filtered.filter(p => p.title.toLowerCase().includes(query) || p.location.toLowerCase().includes(query));
@@ -46,10 +72,6 @@ function OngoingProjectsContent() {
       filtered = filtered.filter(p => p.type.includes(type));
     }
     if (status && status !== "Property Status") {
-      // The search filter uses exact status, which might match our tabs or data.
-      // DUMMY_PROJECTS status: "New Launches", "Ready Possession".
-      // Status dropdown uses: "Newly Launched", "Under Construction", "Ready Possession"
-      // We can map them or just use string includes.
       if (status === "Newly Launched") {
         filtered = filtered.filter(p => p.status.includes("Launch"));
       } else {
@@ -59,7 +81,7 @@ function OngoingProjectsContent() {
     
     setProjects(filtered);
     setCurrentIndex(0);
-  }, [searchParams]);
+  }, [searchParams, allData]);
 
   const filteredProjects = projects.filter(p => 
     activeTab === "View All Properties" ? true : p.status === activeTab
@@ -172,8 +194,25 @@ function OngoingProjectsContent() {
                     />
                     
                     {/* Top Right Icons */}
-                    <div className="absolute top-3 right-3 flex gap-2">
-                   
+                    <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
+                      <button 
+                        onClick={(e) => { e.preventDefault(); toggleSave(project.id.toString()); }}
+                        className={`w-8 h-8 rounded-full backdrop-blur-md flex items-center justify-center transition cursor-pointer ${isSaved(project.id.toString()) ? 'bg-red-500 text-white' : 'bg-black/40 text-white hover:bg-black/60'}`}
+                      >
+                        <Heart size={14} fill={isSaved(project.id.toString()) ? "currentColor" : "none"} />
+                      </button>
+                      <label 
+                        className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition cursor-pointer"
+                        onClick={(e) => e.stopPropagation()}
+                        title="Compare Property"
+                      >
+                        <input 
+                          type="checkbox" 
+                          checked={isCompared(project.id.toString())}
+                          onChange={() => toggleCompare(project.id.toString())}
+                          className="w-4 h-4 cursor-pointer accent-[#B58A3D]"
+                        />
+                      </label>
                       <div 
                         onClick={(e) => handleShare(e, project)}
                         className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition cursor-pointer"

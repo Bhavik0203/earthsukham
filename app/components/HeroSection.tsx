@@ -2,7 +2,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Search, IndianRupee, BedDouble, BarChart3, ChevronDown, Zap, ChevronRight } from "lucide-react";
+import { Search, IndianRupee, BedDouble, BarChart3, ChevronDown, Zap, ChevronRight, X } from "lucide-react";
+import SearchResults from "./SearchResults";
 
 const budgetOptions = ["Under 50 Lacs", "50 Lacs - 1 Cr", "1 Cr - 2 Cr", "Above 2 Cr"];
 const typeOptions = ["1 BHK", "2 BHK", "3 BHK", "4 BHK", "Villa", "Commercial"];
@@ -229,6 +230,31 @@ export default function HeroSection() {
             </button>
           </div>
         </div>
+
+        {/* Live Search Results Dropdown */}
+        {(searchQuery.trim().length > 0 || selectedBudget !== "Budget" || selectedType !== "Property Type" || selectedStatus !== "Property Status") && (
+          <div className="mt-4 w-full bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden border border-gray-100 relative">
+            <button 
+              onClick={() => {
+                setSearchQuery("");
+                setSelectedBudget("Budget");
+                setSelectedType("Property Type");
+                setSelectedStatus("Property Status");
+              }}
+              className="absolute top-4 right-4 z-50 p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-500 transition"
+              title="Clear Search"
+            >
+              <X size={20} />
+            </button>
+            <SearchResults 
+              query={searchQuery} 
+              hasSearched={true} 
+              activePropertyType={selectedType === "Property Type" ? "" : selectedType}
+              activeBudget={selectedBudget === "Budget" ? "" : selectedBudget}
+              activeStatus={selectedStatus === "Property Status" ? "" : selectedStatus}
+            />
+          </div>
+        )}
       </div>
     </section>
   );
