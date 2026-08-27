@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Share2, Heart, Phone, Download, Bed, Bath, Maximize, CalendarDays, Check, Car, ArrowUp, ArrowDown, Sofa, Dumbbell, Waves, Footprints, Gamepad2, GlassWater, ChevronUp, ChevronDown, QrCode } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
+import Calculators from '../../components/Calculators';
 
 const SIMILAR_PROPERTIES = [
   {
@@ -141,6 +142,7 @@ export default function PropertyDetailsPage() {
             if (section === 'pros-and-cons') current = 'Pros & Cons';
             if (section === 'amenities') current = 'Amenities';
             if (section === 'pricing-and-unit-plans') current = 'Pricing & Unit Plans';
+            if (section === 'calculators') current = 'Calculators';
           }
         }
       }
@@ -160,6 +162,7 @@ export default function PropertyDetailsPage() {
     if (tab === 'Pros & Cons') id = 'pros-and-cons';
     if (tab === 'Amenities') id = 'amenities';
     if (tab === 'Pricing & Unit Plans') id = 'pricing-and-unit-plans';
+    if (tab === 'Calculators') id = 'calculators';
     
     if (id) {
       const element = document.getElementById(id);
@@ -296,7 +299,7 @@ export default function PropertyDetailsPage() {
       </div>
       {/* Top Navigation Bar */}
       <div className="sticky top-0 z-50 max-w-7xl mx-auto mt-8 bg-[#b38e41] rounded-t-xl px-6 py-4 flex flex-wrap gap-x-8 gap-y-3 text-white font-medium text-[15px] shadow-md">
-        {['Overview', 'Location', 'Video', 'Pros & Cons', 'Amenities', 'Master & Floor Plans', 'Pricing & Unit Plans'].map((tab) => (
+        {['Overview', 'Location', 'Video', 'Pros & Cons', 'Amenities', 'Master & Floor Plans', 'Pricing & Unit Plans', 'Calculators'].map((tab) => (
           <span 
             key={tab}
             onClick={() => handleScrollTo(tab)}
@@ -623,6 +626,16 @@ export default function PropertyDetailsPage() {
                   )}
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Calculators Card */}
+          <div id="calculators" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
+            <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100">
+              <h2 className="text-[22px] font-serif text-gray-900 font-semibold">Financial Calculators</h2>
+            </div>
+            <div className="p-0">
+              <Calculators />
             </div>
           </div>
 
