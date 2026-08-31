@@ -201,7 +201,7 @@ const BenefitsSection = () => {
   }, []);
 
   return (
-    <>
+    <div className="min-h-screen bg-[#FBF9F4] text-[#2C2C2C] font-sans antialiased">
       {/* Hero Section */}
       <section id="top" className="relative min-h-screen">
         <div className="absolute inset-0 z-0">
@@ -252,7 +252,7 @@ const BenefitsSection = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="w-full py-10 bg-gray-50 ">
+      <section className="w-full py-10">
         <div className="container mx-auto px-4 max-w-6xl text-[#2C2C2C]">
           <div className="mb-12">
             <p className="uppercase text-sm font-medium tracking-wider mb-2">BENEFITS</p>
@@ -304,7 +304,7 @@ const BenefitsSection = () => {
       </section>
 
       {/* Open Roles Section */}
-      <section id="open-roles" className="bg-[#EEF1F5] py-10">
+      <section id="open-roles" className="py-10">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row">
             {/* Left side with text and job listings */}
@@ -363,7 +363,7 @@ const BenefitsSection = () => {
         </div>
 
       </section>
-      <section className="bg-gray-50 py-16">
+      <section className="py-16">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="bg-white rounded-[4px] shadow-sm overflow-hidden max-w-4xl mx-auto">
             <div className="p-8 md:p-12">
@@ -497,7 +497,7 @@ const BenefitsSection = () => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
