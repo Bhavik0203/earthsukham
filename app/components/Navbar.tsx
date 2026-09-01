@@ -77,7 +77,7 @@ export default function Navbar() {
           <Link href="/properties" className="hover:text-[#D4A373] transition">Properties</Link>
           <Link href="/services" className="hover:text-[#D4A373] transition">Services</Link>
           <Link href="/blogs" className="hover:text-[#D4A373] transition">Blogs</Link>
-          <Link href="/careers" className="hover:text-[#D4A373] transition">Careers</Link>
+          <Link href="/career" className="hover:text-[#D4A373] transition">Career</Link>
           <Link href="/contact-us" className="hover:text-[#D4A373] transition">Contact</Link>
         </nav>
 
@@ -147,6 +147,7 @@ export default function Navbar() {
           <Link href="/about-us" className="hover:text-[#C19B54] transition">About</Link>
           <Link href="/properties" className="hover:text-[#C19B54] transition">Properties</Link>
           <Link href="/services" className="hover:text-[#C19B54] transition">Services</Link>
+          <Link href="/career" className="hover:text-[#C19B54] transition">Career</Link>
           <Link href="/blogs" className="hover:text-[#C19B54] transition">Blogs</Link>
           <Link href="/contact-us" className="hover:text-[#C19B54] transition">Contact</Link>
         </nav>

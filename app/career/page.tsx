@@ -206,24 +206,24 @@ const BenefitsSection = () => {
       <section id="top" className="relative min-h-screen">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/bgimage1.png"
+            src="/images/aboutbanner.jpg"
             alt="Luxury Property"
             fill
             style={{ objectFit: "cover" }}
             priority
           />
-          {/* <div className="absolute inset-0 bg-black opacity-40"></div> */}
+          <div className="absolute inset-0 bg-black opacity-40"></div>
         </div>
 
         {/* Hero Content */}
         <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
-          <div className="text-center max-w-3xl mx-auto text-[#2C2C2C]">
+          <div className="text-center max-w-3xl mx-auto text-white">
             <p className=" uppercase  tracking-wider  mb-4"
 
               style={{ fontSize: '18px', fontFamily: 'Lato', letterSpacing: '0.5px' }}>CAREERS</p>
 
             <h1
-              className="text-[#2C2C2C] mb-6 font-[400] text-[56px] leading-[140%] tracking-[1px] font-[Ivy Mode] 
+              className="text-white mb-6 font-[400] text-[56px] leading-[140%] tracking-[1px] font-[Ivy Mode] 
                 max-sm:text-[42px]"
               style={{ fontSize: '56px', fontFamily: 'Ivy Mode', letterSpacing: '1px' }}
             >
