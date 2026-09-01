@@ -75,7 +75,7 @@ export default function Testimonials() {
         {/* Left Arrow Trigger */}
         <button
           onClick={handlePrev}
-          className="bg-[#CC9A3B] hover:bg-[#B38530] text-white p-2.5 rounded-full transition shadow-md shrink-0"
+          className="bg-[#CC9A3B] cursor-pointer hover:bg-[#B38530] text-white p-2.5 rounded-full transition shadow-md shrink-0 cursor-pointer"
           aria-label="Previous testimonial"
         >
           <ChevronLeft size={20} />
@@ -127,7 +127,7 @@ export default function Testimonials() {
         {/* Right Arrow Trigger */}
         <button
           onClick={handleNext}
-          className="bg-[#CC9A3B] hover:bg-[#B38530] text-white p-2.5 rounded-full transition shadow-md shrink-0"
+          className="bg-[#CC9A3B] cursor-pointer hover:bg-[#B38530] text-white p-2.5 rounded-full transition shadow-md shrink-0 cursor-pointer"
           aria-label="Next testimonial"
         >
           <ChevronRight size={20} />

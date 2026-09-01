@@ -85,7 +85,7 @@ export default function Register() {
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+              className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700 cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -103,7 +103,7 @@ export default function Register() {
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+              className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700 cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
@@ -113,7 +113,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#8c6b23] hover:bg-[#73581c] text-white font-medium py-3.5 rounded-sm transition-colors text-[15px] shadow-sm disabled:opacity-50 mt-4"
+            className="w-full bg-[#8c6b23] hover:bg-[#73581c] text-white font-medium py-3.5 rounded-sm transition-colors text-[15px] shadow-sm disabled:opacity-50 mt-4 cursor-pointer"
           >
             {isLoading ? 'Registering...' : 'Register'}
           </button>
@@ -121,7 +121,7 @@ export default function Register() {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{' '}
-          <Link href="/login" className="text-[#8c6b23] font-medium hover:underline">
+          <Link href="/login" className="text-[#8c6b23] font-medium hover:underline cursor-pointer">
             Log in
           </Link>
         </p>

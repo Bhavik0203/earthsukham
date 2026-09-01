@@ -149,9 +149,9 @@ export default function BlogDetailPage() {
               <div className="mx-auto w-full max-w-7xl">
                 <div className="max-w-3xl">
                   <div className="flex items-center gap-2 text-sm font-semibold tracking-[0.2em] text-[#ffee50]">
-                    <Link href="/" className="hover:underline">Home</Link>
+                    <Link href="/" className="hover:underline cursor-pointer">Home</Link>
                     <span>/</span>
-                    <Link href="/blogs" className="hover:underline">Blog</Link>
+                    <Link href="/blogs" className="hover:underline cursor-pointer">Blog</Link>
                     <span>/</span>
                     <span className="text-white/70 truncate max-w-[200px]">{post.tag}</span>
                   </div>
@@ -199,7 +199,7 @@ export default function BlogDetailPage() {
                     <div className="text-xs font-semibold uppercase tracking-widest text-[#6b6b6b] font-raleway">Top Posts</div>
                     <div className="mt-4 space-y-4">
                       {topPosts.map((p) => (
-                        <Link key={p.id} href={`/blogs/${p.slug}`} className="block group">
+                        <Link key={p.id} href={`/blogs/${p.slug}`} className="block group cursor-pointer">
                           <div className={`text-sm font-semibold leading-snug transition-colors font-raleway ${p.slug === post.slug ? 'text-[#3B3808]' : 'text-[#1b1b1b] group-hover:text-[#3B3808]'
                             }`}>
                             {p.title}
@@ -217,19 +217,19 @@ export default function BlogDetailPage() {
                   <div className="flex gap-2 flex-wrap">
                     <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}`}
                       target="_blank" rel="noopener noreferrer" aria-label="Share on X"
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-[#ffee50] hover:text-[#3B3808] text-white transition-colors">
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-[#ffee50] hover:text-[#3B3808] text-white transition-colors cursor-pointer">
                       <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L2.25 2.25h7.068l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                       </svg>
                     </a>
                     <a href="https://linkedin.com/shareArticle" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn"
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-[#ffee50] hover:text-[#3B3808] text-white transition-colors">
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-[#ffee50] hover:text-[#3B3808] text-white transition-colors cursor-pointer">
                       <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                       </svg>
                     </a>
                     <button onClick={handleCopy} aria-label="Copy link"
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-[#ffee50] hover:text-[#3B3808] text-white transition-colors">
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-[#ffee50] hover:text-[#3B3808] text-white transition-colors cursor-pointer">
                       {copied ? (
                         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -282,7 +282,7 @@ export default function BlogDetailPage() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   {related.map((p) => (
                     <Link key={p.id} href={`/blogs/${p.slug}`}
-                      className="group block rounded-xl bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                      className="group block rounded-xl bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
                       <div className="relative h-40 overflow-hidden">
                         <img src={p.image} alt={p.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                       </div>
@@ -306,7 +306,7 @@ export default function BlogDetailPage() {
 
               <div className="mt-8 mb-4">
                 <Link href="/blogs"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#3B3808] px-6 py-3 text-sm font-semibold text-[#ffee50] hover:bg-[#4f4d10] transition-colors font-raleway">
+                  className="inline-flex items-center gap-2 rounded-full bg-[#3B3808] px-6 py-3 text-sm font-semibold text-[#ffee50] hover:bg-[#4f4d10] transition-colors font-raleway cursor-pointer">
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 12H5m7-7l-7 7 7 7" />
                   </svg>

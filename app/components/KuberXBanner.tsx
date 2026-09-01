@@ -1,6 +1,10 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
+import EnquiryModal from './EnquiryModal';
 
 const KuberXBanner = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
       <div className="relative w-full rounded-2xl overflow-hidden bg-[#2C2C2C] shadow-2xl flex flex-col md:flex-row items-stretch">
@@ -35,12 +39,17 @@ const KuberXBanner = () => {
             Along with <span className="text-[#C19B54]">Lowest interest</span> and <span className="text-[#C19B54]">Exclusive benefits</span> on home loans today!
           </p>
           <div>
-            <button className="bg-[#C19B54] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#A88648] transition-colors duration-300 text-sm md:text-base">
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="bg-[#C19B54] cursor-pointer text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#A88648] transition-colors duration-300 text-sm md:text-base"
+            >
               Explore Home Loans
             </button>
           </div>
         </div>
       </div>
+      
+      <EnquiryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

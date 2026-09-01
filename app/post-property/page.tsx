@@ -72,7 +72,7 @@ const PostPropertyPage = () => {
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-gray-800 text-lg">Scan the QR code to post your property on WhatsApp</h3>
-                                    <button className="mt-2 flex items-center gap-2 bg-[#25D366] text-white px-4 py-1.5 rounded-md text-sm font-semibold hover:bg-[#1fb855] transition-colors shadow-sm">
+                                    <button className="mt-2 flex items-center gap-2 bg-[#25D366] text-white px-4 py-1.5 rounded-md text-sm font-semibold hover:bg-[#1fb855] transition-colors shadow-sm cursor-pointer">
                                         Post property on WhatsApp
                                         <ChevronRight size={16} />
                                     </button>
@@ -440,7 +440,7 @@ const PropertyFormCard = () => {
                 </div>
 
                 {/* Helpers */}
-                <button className="flex items-center gap-2 text-[#C19B54] font-medium text-sm hover:underline w-fit">
+                <button className="flex items-center gap-2 text-[#C19B54] font-medium text-sm hover:underline w-fit cursor-pointer">
                     <Plus size={16} /> Add Furnishings / Amenities
                 </button>
 
@@ -464,7 +464,7 @@ const PropertyFormCard = () => {
                 <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="w-full bg-[#B58A3D] hover:bg-[#96702e] text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-lg flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    className="w-full bg-[#B58A3D] hover:bg-[#96702e] text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-lg flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer"
                 >
                     {isSubmitting ? 'Submitting...' : 'Submit'} <ChevronRight size={20} strokeWidth={2.5} />
                 </button>

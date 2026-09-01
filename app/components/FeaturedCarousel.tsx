@@ -80,14 +80,14 @@ export default function FeaturedCarousel({ cards }: { cards: any[] }) {
               <button 
                 key={f}
                 onClick={() => handleFilterChange(f)}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition ${filter === f ? 'bg-[#B58A3D] text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}
+                className={`px-4 py-1.5 rounded-full cursor-pointer text-xs font-semibold uppercase tracking-wider transition ${filter === f ? 'bg-[#B58A3D] text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}
               >
                 {f}
               </button>
             ))}
           </div>
 
-          <Link href="/properties" className="self-start border border-[#B58A3D]/50 text-[#2C2C2C] bg-white px-6 py-3 text-sm font-semibold flex items-center gap-3 hover:bg-[#FBF9F4] transition shadow-sm rounded">
+          <Link href="/properties" className="self-start border border-[#B58A3D]/50 text-[#2C2C2C] bg-white px-6 py-3 text-sm font-semibold flex items-center gap-3 hover:bg-[#FBF9F4] transition shadow-sm rounded cursor-pointer">
             View All Properties <ArrowUpRight size={16} className="text-[#B58A3D]" />
           </Link>
           
@@ -116,7 +116,7 @@ export default function FeaturedCarousel({ cards }: { cards: any[] }) {
         {/* Carousel Cards */}
         {filteredCards.length > 0 ? (
           filteredCards.slice(currentIndex, currentIndex + visibleCardsCount).map((card: any) => (
-            <Link href={`/properties/${card.slug}`} key={card.id} className="block h-fit bg-white rounded-xl overflow-hidden border border-gray-100 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] hover:shadow-lg transition duration-300">
+            <Link href={`/properties/${card.slug}`} key={card.id} className="block h-fit bg-white rounded-xl overflow-hidden border border-gray-100 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] hover:shadow-lg transition duration-300 cursor-pointer">
               {/* Image Container */}
               <div className="relative h-[200px] w-full">
                 <div 

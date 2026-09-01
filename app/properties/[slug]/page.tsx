@@ -67,6 +67,9 @@ const SIMILAR_PROPERTIES = [
 
 import { useParams } from 'next/navigation';
 
+import { API_BASE_URL } from '../../lib/api';
+import { usePropertyActions } from '../../hooks/usePropertyActions';
+
 export default function PropertyDetailsPage() {
   const params = useParams<{ slug: string }>();
   const [isProsOpen, setIsProsOpen] = useState(false);
@@ -77,45 +80,30 @@ export default function PropertyDetailsPage() {
   const [similarProperties, setSimilarProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const { toggleSave, toggleCompare, isSaved, isCompared } = usePropertyActions();
+
   useEffect(() => {
     let isMounted = true;
     const loadData = async () => {
       try {
         if (!params?.slug) return;
         
-        // Construct dummy property based on slug
-        const propertyName = params.slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-        
-        const mockProperty = {
-          propertyName: propertyName,
-          city: "Pune",
-          location: "Kharadi, Pune",
-          tentativeBudget: "₹75 Lakhs Onwards",
-          propertyType: "Premium Residences",
-          developerName: "Earth Sukham Developers",
-          multipleImages: [
-            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&auto=format&fit=crop&q=60",
-            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=60",
-            "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&auto=format&fit=crop&q=60"
-          ],
-          updatedAt: new Date().toISOString()
-        };
+        const res = await fetch(`${API_BASE_URL}/properties/slug/${params.slug}`);
+        const data = await res.json();
 
-        if (isMounted) {
-          setProperty(mockProperty);
-          
-          // Use the SIMILAR_PROPERTIES constant for the similar properties section
-          const simProps = SIMILAR_PROPERTIES.slice(0, 4).map(p => ({
-            id: p.id,
-            propertyName: p.title,
-            propertyType: p.type,
-            location: p.location,
-            tentativeBudget: p.price,
-            multipleImages: [p.image],
-            slug: p.title.toLowerCase().replace(/\s+/g, '-')
-          }));
-          setSimilarProperties(simProps);
+        if (isMounted && data.success && data.data) {
+          setProperty(data.data);
+        }
+
+        // Fetch similar properties from main properties endpoint
+        const allRes = await fetch(`${API_BASE_URL}/properties`);
+        const allData = await allRes.json();
+        
+        if (isMounted && allData.success && allData.properties) {
+           const simProps = allData.properties
+             .filter((p: any) => p.slug !== params.slug)
+             .slice(0, 4);
+           setSimilarProperties(simProps);
         }
       } catch (error) {
         console.error("Failed to load property details:", error);
@@ -181,12 +169,25 @@ export default function PropertyDetailsPage() {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center">Property not found.</div>;
   }
 
+  const getImageUrl = (img?: string) => {
+    if (!img) return "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80";
+    if (img.startsWith('http')) return img;
+    const cleanPath = img.replace(/\\/g, '/');
+    const finalPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
+    return `${API_BASE_URL.replace('/api', '')}${finalPath}`;
+  };
+
+  const shareOnWhatsapp = () => {
+    const text = `Check out this property: ${property.propertyName} at ${property.location || property.city}.`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
   const mainImage = property.multipleImages && property.multipleImages.length > 0 
-    ? property.multipleImages[0] 
+    ? getImageUrl(property.multipleImages[0]) 
     : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80";
 
   const galleryImages = property.multipleImages && property.multipleImages.length > 1 
-    ? property.multipleImages.slice(1, 5) 
+    ? property.multipleImages.slice(1, 5).map(getImageUrl) 
     : [
         "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=60",
         "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&auto=format&fit=crop&q=60",
@@ -196,19 +197,36 @@ export default function PropertyDetailsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Banner Section */}
-      <div className="w-full h-[40vh] md:h-[50vh] relative">
-        <Image 
-          src={mainImage} 
-          alt={property.propertyName} 
-          fill 
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent"></div>
-      </div>
+      {/* --- HERO BANNER --- */}
+      <section className="relative overflow-hidden rounded-2xl m-2">
+        <div className="relative h-[260px] w-full md:h-[420px]">
+          <Image
+            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80" 
+            alt="Property details banner"
+            fill
+            priority
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/70" />
+        </div>
+        
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full px-6">
+            <div className="mx-auto w-full max-w-7xl">
+              <div className="max-w-3xl">
+                <div className="text-sm font-semibold tracking-[0.2em] text-[#ffee50]">
+                  Home / Properties / {property.propertyName}
+                </div>
+                <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl font-raleway">
+                  {property.propertyName}
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto rounded-xl overflow-hidden shadow-[0_4px_20px_rgb(0,0,0,0.06)] bg-white border border-gray-100 -mt-16 md:-mt-38 relative z-10 mx-4 xl:mx-auto">
+      <div className="max-w-7xl mx-auto rounded-xl overflow-hidden shadow-[0_4px_20px_rgb(0,0,0,0.06)] bg-white border border-gray-100 mt-6 relative z-10 mx-4 xl:mx-auto -mt-20">
         
         {/* Header Section */}
         <div className="bg-white px-6 py-5 border-b border-gray-100">
@@ -236,10 +254,27 @@ export default function PropertyDetailsPage() {
                   {property.propertyName}
                 </h1>
                 <div className="flex items-center gap-1.5 text-[#6c2bd9]">
-                  <button className="hover:bg-purple-50 p-1.5 rounded-full transition-colors">
+                  <button 
+                    onClick={shareOnWhatsapp}
+                    className="hover:bg-purple-50 p-1.5 rounded-full transition-colors cursor-pointer"
+                  >
                     <Share2 className="w-5 h-5" />
                   </button>
-                 
+                  <button 
+                    onClick={() => toggleSave(property.id)}
+                    className={`hover:bg-purple-50 p-1.5 rounded-full transition-colors cursor-pointer ${isSaved(property.id) ? 'text-red-500' : ''}`}
+                  >
+                    <Heart className="w-5 h-5" fill={isSaved(property.id) ? "currentColor" : "none"} />
+                  </button>
+                  <label className="flex items-center gap-2 text-sm text-gray-600 ml-2 cursor-pointer hover:bg-gray-50 px-2 py-1 rounded">
+                    <input 
+                      type="checkbox" 
+                      checked={isCompared(property.id)}
+                      onChange={() => toggleCompare(property.id)}
+                      className="accent-[#6c2bd9] w-4 h-4"
+                    />
+                    Compare
+                  </label>
                 </div>
               </div>
               <p className="text-[13px] text-gray-900 mb-2 font-medium">
@@ -258,7 +293,7 @@ export default function PropertyDetailsPage() {
               <div className="text-[13px] text-gray-500 mb-4 w-full md:text-right">
                 {property.propertyType}
               </div>
-              <button className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[#6c2bd9] hover:bg-[#5b21b6] text-white text-[15px] font-medium rounded-md shadow-sm transition-colors w-full md:w-auto">
+              <button className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[#6c2bd9] hover:bg-[#5b21b6] text-white text-[15px] font-medium rounded-md shadow-sm transition-colors w-full md:w-auto cursor-pointer">
                 <Phone className="w-4 h-4" />
                 Contact Seller
               </button>
@@ -277,6 +312,7 @@ export default function PropertyDetailsPage() {
                 alt="Property Main View" 
                 fill 
                 className="object-cover hover:scale-105 transition-transform duration-500"
+                unoptimized
               />
             </div>
             
@@ -284,7 +320,7 @@ export default function PropertyDetailsPage() {
             <div className="lg:w-[42%] grid grid-cols-2 grid-rows-2 gap-3 h-[400px] lg:h-full">
               {galleryImages.map((img: string, idx: number) => (
                 <div key={idx} className="relative rounded-lg overflow-hidden shadow-sm">
-                  <Image src={img} alt={`Gallery ${idx + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                  <Image src={img} alt={`Gallery ${idx + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-500" unoptimized />
                 </div>
               ))}
               {galleryImages.length < 4 && Array.from({ length: 4 - galleryImages.length }).map((_, idx) => (
@@ -320,7 +356,7 @@ export default function PropertyDetailsPage() {
           <div id="overview" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100 flex justify-between items-center">
               <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} Overview</h2>
-              <button className="flex items-center gap-2 px-5 py-2 bg-[#15803d] text-white text-[14px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors">
+              <button className="flex items-center gap-2 px-5 py-2 bg-[#15803d] text-white text-[14px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors cursor-pointer">
                 Brochure <Download className="w-4 h-4" />
               </button>
             </div>
@@ -474,7 +510,7 @@ export default function PropertyDetailsPage() {
           <div id="pricing-and-unit-plans" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100 flex justify-between items-center">
               <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} Pricing & Unit Plan</h2>
-              <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#15803d] text-white text-[13px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors">
+              <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#15803d] text-white text-[13px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors cursor-pointer">
                 Price Sheet <Download className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -483,8 +519,8 @@ export default function PropertyDetailsPage() {
                 {/* Left Side: Tabs and Specs */}
                 <div>
                   <div className="flex gap-6 border-b border-gray-200 mb-6">
-                    <button className="text-[17px] font-bold text-gray-900 pb-2">3BHK</button>
-                    <button className="text-[17px] font-bold text-[#b38e41] border-b-2 border-[#b38e41] pb-2">4BHK</button>
+                    <button className="text-[17px] font-bold text-gray-900 pb-2 cursor-pointer">3BHK</button>
+                    <button className="text-[17px] font-bold text-[#b38e41] border-b-2 border-[#b38e41] pb-2 cursor-pointer">4BHK</button>
                   </div>
                   
                   <p className="text-gray-700 font-medium text-[15px] mb-8">1768 Sqft</p>
@@ -657,13 +693,13 @@ export default function PropertyDetailsPage() {
                 <input type="tel" placeholder="Enter Your Phone Number" className="flex-1 px-4 py-3 border border-gray-200 rounded-md text-[14px] focus:outline-none focus:ring-1 focus:ring-[#b38e41] focus:border-[#b38e41] transition-colors" />
               </div>
               
-              <button className="w-full bg-[#9c7827] hover:bg-[#85651f] text-white py-3.5 rounded-md text-[16px] font-semibold shadow-md transition-colors mt-2">
+              <button className="w-full bg-[#9c7827] hover:bg-[#85651f] text-white py-3.5 rounded-md text-[16px] font-semibold shadow-md transition-colors mt-2 cursor-pointer">
                 Request CallBack
               </button>
             </form>
 
             <div className="mt-5 text-[12px] text-gray-500 leading-snug">
-              By Continuing, You,Rr Agreeing To The <a href="#" className="text-[#0ea5e9] hover:underline">Terms And Conditions</a>
+              By Continuing, You,Rr Agreeing To The <a href="#" className="text-[#0ea5e9] hover:underline cursor-pointer">Terms And Conditions</a>
             </div>
 
             <div className="mt-6 space-y-3">
@@ -678,11 +714,13 @@ export default function PropertyDetailsPage() {
             </div>
 
             <div className="mt-6 bg-[#f4f4f4] rounded-lg p-4 flex items-center gap-3">
-              <div className="w-11 h-11 bg-[#25d366] rounded-full flex items-center justify-center shrink-0 text-white shadow-sm">
+              <a href="https://wa.me/919923901000" target="_blank" rel="noopener noreferrer" className="w-11 h-11 bg-[#25d366] rounded-full flex items-center justify-center shrink-0 text-white shadow-sm hover:scale-105 transition-transform">
                 <FaWhatsapp className="w-6 h-6" />
-              </div>
+              </a>
               <div>
-                <div className="text-[15px] font-bold text-gray-900">+91 000 000 0000</div>
+                <div className="text-[15px] font-bold text-gray-900">
+                  <a href="tel:+919923901000" className="hover:text-[#9c7827] transition-colors">+91 9923 90 1000</a> | <a href="tel:+917074001000" className="hover:text-[#9c7827] transition-colors">+91 7074 00 1000</a>
+                </div>
                 <div className="text-[12px] text-gray-600 font-medium">Contact Helpdesk (Chat Only)</div>
               </div>
             </div>
@@ -698,11 +736,18 @@ export default function PropertyDetailsPage() {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {similarProperties.slice(0, 4).map((property: any) => (
-            <a href={`/properties/${property.slug}`} key={property.id} className="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow flex flex-col">
+            <a href={`/properties/${property.slug}`} key={property.id} className="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow flex flex-col cursor-pointer">
               <div className="relative h-48 w-full overflow-hidden">
-                <Image src={property.multipleImages && property.multipleImages.length > 0 ? property.multipleImages[0] : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=60"} alt={property.propertyName} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-1.5 rounded-full shadow-sm text-gray-400 hover:text-red-500 transition-colors">
-                  <Heart className="w-4 h-4" />
+                <Image src={property.multipleImages && property.multipleImages.length > 0 ? getImageUrl(property.multipleImages[0]) : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=60"} alt={property.propertyName || 'Property'} fill className="object-cover group-hover:scale-105 transition-transform duration-500" unoptimized />
+                <div 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleSave(property.id);
+                  }}
+                  className={`absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-1.5 rounded-full shadow-sm transition-colors cursor-pointer ${isSaved(property.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                >
+                  <Heart className="w-4 h-4" fill={isSaved(property.id) ? "currentColor" : "none"} />
                 </div>
               </div>
               <div className="p-5 flex-1 flex flex-col">
@@ -713,7 +758,7 @@ export default function PropertyDetailsPage() {
                 <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                   <div>
                     <div className="text-[11px] text-gray-500 font-medium">Starting at</div>
-                    <div className="font-bold text-gray-900">{property.tentativeBudget || 'Price on request'}</div>
+                    <div className="font-bold text-gray-900">{property.quotation ? `₹${property.quotation}` : (property.tentativeBudget || 'Price on request')}</div>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-[#fbf9f4] flex items-center justify-center text-[#b38e41] group-hover:bg-[#b38e41] group-hover:text-white transition-colors">
                     <ArrowUp className="w-4 h-4 rotate-45" />

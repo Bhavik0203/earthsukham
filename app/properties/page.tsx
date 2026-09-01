@@ -1,95 +1,63 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Search, ChevronDown, IndianRupee, Home, BarChart2 } from 'lucide-react';
-
-
-interface PropertyItem {
-  id: string;
-  title: string;
-  image: string;
-  type: string;
-  location: string;
-  price: string;
-  slug: string;
-  description: string;
-}
-
-const DUMMY_PROPERTIES: PropertyItem[] = [
-  {
-    id: "1",
-    title: "Earth Sukham - Phase 1",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=60",
-    type: "2 & 3 BHK Apartments",
-    location: "Kharadi, Pune",
-    price: "₹75 Lakhs Onwards",
-    slug: "earth-sukham-phase-1",
-    description: "Experience luxurious living with world-class amenities in the heart of Kharadi."
-  },
-  {
-    id: "2",
-    title: "Sukham Elite",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=60",
-    type: "3 & 4 BHK Villas",
-    location: "Wakad, Pune",
-    price: "₹1.5 Cr Onwards",
-    slug: "sukham-elite",
-    description: "Premium villas designed for those who appreciate the finer things in life."
-  },
-  {
-    id: "3",
-    title: "Earth Meadows",
-    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=600&auto=format&fit=crop&q=60",
-    type: "1 & 2 BHK Apartments",
-    location: "Hinjewadi, Pune",
-    price: "₹45 Lakhs Onwards",
-    slug: "earth-meadows",
-    description: "Smart homes with beautiful landscapes, perfect for the modern professional."
-  },
-  {
-    id: "4",
-    title: "Sukham Signature",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&auto=format&fit=crop&q=60",
-    type: "4 BHK Penthouse",
-    location: "Baner, Pune",
-    price: "₹3.2 Cr Onwards",
-    slug: "sukham-signature",
-    description: "Exclusive penthouses offering panoramic city views and private pools."
-  },
-  {
-    id: "5",
-    title: "Earth Residency",
-    image: "https://images.unsplash.com/photo-1600566753086-00f18efc2297?w=600&auto=format&fit=crop&q=60",
-    type: "2 BHK Apartments",
-    location: "Viman Nagar, Pune",
-    price: "₹85 Lakhs Onwards",
-    slug: "earth-residency",
-    description: "Comfortable and spacious living in one of Pune's most vibrant neighborhoods."
-  },
-  {
-    id: "6",
-    title: "Sukham Heights",
-    image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&auto=format&fit=crop&q=60",
-    type: "3 BHK Apartments",
-    location: "Kothrud, Pune",
-    price: "₹1.2 Cr Onwards",
-    slug: "sukham-heights",
-    description: "High-rise living that combines luxury, convenience, and tranquility."
-  }
-];
+import { Search, ChevronDown, IndianRupee, Home, BarChart2, Heart, GitCompare, Share2 } from 'lucide-react';
+import { API_BASE_URL } from '../lib/api';
+import { usePropertyActions } from '../hooks/usePropertyActions';
 
 export default function PropertyPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [properties, setProperties] = useState<PropertyItem[]>(DUMMY_PROPERTIES);
+  const [properties, setProperties] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  const { toggleSave, toggleCompare, isSaved, isCompared } = usePropertyActions();
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/properties`);
+        const data = await res.json();
+        if (data.success && data.properties) {
+          setProperties(data.properties);
+        }
+      } catch (error) {
+        console.error("Failed to fetch properties:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProperties();
+  }, []);
+
+  const getImageUrl = (img?: string) => {
+    if (!img) return "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=60";
+    if (img.startsWith('http')) return img;
+    const cleanPath = img.replace(/\\/g, '/');
+    const finalPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
+    return `${API_BASE_URL.replace('/api', '')}${finalPath}`;
+  };
+
+  const shareOnWhatsapp = (property: any, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const text = `Check out this property: ${property.propertyName} at ${property.location}. Price: ${property.quotation || 'Price on Request'}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
+  const handleActionClick = (e: React.MouseEvent, action: () => void) => {
+    e.preventDefault();
+    e.stopPropagation();
+    action();
+  };
 
   const filteredProperties = properties.filter(property => {
     const query = searchQuery.toLowerCase();
-    return (
-      property.title.toLowerCase().includes(query) || 
-      property.location.toLowerCase().includes(query) ||
-      property.type.toLowerCase().includes(query)
-    );
+    const title = (property.propertyName || '').toLowerCase();
+    const loc = (property.location || '').toLowerCase();
+    const type = (property.propertyType || '').toLowerCase();
+    
+    return title.includes(query) || loc.includes(query) || type.includes(query);
   });
 
   const sidebarProperties = properties.slice(0, 6);
@@ -102,7 +70,7 @@ export default function PropertyPage() {
                <div className="relative h-[260px] w-full md:h-[420px]">
                  <Image
                   src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80" 
-                   alt="Blog banner"
+                   alt="Properties banner"
                    fill
                    priority
                    className="object-cover"
@@ -143,15 +111,14 @@ export default function PropertyPage() {
                 className="w-full pl-11 pr-4 py-3 bg-[#f8f9fa] border-0 rounded-lg text-sm text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-[#b38e41]/30 focus:outline-none transition-all"
               />
             </div>
-            <button className="bg-[#a37f37] text-white px-8 py-3 rounded-lg text-sm font-semibold shadow-sm hover:bg-[#8f6f2e] transition-colors whitespace-nowrap">
+            <button className="bg-[#a37f37] text-white px-8 py-3 rounded-lg text-sm font-semibold shadow-sm hover:bg-[#8f6f2e] transition-colors whitespace-nowrap cursor-pointer">
               Search
             </button>
           </div>
 
           {/* Bottom Row: Filters */}
           <div className="flex flex-wrap items-center gap-3">
-            {/* Budget Filter */}
-            <button className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-[13px] text-gray-600 hover:border-gray-300 transition-colors min-w-[120px]">
+            <button className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-[13px] text-gray-600 hover:border-gray-300 transition-colors min-w-[120px] cursor-pointer">
               <div className="flex items-center gap-1.5">
                 <IndianRupee className="h-3.5 w-3.5 text-[#d4af37]" />
                 <span>Budget</span>
@@ -159,8 +126,7 @@ export default function PropertyPage() {
               <ChevronDown className="h-3.5 w-3.5 text-gray-500" />
             </button>
 
-            {/* Property Type Filter */}
-            <button className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-[13px] text-gray-600 hover:border-gray-300 transition-colors min-w-[140px]">
+            <button className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-[13px] text-gray-600 hover:border-gray-300 transition-colors min-w-[140px] cursor-pointer">
               <div className="flex items-center gap-1.5">
                 <Home className="h-3.5 w-3.5 text-[#d4af37]" />
                 <span>Property Type</span>
@@ -168,8 +134,7 @@ export default function PropertyPage() {
               <ChevronDown className="h-3.5 w-3.5 text-gray-500" />
             </button>
 
-            {/* Project Status Filter */}
-            <button className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-[13px] text-gray-600 hover:border-gray-300 transition-colors min-w-[140px]">
+            <button className="flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md text-[13px] text-gray-600 hover:border-gray-300 transition-colors min-w-[140px] cursor-pointer">
               <div className="flex items-center gap-1.5">
                 <BarChart2 className="h-3.5 w-3.5 text-[#d4af37]" />
                 <span>Project Status</span>
@@ -190,31 +155,54 @@ export default function PropertyPage() {
           
           {/* LEFT: MAIN LISTINGS CONTAINER (2 Columns wide) */}
           <div className="lg:col-span-2 space-y-6">
-            {filteredProperties.length > 0 ? (
+            {loading ? (
+              <div className="flex justify-center items-center py-20">
+                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
+              </div>
+            ) : filteredProperties.length > 0 ? (
               filteredProperties.map((property) => (
                 <Link 
                   href={`/properties/${property.slug}`}
                   key={property.id} 
-                  className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 flex flex-col md:flex-row gap-6 transition-all hover:shadow-md hover:border-[#b38e41]/30 block group"
+                  className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 flex flex-col md:flex-row gap-6 transition-all hover:shadow-md hover:border-[#b38e41]/30 block group cursor-pointer relative"
                 >
+                {/* Save and Share Overlay icons on top right */}
+                <div className="absolute top-8 right-8 z-10 flex flex-col gap-2">
+                    <button 
+                        onClick={(e) => handleActionClick(e, () => toggleSave(property.id))}
+                        className={`w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md transition-all hover:scale-105 ${isSaved(property.id) ? 'text-red-500' : 'text-gray-500'}`}
+                        title="Save Property"
+                    >
+                        <Heart size={18} fill={isSaved(property.id) ? "currentColor" : "none"} />
+                    </button>
+                    <button 
+                        onClick={(e) => shareOnWhatsapp(property, e)}
+                        className="w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-500 shadow-md transition-all hover:scale-105 hover:text-green-500"
+                        title="Share on WhatsApp"
+                    >
+                        <Share2 size={18} />
+                    </button>
+                </div>
+
                 {/* Property Image */}
                 <div className="relative w-full md:w-[240px] h-[200px] md:h-[270px] shrink-0 rounded-xl overflow-hidden shadow-sm">
                   <Image 
-                    src={property.image} 
-                    alt={property.title}
+                    src={getImageUrl(property.multipleImages?.[0])} 
+                    alt={property.propertyName || 'Property'}
                     fill
                     className="object-cover"
+                    unoptimized
                   />
                 </div>
 
                 {/* Property Details */}
-                <div className="flex flex-col justify-between flex-1">
+                <div className="flex flex-col justify-between flex-1 pr-12">
                   <div>
                     <h3 className="text-xl md:text-[22px] font-serif font-medium text-zinc-900 leading-snug mb-3">
-                      {property.title}
+                      {property.propertyName}
                     </h3>
                     <p className="text-[13px] text-gray-500 leading-relaxed mb-5 line-clamp-2">
-                      {property.description}
+                      {property.clientRemark || property.seoDescription || `Beautiful property at ${property.location}. Contact for more details.`}
                     </p>
                   </div>
 
@@ -222,23 +210,30 @@ export default function PropertyPage() {
                   <div className="grid grid-cols-3 border border-[#b38e41]/30 rounded-xl overflow-hidden mb-5 bg-white">
                     <div className="p-3.5 border-r border-[#b38e41]/20 text-left">
                       <span className="block text-[11px] uppercase tracking-wider text-[#b38e41] font-bold mb-1">Type</span>
-                      <span className="text-xs md:text-[13px] font-semibold text-zinc-800 leading-tight block">{property.type}</span>
+                      <span className="text-xs md:text-[13px] font-semibold text-zinc-800 leading-tight block">{property.propertyType || 'N/A'}</span>
                     </div>
                     <div className="p-3.5 border-r border-[#b38e41]/20 text-left">
                       <span className="block text-[11px] uppercase tracking-wider text-[#b38e41] font-bold mb-1">Location</span>
-                      <span className="text-xs md:text-[13px] font-semibold text-zinc-800 leading-tight block">{property.location}</span>
+                      <span className="text-xs md:text-[13px] font-semibold text-zinc-800 leading-tight block truncate" title={property.location}>{property.location || 'N/A'}</span>
                     </div>
                     <div className="p-3.5 text-left">
                       <span className="block text-[11px] uppercase tracking-wider text-[#b38e41] font-bold mb-1">Price</span>
-                      <span className="text-xs md:text-[13px] font-semibold text-zinc-800 leading-tight block">{property.price}</span>
+                      <span className="text-xs md:text-[13px] font-semibold text-zinc-800 leading-tight block truncate" title={property.quotation ? `₹${property.quotation}` : 'Price on Request'}>{property.quotation ? `₹${property.quotation}` : 'On Request'}</span>
                     </div>
                   </div>
 
-                  {/* Action Button */}
-                  <div>
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-4">
                     <span className="inline-block bg-gradient-to-r from-[#c49a45] to-[#785921] group-hover:brightness-105 text-white text-sm font-semibold px-8 py-3 rounded-lg shadow-md transition-all active:scale-[0.98]">
                       Enquire Now
                     </span>
+                    <button 
+                        onClick={(e) => handleActionClick(e, () => toggleCompare(property.id))}
+                        className={`flex items-center gap-2 text-sm font-medium px-4 py-3 border rounded-lg transition-colors ${isCompared(property.id) ? 'bg-[#b38e41]/10 text-[#a37f37] border-[#b38e41]/50' : 'text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                    >
+                        <GitCompare size={16} />
+                        {isCompared(property.id) ? 'Added to Compare' : 'Compare'}
+                    </button>
                   </div>
                 </div>
               </Link>
@@ -274,7 +269,7 @@ export default function PropertyPage() {
                   </div>
                   <button 
                     type="submit"
-                    className="w-full bg-gradient-to-r from-[#c49a45] to-[#785921] hover:brightness-105 text-white font-semibold py-3.5 rounded-lg shadow-md transition-all active:scale-[0.98] mt-2"
+                    className="w-full bg-gradient-to-r from-[#c49a45] to-[#785921] hover:brightness-105 text-white font-semibold py-3.5 rounded-lg shadow-md transition-all active:scale-[0.98] mt-2 cursor-pointer"
                   >
                     Request a Callback
                   </button>
@@ -314,10 +309,10 @@ export default function PropertyPage() {
                     <p className="text-[11px] opacity-80">Godrej Township, Wakad, Pune</p>
                   </div>
                   <div className="flex gap-1.5">
-                    <button className="bg-[#b38e41] text-white text-[10px] px-3 py-1.5 rounded font-medium">
+                    <button className="bg-[#b38e41] text-white text-[10px] px-3 py-1.5 rounded font-medium cursor-pointer">
                       View Details
                     </button>
-                    <button className="bg-zinc-800 text-white p-1.5 rounded" aria-label="Call">
+                    <button className="bg-zinc-800 text-white p-1.5 rounded cursor-pointer" aria-label="Call">
                       📞
                     </button>
                   </div>
@@ -336,22 +331,23 @@ export default function PropertyPage() {
                   <div className="flex items-center gap-3">
                     <div className="relative w-14 h-14 rounded overflow-hidden shrink-0">
                       <Image 
-                        src={property.image} 
-                        alt={property.title} 
+                        src={getImageUrl(property.multipleImages?.[0])} 
+                        alt={property.propertyName || 'Property'} 
                         fill
                         className="object-cover"
+                        unoptimized
                       />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-zinc-800">{property.price}</p>
-                      <p className="text-[11px] text-gray-500 line-clamp-1 max-w-[120px]">{property.title}</p>
-                      <p className="text-[10px] text-gray-400">{property.location}</p>
+                      <p className="text-xs font-bold text-zinc-800">{property.quotation ? `₹${property.quotation}` : 'Price on Request'}</p>
+                      <p className="text-[11px] text-gray-500 line-clamp-1 max-w-[120px]">{property.propertyName}</p>
+                      <p className="text-[10px] text-gray-400 truncate w-24">{property.location}</p>
                     </div>
                   </div>
                   
                   {/* Arrow Action Icon */}
                   <button 
-                    className="w-7 h-7 rounded-full border border-amber-200 flex items-center justify-center text-[#b38e41] hover:bg-amber-50 text-sm transition-colors"
+                    className="w-7 h-7 rounded-full border border-amber-200 flex items-center justify-center text-[#b38e41] hover:bg-amber-50 text-sm transition-colors cursor-pointer"
                     aria-label="View Info"
                   >
                     ↗

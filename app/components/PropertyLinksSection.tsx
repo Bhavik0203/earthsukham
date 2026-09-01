@@ -66,25 +66,25 @@ export default function PropertyLinksSection() {
               
               {activeTab === 'residential' ? (
                 <>
-                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors">
+                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors cursor-pointer">
                     Flats for Sale in {loc}
                   </Link>
-                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors">
+                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors cursor-pointer">
                     Properties in {loc}
                   </Link>
-                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors">
+                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors cursor-pointer">
                     Properties for Sale in {loc}
                   </Link>
                 </>
               ) : (
                 <>
-                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors">
+                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors cursor-pointer">
                     Offices for Sale in {loc}
                   </Link>
-                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors">
+                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors cursor-pointer">
                     Commercial Properties in {loc}
                   </Link>
-                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors">
+                  <Link href="#" className="text-[13px] text-gray-500 hover:text-[#C89B4A] transition-colors cursor-pointer">
                     Shops for Sale in {loc}
                   </Link>
                 </>

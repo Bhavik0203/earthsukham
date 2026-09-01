@@ -107,7 +107,7 @@ export default function ProjectGallery() {
           {/* Close Button */}
           <button 
             onClick={handleClose} 
-            className="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white p-2 transition-colors z-50"
+            className="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white p-2 transition-colors z-50 cursor-pointer"
             aria-label="Close gallery"
           >
             <X size={36} strokeWidth={1.5} />
@@ -116,7 +116,7 @@ export default function ProjectGallery() {
           {/* Prev Button */}
           <button 
             onClick={handlePrev} 
-            className="absolute left-2 md:left-8 text-white/70 hover:text-white p-4 transition-colors z-50 group"
+            className="absolute left-2 md:left-8 text-white/70 hover:text-white p-4 transition-colors z-50 group cursor-pointer"
             aria-label="Previous image"
           >
             <ChevronLeft size={48} strokeWidth={1} className="group-hover:-translate-x-1 transition-transform" />
@@ -141,7 +141,7 @@ export default function ProjectGallery() {
           {/* Next Button */}
           <button 
             onClick={handleNext} 
-            className="absolute right-2 md:right-8 text-white/70 hover:text-white p-4 transition-colors z-50 group"
+            className="absolute right-2 md:right-8 text-white/70 hover:text-white p-4 transition-colors z-50 group cursor-pointer"
             aria-label="Next image"
           >
             <ChevronRight size={48} strokeWidth={1} className="group-hover:translate-x-1 transition-transform" />

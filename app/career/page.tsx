@@ -107,7 +107,7 @@ const BenefitsSection = () => {
       }
 
       // Send to API endpoint
-      const response = await fetch('https://api.propertydronerealty.com/applications/submit', {
+      const response = await fetch('http://localhost:8000/api/applications/submit', {
         method: 'POST',
         body: submissionData,
         // Don't set Content-Type header when sending FormData
@@ -153,7 +153,7 @@ const BenefitsSection = () => {
     const fetchJobs = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('https://api.propertydronerealty.com/careers');
+        const response = await fetch('http://localhost:8000/api/careers');
 
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.status}`);
@@ -238,8 +238,8 @@ const BenefitsSection = () => {
             <div className="flex justify-center">
               <Link
                 href="#open-roles"
-              >
-                <button className="bg-[#B58A3D] rounded-[4px] text-white hover:bg-white hover:text-[#B58A3D] hover:border hover:border-[#B58A3D] px-6 py-3 flex items-center justify-center gap-2 transition-colors">
+               className="cursor-pointer">
+                <button className="bg-[#B58A3D] rounded-[4px] text-white hover:bg-white hover:text-[#B58A3D] hover:border hover:border-[#B58A3D] px-6 py-3 flex items-center justify-center gap-2 transition-colors cursor-pointer">
                   View Open Roles
 
                 </button>
@@ -331,9 +331,9 @@ const BenefitsSection = () => {
                 ) : (
                   jobs.map((job, index) => (
                     <Link
+                      key={index}
                       href={`/career/${job.jobTitle}`}
-                      className={`flex items-center justify-between p-4 hover:bg-gray-50 transition-colors ${index !== jobs.length - 1 ? 'border-b border-gray-200' : ''
-                        }`}
+                      className={`flex items-center justify-between p-4 hover:bg-gray-50 transition-colors ${index !== jobs.length - 1 ? 'border-b border-gray-200' : ''} cursor-pointer`}
                     >
                       <span className="text-[#2C2C2C] font-medium">{job.jobTitle}</span>
                       <div className="bg-[#B58A3D] text-white p-2 rounded-full">
@@ -478,7 +478,7 @@ const BenefitsSection = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="bg-[#B58A3D] rounded-[4px] text-white hover:bg-white hover:text-[#B58A3D] hover:border hover:border-[#B58A3D] px-6 py-3 flex items-center justify-center gap-2 transition-colors">
+                        className="bg-[#B58A3D] rounded-[4px] text-white hover:bg-white hover:text-[#B58A3D] hover:border hover:border-[#B58A3D] px-6 py-3 flex items-center justify-center gap-2 transition-colors cursor-pointer">
 
                         {isSubmitting ? 'Sending...' : 'Send Application'}
                       </button>

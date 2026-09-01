@@ -485,7 +485,7 @@ function ApplicationFormContent() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`inline-flex items-center px-8 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-gradient-to-r from-[#224295] to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#224295] transition-all transform hover:-translate-y-0.5 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+              className={``inline-flex items-center px-8 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-gradient-to-r from-[#224295] to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#224295] transition-all transform hover:-translate-y-0.5 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : '' cursor-pointer`}`}
             >
               {isSubmitting ? (
                 <>

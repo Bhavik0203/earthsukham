@@ -138,7 +138,7 @@ function JobTitleContent() {
       });
 
       // Submit the form data
-      const response = await fetch('api.propertydronerealty.com/applications/submit', {
+      const response = await fetch('http://localhost:8000/api/applications/submit', {
         method: 'POST',
         body: submitData,
       });
@@ -185,7 +185,7 @@ function JobTitleContent() {
         // Extract the slug from the URL (last part after the final slash)
         const slug = path.substring(path.lastIndexOf('/') + 1);
 
-        const response = await fetch("api.propertydronerealty.com/careers");
+        const response = await fetch("http://localhost:8000/api/careers");
         if (!response.ok) {
           throw new Error("Failed to fetch job data");
         }
@@ -299,7 +299,7 @@ function JobTitleContent() {
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <button className="bg-blue-900 text-white px-6 py-3 flex items-center justify-center gap-2 hover:bg-blue-800 transition-colors">
+                  <button className="bg-blue-900 text-white px-6 py-3 flex items-center justify-center gap-2 hover:bg-blue-800 transition-colors cursor-pointer">
                     Apply Now
                   </button>
 
@@ -583,7 +583,7 @@ function JobTitleContent() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300"
+                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 cursor-pointer"
               >
                 {isSubmitting ? 'Submitting...' : 'Submit Application'}
               </button>

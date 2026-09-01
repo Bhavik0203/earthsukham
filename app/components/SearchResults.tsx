@@ -243,17 +243,17 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, hasSearched, activ
               <div className="flex items-center gap-3">
                 <button 
                   onClick={handleScrollLeft}
-                  className="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
                 <button 
                   onClick={handleScrollRight}
-                  className="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shrink-0"
+                  className="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shrink-0 cursor-pointer"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
-                <Link href="/properties" className="ml-2 text-sm font-semibold text-[#30498a] dark:text-blue-400 hover:underline whitespace-nowrap">
+                <Link href="/properties" className="ml-2 text-sm font-semibold text-[#30498a] dark:text-blue-400 hover:underline whitespace-nowrap cursor-pointer">
                   Show All Properties →
                 </Link>
               </div>
@@ -345,7 +345,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, hasSearched, activ
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">What are you looking for?</label>
                 <textarea rows={2} className="w-full px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#30498a] dark:focus:ring-blue-500 focus:border-[#30498a] dark:focus:border-blue-500 outline-none transition-all dark:text-white" placeholder="e.g. 3 BHK in Wakad under 1.5 Cr..."></textarea>
               </div>
-              <button type="submit" className="w-full bg-[#30498a] hover:bg-[#253970] dark:bg-[#3d60b5] dark:hover:bg-[#4d70c5] text-white font-bold py-3 px-4 rounded-lg transition-colors">
+              <button type="submit" className="w-full bg-[#30498a] hover:bg-[#253970] dark:bg-[#3d60b5] dark:hover:bg-[#4d70c5] text-white font-bold py-3 px-4 rounded-lg transition-colors cursor-pointer">
                 Request Property Details
               </button>
             </form>

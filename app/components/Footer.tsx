@@ -40,16 +40,16 @@ export default function Footer() {
             </p>
             {/* Social Media Monochromatic Icon Badges */}
             <div className="flex items-center gap-3 pt-2">
-              <Link href="#" className="bg-[#B58A3D] text-white p-2 rounded hover:bg-[#967132] transition">
+              <Link href="#" className="bg-[#B58A3D] text-white p-2 rounded hover:bg-[#967132] transition cursor-pointer">
                 <FiFacebook size={14} fill="currentColor" stroke="none" />
               </Link>
-              <Link href="#" className="bg-[#B58A3D] text-white p-2 rounded hover:bg-[#967132] transition">
+              <Link href="#" className="bg-[#B58A3D] text-white p-2 rounded hover:bg-[#967132] transition cursor-pointer">
                 <FiTwitter size={14} fill="currentColor" stroke="none" />
               </Link>
-              <Link href="#" className="bg-[#B58A3D] text-white p-2 rounded hover:bg-[#967132] transition">
+              <Link href="#" className="bg-[#B58A3D] text-white p-2 rounded hover:bg-[#967132] transition cursor-pointer">
                 <FiInstagram size={14} />
               </Link>
-              <Link href="#" className="bg-[#B58A3D] text-white p-2 rounded hover:bg-[#967132] transition">
+              <Link href="#" className="bg-[#B58A3D] text-white p-2 rounded hover:bg-[#967132] transition cursor-pointer">
                 <FiYoutube size={14} fill="currentColor" stroke="none" />
               </Link>
             </div>
@@ -61,11 +61,11 @@ export default function Footer() {
               Quick Links
             </h4>
             <ul className="space-y-2.5 text-xs text-gray-700 font-medium">
-              <li><Link href="/about-us" className="hover:text-[#B58A3D] transition">About Us</Link></li>
-              <li><Link href="/properties" className="hover:text-[#B58A3D] transition">Properties</Link></li>
-              <li><Link href="/blogs" className="hover:text-[#B58A3D] transition">Blogs</Link></li>
-              <li><Link href="/privacy-policy" className="hover:text-[#B58A3D] transition">Privacy Policy</Link></li>
-              <li><Link href="/terms-conditions" className="hover:text-[#B58A3D] transition">Terms & Condition</Link></li>
+              <li><Link href="/about-us" className="hover:text-[#B58A3D] transition cursor-pointer">About Us</Link></li>
+              <li><Link href="/properties" className="hover:text-[#B58A3D] transition cursor-pointer">Properties</Link></li>
+              <li><Link href="/blogs" className="hover:text-[#B58A3D] transition cursor-pointer">Blogs</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-[#B58A3D] transition cursor-pointer">Privacy Policy</Link></li>
+              <li><Link href="/terms-conditions" className="hover:text-[#B58A3D] transition cursor-pointer">Terms & Condition</Link></li>
             </ul>
           </div>
 
@@ -78,21 +78,23 @@ export default function Footer() {
               {/* Address Row */}
               <li className="flex items-start gap-3">
                 <MapPin size={16} className="text-[#B58A3D] shrink-0 mt-0.5" />
-                <span className="leading-normal">
+                <a href="https://maps.google.com/?q=Office+254,+Vision+9,+Pimple+Saudagar,+Pune,+Maharashtra+-+411027" target="_blank" rel="noopener noreferrer" className="leading-normal hover:text-[#B58A3D] transition cursor-pointer">
                   Office 254, Vision 9, Pimple Saudagar, Pune, Maharashtra - 411027
-                </span>
+                </a>
               </li>
               {/* Telephone Dial Row */}
               <li className="flex items-center gap-3">
                 <Phone size={16} className="text-[#B58A3D] shrink-0" />
-                <a href="tel:+919923901000" className="hover:text-[#B58A3D] transition">
-                  +91 9923 90 1000
-                </a>
+                <div className="flex gap-1 items-center">
+                  <a href="tel:+919923901000" className="hover:text-[#B58A3D] transition cursor-pointer">+91 9923 90 1000</a> 
+                  <span className="text-gray-400">|</span> 
+                  <a href="tel:+917074001000" className="hover:text-[#B58A3D] transition cursor-pointer">+91 7074 00 1000</a>
+                </div>
               </li>
               {/* Electronic Mailing Address Row */}
               <li className="flex items-center gap-3">
                 <Mail size={16} className="text-[#B58A3D] shrink-0" />
-                <a href="mailto:earthsukham@gmail.com" className="hover:text-[#B58A3D] transition">
+                <a href="mailto:earthsukham@gmail.com" className="hover:text-[#B58A3D] transition cursor-pointer">
                   earthsukham@gmail.com
                 </a>
               </li>

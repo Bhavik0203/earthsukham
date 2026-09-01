@@ -62,7 +62,7 @@ export default function Login() {
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+              className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700 cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -71,13 +71,13 @@ export default function Login() {
 
           <div className="flex justify-end">
              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-             <a href="#" className="text-sm text-[#8c6b23] hover:underline">Forgot password?</a>
+             <a href="#" className="text-sm text-[#8c6b23] hover:underline cursor-pointer">Forgot password?</a>
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#8c6b23] hover:bg-[#73581c] text-white font-medium py-3.5 rounded-sm transition-colors text-[15px] shadow-sm disabled:opacity-50"
+            className="w-full bg-[#8c6b23] hover:bg-[#73581c] text-white font-medium py-3.5 rounded-sm transition-colors text-[15px] shadow-sm disabled:opacity-50 cursor-pointer"
           >
             {isLoading ? 'Logging in...' : 'Log In'}
           </button>
@@ -85,7 +85,7 @@ export default function Login() {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Don&apos;t have an account?{' '}
-          <Link href="/register" className="text-[#8c6b23] font-medium hover:underline">
+          <Link href="/register" className="text-[#8c6b23] font-medium hover:underline cursor-pointer">
             Sign up
           </Link>
         </p>

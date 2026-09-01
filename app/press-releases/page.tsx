@@ -56,7 +56,7 @@ export default function PressReleasesPage() {
         
         <div className="space-y-6">
           {pressReleases.map((pr) => (
-            <Link href={`/press-releases/${pr.slug}`} key={pr._id} className="block bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
+            <Link href={`/press-releases/${pr.slug}`} key={pr._id} className="block bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow cursor-pointer">
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">

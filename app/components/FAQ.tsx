@@ -57,7 +57,7 @@ export default function FAQ() {
                 {/* Accordion Toggle Banner bar */}
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full flex items-center justify-between text-left px-5 py-4 font-serif text-sm md:text-base font-medium tracking-wide transition-colors"
+                  className="w-full cursor-pointer  flex items-center justify-between text-left px-5 py-4 font-serif text-sm md:text-base font-medium tracking-wide transition-colors"
                 >
                   <span>{faq.question}</span>
                   <span className="shrink-0 ml-4">

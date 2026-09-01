@@ -69,9 +69,9 @@ export default function BuildersPage() {
                 <p className="text-sm text-gray-600 mb-4 line-clamp-2">{builder.description}</p>
                 <div className="space-y-2 text-sm text-gray-500">
                   {builder.establishedYear && <p><span className="font-semibold text-gray-700">Established:</span> {builder.establishedYear}</p>}
-                  {builder.website && <p><span className="font-semibold text-gray-700">Website:</span> <a href={builder.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{builder.website.replace('https://', '')}</a></p>}
+                  {builder.website && <p><span className="font-semibold text-gray-700">Website:</span> <a href={builder.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline cursor-pointer">{builder.website.replace('https://', '')}</a></p>}
                 </div>
-                <button className="mt-6 w-full py-2 border border-[#b38e41] text-[#b38e41] rounded hover:bg-[#b38e41] hover:text-white transition-colors font-medium">
+                <button className="mt-6 w-full py-2 border border-[#b38e41] text-[#b38e41] rounded hover:bg-[#b38e41] hover:text-white transition-colors font-medium cursor-pointer">
                   View Properties
                 </button>
               </div>

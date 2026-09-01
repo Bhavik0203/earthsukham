@@ -23,7 +23,7 @@ export default function CallToAction() {
           <p className="text-gray-200 text-[15px] md:text-[16px] leading-relaxed mb-6 max-w-lg">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing.
           </p>
-          <button className="bg-[#C89B4A] hover:bg-[#b0853b] text-white px-8 py-3.5 rounded-[4px] font-semibold text-sm transition flex items-center gap-2">
+          <button className="bg-[#C89B4A] hover:bg-[#b0853b] text-white px-8 py-3.5 rounded-[4px] font-semibold text-sm transition flex items-center gap-2 cursor-pointer">
             Contact Us <ChevronRight size={18} strokeWidth={2.5} />
           </button>
         </div>

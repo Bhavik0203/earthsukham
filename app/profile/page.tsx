@@ -163,12 +163,12 @@ export default function Profile() {
                 <aside className="w-64 bg-transparent hidden md:block sticky top-24 h-[calc(100vh-6rem)] overflow-y-auto">
                 <div className="p-6">
                     <nav className="space-y-6 mt-4">
-                        <Link href="/profile" className="flex items-center space-x-3 text-gray-600 hover:text-[#8c6b23] transition-colors font-medium">
+                        <Link href="/profile" className="flex items-center space-x-3 text-gray-600 hover:text-[#8c6b23] transition-colors font-medium cursor-pointer">
                             <GitCompare className="w-5 h-5" />
                             <span>Compare Properties</span>
                         </Link>
 
-                        <Link href="/properties" className="flex items-center space-x-3 text-gray-600 hover:text-[#8c6b23] transition-colors font-medium">
+                        <Link href="/properties" className="flex items-center space-x-3 text-gray-600 hover:text-[#8c6b23] transition-colors font-medium cursor-pointer">
                             <Search className="w-5 h-5" />
                             <span>Explore More</span>
                         </Link>
@@ -178,7 +178,7 @@ export default function Profile() {
                             <span>Profile</span>
                         </div>
 
-                        <Link href="/profile" className="flex items-center space-x-3 text-gray-600 hover:text-[#8c6b23] transition-colors font-medium">
+                        <Link href="/profile" className="flex items-center space-x-3 text-gray-600 hover:text-[#8c6b23] transition-colors font-medium cursor-pointer">
                             <Heart className="w-5 h-5" />
                             <span>Saved Properties</span>
                         </Link>
@@ -186,7 +186,7 @@ export default function Profile() {
                         <div className="pt-10">
                             <button
                                 onClick={handleLogout}
-                                className="flex items-center space-x-3 text-red-500 hover:text-red-600 transition-colors font-medium w-full text-left"
+                                className="flex items-center space-x-3 text-red-500 hover:text-red-600 transition-colors font-medium w-full text-left cursor-pointer"
                             >
                                 <LogOut className="w-5 h-5" />
                                 <span>Logout</span>
@@ -256,7 +256,7 @@ export default function Profile() {
                                     <h3 className="font-bold text-[#2C2C2C] mb-2">Saved Properties</h3>
                                     <div className="text-3xl font-bold text-[#8c6b23] mb-2">{savedCount}</div>
                                     <p className="text-sm text-gray-500 mb-4">Properties saved to your list</p>
-                                    <Link href="/saved-properties" className="text-[#8c6b23] text-sm font-medium hover:underline">
+                                    <Link href="/saved-properties" className="text-[#8c6b23] text-sm font-medium hover:underline cursor-pointer">
                                         View all saved properties
                                     </Link>
                                 </div>
@@ -266,7 +266,7 @@ export default function Profile() {
                                     <h3 className="font-bold text-[#2C2C2C] mb-2">Compare Properties</h3>
                                     <div className="text-3xl font-bold text-[#8c6b23] mb-2">{compareCount}</div>
                                     <p className="text-sm text-gray-500 mb-4">Properties in your comparison list</p>
-                                    <Link href="/compareproperties" className="text-[#8c6b23] text-sm font-medium hover:underline">
+                                    <Link href="/compareproperties" className="text-[#8c6b23] text-sm font-medium hover:underline cursor-pointer">
                                         View comparison
                                     </Link>
                                 </div>
@@ -276,7 +276,7 @@ export default function Profile() {
                             <div className="mt-auto">
                                 <button
                                     onClick={handleClearAll}
-                                    className="bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:border-red-300 px-6 py-3 rounded-sm shadow-sm font-medium transition-colors"
+                                    className="bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:border-red-300 px-6 py-3 rounded-sm shadow-sm font-medium transition-colors cursor-pointer"
                                 >
                                     Clear All Saved & Compared
                                 </button>

@@ -177,7 +177,7 @@ function OngoingProjectsContent() {
             {/* Left Arrow */}
             <button 
               onClick={handlePrev}
-              className="hidden md:block text-[#C89B4A] hover:opacity-80 transition p-2 flex-shrink-0"
+              className="hidden md:block text-[#C89B4A] hover:opacity-80 transition p-2 flex-shrink-0 cursor-pointer"
             >
               <ChevronLeft size={56} strokeWidth={1} />
             </button>
@@ -185,7 +185,7 @@ function OngoingProjectsContent() {
             {/* Content Block */}
             <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch w-full">
               {visibleProjects.map((project, idx) => (
-                <Link href={`/properties/${project.slug}`} key={`${project.id}-${idx}`} className="block h-fit bg-white rounded-xl overflow-hidden border border-gray-100 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] hover:shadow-lg transition duration-300 group">
+                <Link href={`/properties/${project.slug}`} key={`${project.id}-${idx}`} className="block h-fit bg-white rounded-xl overflow-hidden border border-gray-100 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] hover:shadow-lg transition duration-300 group cursor-pointer">
                   {/* Image Container */}
                   <div className="relative h-[200px] w-full overflow-hidden">
                     <div 
@@ -251,13 +251,13 @@ function OngoingProjectsContent() {
             <div className="flex md:hidden items-center justify-center gap-8 w-full mt-4">
                <button 
                 onClick={handlePrev}
-                className="text-[#C89B4A] hover:opacity-80 transition p-2"
+                className="text-[#C89B4A] hover:opacity-80 transition p-2 cursor-pointer"
               >
                 <ChevronLeft size={48} strokeWidth={1} />
               </button>
               <button 
                 onClick={handleNext}
-                className="text-[#C89B4A] hover:opacity-80 transition p-2"
+                className="text-[#C89B4A] hover:opacity-80 transition p-2 cursor-pointer"
               >
                 <ChevronRight size={48} strokeWidth={1} />
               </button>
@@ -266,7 +266,7 @@ function OngoingProjectsContent() {
             {/* Right Arrow */}
             <button 
               onClick={handleNext}
-              className="hidden md:block text-[#C89B4A] hover:opacity-80 transition p-2 flex-shrink-0"
+              className="hidden md:block text-[#C89B4A] hover:opacity-80 transition p-2 flex-shrink-0 cursor-pointer"
             >
               <ChevronRight size={56} strokeWidth={1} />
             </button>

@@ -114,7 +114,7 @@ export default function HeroSection() {
             </div>
             <button 
               onClick={handleSearch}
-              className="hidden md:flex items-center gap-2 bg-[#B58A3D] text-white px-8 py-2 rounded-xl hover:bg-[#96702e] transition font-bold shadow-md mx-2"
+              className="hidden md:flex items-center gap-2 bg-[#B58A3D] text-white px-8 py-2 rounded-xl hover:bg-[#96702e] transition font-bold shadow-md mx-2 cursor-pointer"
             >
               Search
             </button>
@@ -129,7 +129,7 @@ export default function HeroSection() {
               <div className="relative">
                 <button 
                   onClick={() => setActiveDropdown(activeDropdown === 'budget' ? null : 'budget')}
-                  className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'budget' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`flex items-center cursor-pointer gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'budget' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
                   <IndianRupee className={`w-4 h-4 transition-colors ${activeDropdown === 'budget' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
                   {selectedBudget}
@@ -142,13 +142,13 @@ export default function HeroSection() {
                       <button
                         key={option}
                         onClick={() => { setSelectedBudget(option); setActiveDropdown(null); }}
-                        className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#C19B54] transition border-b border-gray-50 last:border-none"
+                        className="w-full cursor-pointer text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#C19B54] transition border-b border-gray-50 last:border-none"
                       >
                         {option}
                       </button>
                     ))}
                     {selectedBudget !== "Budget" && (
-                      <button onClick={() => { setSelectedBudget("Budget"); setActiveDropdown(null); }} className="w-full text-left px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition border-t border-gray-100 bg-gray-50">Clear Selection</button>
+                      <button onClick={() => { setSelectedBudget("Budget"); setActiveDropdown(null); }} className="w-full cursor-pointer text-left px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition border-t border-gray-100 bg-gray-50">Clear Selection</button>
                     )}
                   </div>
                 )}
@@ -158,20 +158,20 @@ export default function HeroSection() {
               <div className="relative">
                 <button 
                   onClick={() => setActiveDropdown(activeDropdown === 'type' ? null : 'type')}
-                  className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'type' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`flex items-center cursor-pointer gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'type' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
-                  <BedDouble className={`w-4 h-4 transition-colors ${activeDropdown === 'type' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
+                  <BedDouble className={`w-4 h-4 transition-colors cursor-pointer ${activeDropdown === 'type' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
                   {selectedType}
-                  <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${activeDropdown === 'type' ? 'rotate-180 text-[#C19B54]' : 'text-gray-500'}`} />
+                  <ChevronDown className={`w-4 h-4 ml-1 transition-transform cursor-pointer ${activeDropdown === 'type' ? 'rotate-180 text-[#C19B54]' : 'text-gray-500'}`} />
                 </button>
 
                 {activeDropdown === 'type' && (
-                  <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
+                  <div className="absolute top-full left-0 mt-2 w-56 cursor-pointer bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
                     {typeOptions.map(option => (
                       <button
                         key={option}
                         onClick={() => { setSelectedType(option); setActiveDropdown(null); }}
-                        className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#C19B54] transition border-b border-gray-50 last:border-none"
+                        className="w-full cursor-pointer text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#C19B54] transition border-b border-gray-50 last:border-none"
                       >
                         {option}
                       </button>
@@ -187,7 +187,7 @@ export default function HeroSection() {
               <div className="relative">
                 <button 
                   onClick={() => setActiveDropdown(activeDropdown === 'status' ? null : 'status')}
-                  className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'status' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`flex items-center gap-2 cursor-pointer px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'status' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
                   <BarChart3 className={`w-4 h-4 transition-colors ${activeDropdown === 'status' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
                   {selectedStatus}
@@ -195,12 +195,12 @@ export default function HeroSection() {
                 </button>
 
                 {activeDropdown === 'status' && (
-                  <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
+                  <div className="absolute top-full left-0 mt-2 cursor-pointer w-56 bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
                     {statusOptions.map(option => (
                       <button
                         key={option}
                         onClick={() => { setSelectedStatus(option); setActiveDropdown(null); }}
-                        className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#C19B54] transition border-b border-gray-50 last:border-none"
+                        className="w-full text-left cursor-pointer px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#C19B54] transition border-b border-gray-50 last:border-none"
                       >
                         {option}
                       </button>
@@ -216,7 +216,7 @@ export default function HeroSection() {
             {/* Right Side Button */}
             <Link 
               href="/post-property"
-              className="flex items-center gap-2 bg-white text-[#C19B54] px-6 py-2.5 rounded-full font-bold hover:bg-gray-50 transition shadow-sm w-full md:w-auto justify-center md:justify-start"
+              className="flex items-center gap-2 bg-white text-[#C19B54] px-6 py-2.5 rounded-full font-bold hover:bg-gray-50 transition shadow-sm w-full md:w-auto justify-center md:justify-start cursor-pointer"
             >
               <Zap className="w-4 h-4 fill-[#C19B54]" />
               Are you a Property Owner?
@@ -224,7 +224,7 @@ export default function HeroSection() {
             </Link>
             <button 
               onClick={handleSearch}
-              className="md:hidden w-full flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-3 rounded-xl hover:bg-black transition font-bold shadow-md mt-2"
+              className="md:hidden w-full flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-3 rounded-xl hover:bg-black transition font-bold shadow-md mt-2 cursor-pointer"
             >
               Search
             </button>

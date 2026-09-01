@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Link from 'next/link';
 
 interface EnquiryModalProps {
   isOpen: boolean;
@@ -14,7 +15,7 @@ export default function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
       <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200">
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 transition-colors z-10"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 transition-colors z-10 cursor-pointer"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
@@ -33,10 +34,34 @@ export default function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
               <input type="email" placeholder="Your Email" className="w-full px-4 py-3 bg-[#f8f9fa] text-gray-800 border-none rounded-lg focus:outline-none focus:ring-1 focus:ring-[#9c7827] placeholder:text-gray-500 text-[14px]" required />
             </div>
             <div>
-              <input type="tel" placeholder="Mobile Number" className="w-full px-4 py-3 bg-[#f8f9fa] text-gray-800 border-none rounded-lg focus:outline-none focus:ring-1 focus:ring-[#9c7827] placeholder:text-gray-500 text-[14px]" required />
+              <input 
+                type="tel" 
+                placeholder="Mobile Number" 
+                className="w-full px-4 py-3 bg-[#f8f9fa] text-gray-800 border-none rounded-lg focus:outline-none focus:ring-1 focus:ring-[#9c7827] placeholder:text-gray-500 text-[14px]" 
+                required 
+                pattern="[0-9]{10}"
+                maxLength={10}
+                minLength={10}
+                title="Please enter a valid 10-digit mobile number"
+                onInput={(e) => {
+                  e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+                }}
+              />
             </div>
             
-            <button type="submit" className="w-full bg-[#B58A3D] hover:bg-[#967132] text-white font-semibold py-3.5 rounded-lg transition-colors text-[15px] shadow-sm mt-4">
+            <div className="flex items-start gap-2 pt-2">
+              <input 
+                type="checkbox" 
+                id="consent" 
+                required 
+                className="mt-1 min-w-[16px] h-4 w-4 cursor-pointer accent-[#B58A3D]"
+              />
+              <label htmlFor="consent" className="text-xs text-gray-600 cursor-pointer leading-tight">
+                I agree to the <Link href="/terms-conditions" className="text-[#B58A3D] hover:underline">terms and conditions</Link> and <Link href="/privacy-policy" className="text-[#B58A3D] hover:underline">privacy policy</Link> and consent to being contacted regarding my enquiry.
+              </label>
+            </div>
+            
+            <button type="submit" className="w-full bg-[#B58A3D] hover:bg-[#967132] text-white font-semibold py-3.5 rounded-lg transition-colors text-[15px] shadow-sm mt-4 cursor-pointer">
               Submit Enquiry
             </button>
           </form>

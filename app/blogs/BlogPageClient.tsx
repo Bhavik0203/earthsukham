@@ -195,7 +195,7 @@ export default function BlogsPage() {
                     <div className="text-xs font-semibold uppercase tracking-widest text-[#6b6b6b] font-raleway">Featured Articles</div>
                     <div className="mt-4 space-y-4">
                       {blogs.slice(0, 5).map((p) => (
-                        <Link key={p.id} href={`/blogs/${p.slug}`} className="block group">
+                        <Link key={p.id} href={`/blogs/${p.slug}`} className="block group cursor-pointer">
                           <div className="mt-1 text-sm font-semibold leading-snug text-[#1b1b1b] group-hover:text-[#3B3808] transition-colors font-raleway">
                             {p.title}
                           </div>
@@ -229,7 +229,7 @@ export default function BlogsPage() {
                         key={`${post.id}-${idx}`}
                         className={`${layoutClass} rounded-xl bg-white p-4 shadow-sm group hover:shadow-md transition-shadow duration-300`}
                       >
-                        <Link href={`/blogs/${post.slug}`} className="block h-full">
+                        <Link href={`/blogs/${post.slug}`} className="block h-full cursor-pointer">
                           <div className="overflow-hidden rounded-2xl">
                             <div className="relative h-[220px] w-full lg:h-[240px]">
                               <img

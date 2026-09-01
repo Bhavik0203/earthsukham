@@ -77,7 +77,7 @@ export default function ExclusiveProjects() {
     <section className="max-w-7xl mx-auto px-4 md:px-8 py-12">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-[#0a192f]">Exclusive Projects</h2>
-        <Link href="/exclusive-projects" className="text-blue-400 hover:text-blue-500 transition font-medium flex items-center gap-1">
+        <Link href="/exclusive-projects" className="text-blue-400 hover:text-blue-500 transition font-medium flex items-center gap-1 cursor-pointer">
           View all <span className="text-lg leading-none pb-0.5">&gt;</span>
         </Link>
       </div>
@@ -105,7 +105,7 @@ export default function ExclusiveProjects() {
                   />
                   Compare
                 </label>
-                <button className="hover:text-blue-500 transition ml-2"><Share2 size={20} /></button>
+                <button className="hover:text-blue-500 transition ml-2 cursor-pointer"><Share2 size={20} /></button>
               </div>
             </div>
             <p className="text-gray-500 text-sm mb-8">{activeProject.location}</p>
@@ -125,8 +125,8 @@ export default function ExclusiveProjects() {
           </div>
 
           <div className="flex items-center gap-6 mt-12 md:mt-auto">
-            <button className="text-[#0a192f] font-semibold hover:underline">Contact Us</button>
-            <Link href={`/properties/${activeProject.slug}`} className="bg-[#15234b] text-white px-8 py-2.5 rounded-full font-medium hover:bg-[#0a192f] transition shadow-md">
+            <button className="text-[#0a192f] font-semibold hover:underline cursor-pointer">Contact Us</button>
+            <Link href={`/properties/${activeProject.slug}`} className="bg-[#15234b] text-white px-8 py-2.5 rounded-full font-medium hover:bg-[#0a192f] transition shadow-md cursor-pointer">
               Explore now
             </Link>
           </div>
@@ -148,7 +148,7 @@ export default function ExclusiveProjects() {
       <div className="flex items-center justify-end gap-4 py-4 pr-0 md:pr-4">
         <button 
           onClick={handlePrev}
-          className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 bg-white hover:bg-gray-50 shadow-sm transition"
+          className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 bg-white hover:bg-gray-50 shadow-sm transition cursor-pointer"
         >
           <ChevronLeft size={20} />
         </button>
@@ -173,7 +173,7 @@ export default function ExclusiveProjects() {
 
         <button 
           onClick={handleNext}
-          className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 bg-white hover:bg-gray-50 shadow-sm transition"
+          className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 bg-white hover:bg-gray-50 shadow-sm transition cursor-pointer"
         >
           <ChevronRight size={20} />
         </button>

@@ -145,7 +145,7 @@ export default function AboutUsPage() {
                 Lorem Ipsum is simply dummy text of the printing and typesetting dummy text of the printing industry 
                 Lorem Ipsum is of the and it is printingLorem Ipsum is simply dummy text of the printing and typesetting 
                 dummy text of the printing industr...{' '}
-                <a href="#" className="text-[#C59B27] hover:underline font-medium inline-block transition-colors ml-1">
+                <a href="#" className="text-[#C59B27] hover:underline font-medium inline-block transition-colors ml-1 cursor-pointer">
                   Read more
                 </a>
               </p>

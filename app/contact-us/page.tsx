@@ -66,7 +66,7 @@ export default function ContactUs() {
             
             <textarea placeholder="Message" rows={6} className="w-full px-4 py-3 bg-[#efe9d6] text-gray-800 border-none rounded-sm focus:outline-none focus:ring-1 focus:ring-[#9c7827] placeholder:text-gray-500 text-[14px] resize-none"></textarea>
             
-            <button type="submit" className="w-full bg-[#8c6b23] hover:bg-[#73581c] text-white font-medium py-3.5 rounded-sm transition-colors text-[15px] shadow-sm">
+            <button type="submit" className="w-full bg-[#8c6b23] hover:bg-[#73581c] text-white font-medium py-3.5 rounded-sm transition-colors text-[15px] shadow-sm cursor-pointer">
               Send a message
             </button>
           </form>
@@ -78,38 +78,42 @@ export default function ContactUs() {
           <div>
             <h3 className="text-[22px] font-serif text-gray-800 mb-3">Corporate office</h3>
             <p className="text-[13px] text-gray-500 leading-relaxed max-w-sm">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing.
+              <a href="https://maps.google.com/?q=Office+254,+Vision+9,+Pimple+Saudagar,+Pune,+Maharashtra+-+411027" target="_blank" rel="noopener noreferrer" className="hover:text-[#9c7827] transition-colors cursor-pointer">
+                Office 254, Vision 9, Pimple Saudagar, Pune, Maharashtra - 411027
+              </a>
             </p>
           </div>
 
           <div>
             <h3 className="text-[22px] font-serif text-gray-800 mb-2">For sales/ Marketing queries</h3>
-            <p className="text-[14px] text-gray-600">+91 000 000 0000</p>
+            <p className="text-[14px] text-gray-600">
+              <a href="tel:+919923901000" className="hover:text-[#9c7827] transition-colors">+91 9923 90 1000</a> | <a href="tel:+917074001000" className="hover:text-[#9c7827] transition-colors">+91 7074 00 1000</a>
+            </p>
           </div>
 
           <div>
             <h3 className="text-[22px] font-serif text-gray-800 mb-2">Email</h3>
-            <a href="mailto:INFO@EARTHSUKHAM.COM" className="text-[12px] text-gray-500 hover:text-[#9c7827] transition-colors uppercase tracking-widest">
-              INFO@EARTHSUKHAM.COM
+            <a href="mailto:earthsukham@gmail.com" className="text-[12px] text-gray-500 hover:text-[#9c7827] transition-colors uppercase tracking-widest cursor-pointer">
+              earthsukham@gmail.com
             </a>
           </div>
 
           <div>
             <h3 className="text-[22px] font-serif text-gray-800 mb-2">Social Connects</h3>
-            <a href="mailto:INFO@EARTHSUKHAM.COM" className="text-[12px] text-gray-500 hover:text-[#9c7827] transition-colors uppercase tracking-widest block mb-4">
-              INFO@EARTHSUKHAM.COM
+            <a href="mailto:earthsukham@gmail.com" className="text-[12px] text-gray-500 hover:text-[#9c7827] transition-colors uppercase tracking-widest block mb-4 cursor-pointer">
+              earthsukham@gmail.com
             </a>
             <div className="flex gap-3">
-              <a href="#" className="w-[30px] h-[30px] rounded flex items-center justify-center bg-[#1877F2] text-white hover:bg-blue-700 transition-colors">
+              <a href="#" className="w-[30px] h-[30px] rounded flex items-center justify-center bg-[#1877F2] text-white hover:bg-blue-700 transition-colors cursor-pointer">
                 <FaFacebookF className="w-[14px] h-[14px]" />
               </a>
-              <a href="#" className="w-[30px] h-[30px] rounded flex items-center justify-center bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white hover:opacity-90 transition-opacity">
+              <a href="#" className="w-[30px] h-[30px] rounded flex items-center justify-center bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white hover:opacity-90 transition-opacity cursor-pointer">
                 <FaInstagram className="w-[16px] h-[16px]" />
               </a>
-              <a href="#" className="w-[30px] h-[30px] rounded flex items-center justify-center bg-[#FF0000] text-white hover:bg-red-700 transition-colors">
+              <a href="#" className="w-[30px] h-[30px] rounded flex items-center justify-center bg-[#FF0000] text-white hover:bg-red-700 transition-colors cursor-pointer">
                 <FaYoutube className="w-[14px] h-[14px]" />
               </a>
-              <a href="#" className="w-[30px] h-[30px] rounded flex items-center justify-center bg-[#0A66C2] text-white hover:bg-blue-800 transition-colors">
+              <a href="#" className="w-[30px] h-[30px] rounded flex items-center justify-center bg-[#0A66C2] text-white hover:bg-blue-800 transition-colors cursor-pointer">
                 <FaLinkedinIn className="w-[14px] h-[14px]" />
               </a>
             </div>

@@ -67,18 +67,18 @@ export default function Navbar() {
         }`}
       >
         {/* Brand Logo (White) */}
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center cursor-pointer">
           <Image src="/images/logo-white.png" alt="Earth Sukham" width={200} height={80} className="h-10 sm:h-16 w-auto object-contain" />
         </Link>
 
         {/* Navigation Links (White) */}
         <nav className="hidden md:flex items-center gap-8 text-white font-medium text-sm">
-          <Link href="/about-us" className="hover:text-[#D4A373] transition">About</Link>
-          <Link href="/properties" className="hover:text-[#D4A373] transition">Properties</Link>
-          <Link href="/services" className="hover:text-[#D4A373] transition">Services</Link>
-          <Link href="/blogs" className="hover:text-[#D4A373] transition">Blogs</Link>
-          <Link href="/career" className="hover:text-[#D4A373] transition">Career</Link>
-          <Link href="/contact-us" className="hover:text-[#D4A373] transition">Contact</Link>
+          <Link href="/about-us" className="hover:text-[#D4A373] transition cursor-pointer">About</Link>
+          <Link href="/properties" className="hover:text-[#D4A373] transition cursor-pointer">Properties</Link>
+          <Link href="/services" className="hover:text-[#D4A373] transition cursor-pointer">Services</Link>
+          <Link href="/blogs" className="hover:text-[#D4A373] transition cursor-pointer">Blogs</Link>
+          <Link href="/career" className="hover:text-[#D4A373] transition cursor-pointer">Career</Link>
+          <Link href="/contact-us" className="hover:text-[#D4A373] transition cursor-pointer">Contact</Link>
         </nav>
 
         {/* CTA Button and Auth */}
@@ -91,7 +91,7 @@ export default function Navbar() {
             >
               <Link 
                 href="/profile"
-                className="flex items-center gap-2 bg-white text-[#2C2C2C] px-4 py-2 rounded shadow-sm hover:bg-gray-50 transition font-medium text-sm"
+                className="flex items-center cursor-pointer  gap-2 bg-white text-[#2C2C2C] px-4 py-2 rounded shadow-sm hover:bg-gray-50 transition font-medium text-sm cursor-pointer"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                 Profile
@@ -99,18 +99,18 @@ export default function Navbar() {
               
               {activeDropdown === 1 && (
                 <div className="absolute right-0 top-full pt-2 w-48 z-50">
-                  <div className="bg-white rounded-md shadow-lg py-1 border border-gray-100">
-                    <Link href="/profile" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium">
+                  <div className="bg-white cursor-pointer rounded-md shadow-lg py-1 border border-gray-100">
+                    <Link href="/profile" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium cursor-pointer">
                       My Profile
                     </Link>
-                    <Link href="/saved-properties" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium">
+                    <Link href="/saved-properties" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium cursor-pointer">
                       Saved Properties
                     </Link>
-                    <Link href="/compareproperties" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium">
+                    <Link href="/compareproperties" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium cursor-pointer">
                       Compare Properties
                     </Link>
                     <div className="border-t border-gray-100 my-1"></div>
-                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 font-medium">
+                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 font-medium cursor-pointer">
                       Logout
                     </button>
                   </div>
@@ -118,11 +118,11 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <Link href="/login" className="text-white text-sm font-medium hover:text-[#D4A373] transition hidden md:block">
+            <Link href="/login" className="text-white cursor-pointer  text-sm font-medium hover:text-[#D4A373] transition hidden md:block cursor-pointer">
               Login
             </Link>
           )}
-          <button onClick={() => setIsModalOpen(true)} className="bg-[#B58A3D] text-white px-6 py-2 rounded text-sm font-semibold hover:bg-[#967132] transition shadow-md">
+          <button onClick={() => setIsModalOpen(true)} className="bg-[#B58A3D] cursor-pointer  text-white px-6 py-2 rounded text-sm font-semibold hover:bg-[#967132] transition shadow-md">
             Enquiry Now
           </button>
         </div>
@@ -138,18 +138,18 @@ export default function Navbar() {
         }`}
       >
         {/* Brand Logo (Dark) */}
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center cursor-pointer">
           <Image src="/images/Logo.png" alt="Earth Sukham" width={200} height={80} className="h-10 sm:h-14 w-auto object-contain" />
         </Link>
 
         {/* Navigation Links (Dark) */}
         <nav className="hidden md:flex items-center gap-8 text-[#2C2C2C] font-medium text-sm">
-          <Link href="/about-us" className="hover:text-[#C19B54] transition">About</Link>
-          <Link href="/properties" className="hover:text-[#C19B54] transition">Properties</Link>
-          <Link href="/services" className="hover:text-[#C19B54] transition">Services</Link>
-          <Link href="/career" className="hover:text-[#C19B54] transition">Career</Link>
-          <Link href="/blogs" className="hover:text-[#C19B54] transition">Blogs</Link>
-          <Link href="/contact-us" className="hover:text-[#C19B54] transition">Contact</Link>
+          <Link href="/about-us" className="hover:text-[#C19B54] transition cursor-pointer">About</Link>
+          <Link href="/properties" className="hover:text-[#C19B54] transition cursor-pointer">Properties</Link>
+          <Link href="/services" className="hover:text-[#C19B54] transition cursor-pointer">Services</Link>
+          <Link href="/career" className="hover:text-[#C19B54] transition cursor-pointer">Career</Link>
+          <Link href="/blogs" className="hover:text-[#C19B54] transition cursor-pointer">Blogs</Link>
+          <Link href="/contact-us" className="hover:text-[#C19B54] transition cursor-pointer">Contact</Link>
         </nav>
 
         {/* CTA Button and Auth */}
@@ -162,7 +162,7 @@ export default function Navbar() {
             >
               <Link 
                 href="/profile"
-                className="flex items-center gap-2 bg-white border border-gray-200 text-[#2C2C2C] px-4 py-2 rounded shadow-sm hover:bg-gray-50 transition font-medium text-sm"
+                className="flex items-center gap-2 bg-white border border-gray-200 text-[#2C2C2C] px-4 py-2 rounded shadow-sm hover:bg-gray-50 transition font-medium text-sm cursor-pointer"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                 Profile
@@ -171,17 +171,17 @@ export default function Navbar() {
               {activeDropdown === 2 && (
                 <div className="absolute right-0 top-full pt-2 w-48 z-50">
                   <div className="bg-white rounded-md shadow-lg py-1 border border-gray-100">
-                    <Link href="/profile" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium">
+                    <Link href="/profile" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium cursor-pointer">
                       My Profile
                     </Link>
-                    <Link href="/saved-properties" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium">
+                    <Link href="/saved-properties" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium cursor-pointer">
                       Saved Properties
                     </Link>
-                    <Link href="/compareproperties" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium">
+                    <Link href="/compareproperties" className="block px-4 py-2 text-sm text-[#2C2C2C] hover:bg-gray-100 font-medium cursor-pointer">
                       Compare Properties
                     </Link>
                     <div className="border-t border-gray-100 my-1"></div>
-                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 font-medium">
+                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 font-medium cursor-pointer">
                       Logout
                     </button>
                   </div>
@@ -189,7 +189,7 @@ export default function Navbar() {
               )}
             </div>
           ) : (
-            <Link href="/login" className="text-[#2C2C2C] text-sm font-medium hover:text-[#C19B54] transition hidden md:block">
+            <Link href="/login" className="text-[#2C2C2C] text-sm font-medium hover:text-[#C19B54] transition hidden md:block cursor-pointer">
               Login
             </Link>
           )}
