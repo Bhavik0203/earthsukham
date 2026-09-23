@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Share2, Heart, Phone, Download, Bed, Bath, Maximize, CalendarDays, Check, Car, ArrowUp, ArrowDown, Sofa, Dumbbell, Waves, Footprints, Gamepad2, GlassWater, ChevronUp, ChevronDown, QrCode } from 'lucide-react';
-import { FaWhatsapp } from 'react-icons/fa';
+import { Share2, Heart, Phone, Download, Bed, Bath, Maximize, CalendarDays, Check, Car, ArrowUp, ArrowDown, Sofa, Dumbbell, Waves, Footprints, Gamepad2, GlassWater, ChevronUp, ChevronDown, QrCode, Link as LinkIcon } from 'lucide-react';
+import { FaWhatsapp, FaFacebook, FaTwitter } from 'react-icons/fa';
 import Calculators from '../../components/Calculators';
 
 const SIMILAR_PROPERTIES = [
@@ -177,9 +177,24 @@ export default function PropertyDetailsPage() {
     return `${API_BASE_URL.replace('/api', '')}${finalPath}`;
   };
 
-  const shareOnWhatsapp = () => {
-    const text = `Check out this property: ${property.propertyName} at ${property.location || property.city}.`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  const getShareUrl = () => typeof window !== 'undefined' ? window.location.href : '';
+
+  const handleShare = async () => {
+    const url = getShareUrl();
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: property.propertyName,
+          text: `Check out this property: ${property.propertyName} at ${property.location || property.city}.`,
+          url: url,
+        });
+      } catch (err) {
+        console.error("Error sharing:", err);
+      }
+    } else {
+      navigator.clipboard.writeText(url);
+      alert('Link copied to clipboard!');
+    }
   };
 
   const mainImage = property.multipleImages && property.multipleImages.length > 0 
@@ -255,7 +270,7 @@ export default function PropertyDetailsPage() {
                 </h1>
                 <div className="flex items-center gap-1.5 text-[#6c2bd9]">
                   <button 
-                    onClick={shareOnWhatsapp}
+                    onClick={handleShare}
                     className="hover:bg-purple-50 p-1.5 rounded-full transition-colors cursor-pointer"
                   >
                     <Share2 className="w-5 h-5" />
@@ -293,10 +308,10 @@ export default function PropertyDetailsPage() {
               <div className="text-[13px] text-gray-500 mb-4 w-full md:text-right">
                 {property.propertyType}
               </div>
-              <button className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[#6c2bd9] hover:bg-[#5b21b6] text-white text-[15px] font-medium rounded-md shadow-sm transition-colors w-full md:w-auto cursor-pointer">
+              <a href="tel:+919923901000" className="flex items-center justify-center gap-2 px-6 py-2.5 bg-[#6c2bd9] hover:bg-[#5b21b6] text-white text-[15px] font-medium rounded-md shadow-sm transition-colors w-full md:w-auto cursor-pointer">
                 <Phone className="w-4 h-4" />
                 Contact Seller
-              </button>
+              </a>
             </div>
             
           </div>
@@ -356,69 +371,42 @@ export default function PropertyDetailsPage() {
           <div id="overview" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100 flex justify-between items-center">
               <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} Overview</h2>
-              <button className="flex items-center gap-2 px-5 py-2 bg-[#15803d] text-white text-[14px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors cursor-pointer">
+              {/* <button className="flex items-center gap-2 px-5 py-2 bg-[#15803d] text-white text-[14px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors cursor-pointer">
                 Brochure <Download className="w-4 h-4" />
-              </button>
+              </button> */}
             </div>
             <div className="p-6">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {/* Row 1 */}
-                <div className="border border-[#b38e41]/30 rounded-md flex items-center justify-center gap-3 p-3">
-                  <Bed className="w-8 h-8 text-[#b38e41] font-light stroke-[1.5]" />
-                  <div className="text-center leading-tight">
-                    <span className="block text-[14px] font-bold text-gray-800">4</span>
-                    <span className="block text-[12px] text-[#b38e41] font-medium">Beds</span>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                {/* Beds */}
+                <div className="border border-[#b38e41]/30 rounded-lg flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 p-3 bg-white hover:shadow-md transition-shadow">
+                  <Bed className="w-6 h-6 sm:w-7 sm:h-7 text-[#b38e41] font-light stroke-[1.5]" />
+                  <div className="text-center sm:text-left leading-tight">
+                    <span className="block text-[14px] sm:text-[15px] font-bold text-gray-800">4</span>
+                    <span className="block text-[10px] sm:text-[12px] text-[#b38e41] font-medium uppercase tracking-wider">Beds</span>
                   </div>
                 </div>
-                <div className="border border-[#b38e41]/30 rounded-md flex items-center justify-center gap-3 p-3">
-                  <Bath className="w-8 h-8 text-[#b38e41] font-light stroke-[1.5]" />
-                  <div className="text-center leading-tight">
-                    <span className="block text-[14px] font-bold text-gray-800">3</span>
-                    <span className="block text-[12px] text-[#b38e41] font-medium">Beds</span>
+                {/* Baths */}
+                <div className="border border-[#b38e41]/30 rounded-lg flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 p-3 bg-white hover:shadow-md transition-shadow">
+                  <Bath className="w-6 h-6 sm:w-7 sm:h-7 text-[#b38e41] font-light stroke-[1.5]" />
+                  <div className="text-center sm:text-left leading-tight">
+                    <span className="block text-[14px] sm:text-[15px] font-bold text-gray-800">3</span>
+                    <span className="block text-[10px] sm:text-[12px] text-[#b38e41] font-medium uppercase tracking-wider">Baths</span>
                   </div>
                 </div>
-                <div className="border border-[#b38e41]/30 rounded-md flex items-center justify-center gap-3 p-3 col-span-2 md:col-span-1">
-                  <Bath className="w-8 h-8 text-[#b38e41] font-light stroke-[1.5]" />
-                  <div className="text-center leading-tight">
-                    <span className="block text-[13px] font-bold text-gray-800 tracking-tight">769sq.ft - 1599sq.ft</span>
-                    <span className="block text-[12px] text-[#b38e41] font-medium">Baths</span>
+                {/* Area */}
+                <div className="border border-[#b38e41]/30 rounded-lg flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 p-3 bg-white hover:shadow-md transition-shadow col-span-2 md:col-span-1">
+                  <Maximize className="w-6 h-6 sm:w-7 sm:h-7 text-[#b38e41] font-light stroke-[1.5]" />
+                  <div className="text-center sm:text-left leading-tight">
+                    <span className="block text-[13px] sm:text-[14px] font-bold text-gray-800 tracking-tight">769 - 1599 sq.ft</span>
+                    <span className="block text-[10px] sm:text-[12px] text-[#b38e41] font-medium uppercase tracking-wider">Area</span>
                   </div>
                 </div>
-                <div className="border border-[#b38e41]/30 rounded-md flex items-center justify-center gap-3 p-3">
-                  <Bath className="w-8 h-8 text-[#b38e41] font-light stroke-[1.5]" />
-                  <div className="text-center leading-tight">
-                    <span className="block text-[14px] font-bold text-gray-800">2026</span>
-                    <span className="block text-[12px] text-[#b38e41] font-medium">Year</span>
-                  </div>
-                </div>
-
-                {/* Row 2 */}
-                <div className="border border-[#b38e41]/30 rounded-md flex items-center justify-center gap-3 p-3">
-                  <Bed className="w-8 h-8 text-[#b38e41] font-light stroke-[1.5]" />
-                  <div className="text-center leading-tight">
-                    <span className="block text-[14px] font-bold text-gray-800">4</span>
-                    <span className="block text-[12px] text-[#b38e41] font-medium">Beds</span>
-                  </div>
-                </div>
-                <div className="border border-[#b38e41]/30 rounded-md flex items-center justify-center gap-3 p-3">
-                  <Bath className="w-8 h-8 text-[#b38e41] font-light stroke-[1.5]" />
-                  <div className="text-center leading-tight">
-                    <span className="block text-[14px] font-bold text-gray-800">3</span>
-                    <span className="block text-[12px] text-[#b38e41] font-medium">Beds</span>
-                  </div>
-                </div>
-                <div className="border border-[#b38e41]/30 rounded-md flex items-center justify-center gap-3 p-3 col-span-2 md:col-span-1">
-                  <Bath className="w-8 h-8 text-[#b38e41] font-light stroke-[1.5]" />
-                  <div className="text-center leading-tight">
-                    <span className="block text-[13px] font-bold text-gray-800 tracking-tight">769sq.ft - 1599sq.ft</span>
-                    <span className="block text-[12px] text-[#b38e41] font-medium">Baths</span>
-                  </div>
-                </div>
-                <div className="border border-[#b38e41]/30 rounded-md flex items-center justify-center gap-3 p-3">
-                  <Bath className="w-8 h-8 text-[#b38e41] font-light stroke-[1.5]" />
-                  <div className="text-center leading-tight">
-                    <span className="block text-[14px] font-bold text-gray-800">2026</span>
-                    <span className="block text-[12px] text-[#b38e41] font-medium">Year</span>
+                {/* Year Built */}
+                <div className="border border-[#b38e41]/30 rounded-lg flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 p-3 bg-white hover:shadow-md transition-shadow col-span-2 md:col-span-1">
+                  <CalendarDays className="w-6 h-6 sm:w-7 sm:h-7 text-[#b38e41] font-light stroke-[1.5]" />
+                  <div className="text-center sm:text-left leading-tight">
+                    <span className="block text-[14px] sm:text-[15px] font-bold text-gray-800">2026</span>
+                    <span className="block text-[10px] sm:text-[12px] text-[#b38e41] font-medium uppercase tracking-wider">Year Built</span>
                   </div>
                 </div>
               </div>
@@ -510,9 +498,9 @@ export default function PropertyDetailsPage() {
           <div id="pricing-and-unit-plans" className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden scroll-mt-28">
             <div className="bg-[#fbf9f4] px-6 py-4 border-b border-gray-100 flex justify-between items-center">
               <h2 className="text-[22px] font-serif text-gray-900 font-semibold">{property.propertyName} Pricing & Unit Plan</h2>
-              <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#15803d] text-white text-[13px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors cursor-pointer">
+              {/* <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#15803d] text-white text-[13px] font-medium rounded shadow-sm hover:bg-green-700 transition-colors cursor-pointer">
                 Price Sheet <Download className="w-3.5 h-3.5" />
-              </button>
+              </button> */}
             </div>
             <div className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -679,7 +667,7 @@ export default function PropertyDetailsPage() {
 
         {/* Right Column (Form) */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-xl shadow-[0_4px_25px_rgb(0,0,0,0.08)] border border-gray-100 p-6 sticky top-6">
+          <div className="bg-white rounded-xl shadow-[0_4px_25px_rgb(0,0,0,0.08)] border border-gray-100 p-6 sticky top-10">
             <h3 className="text-[22px] font-serif text-center text-gray-900 mb-6 font-semibold">Call Me Instantly</h3>
             
             <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>

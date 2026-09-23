@@ -58,6 +58,64 @@ const formatDate = (value?: string) => {
   });
 };
 
+const DUMMY_BLOGS: BlogPost[] = [
+  {
+    id: 'dummy-1',
+    title: 'The Future of Real Estate: Trends to Watch in 2026',
+    slug: 'future-of-real-estate-trends',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'Explore the latest innovations and market trends shaping the future of real estate development and investment across the globe.',
+    content: '<p>Real estate is evolving rapidly. As we approach 2026, technology is fundamentally shifting how we build, buy, and live in our homes. From virtual reality home tours to blockchain-based property transactions, the industry is more dynamic than ever.</p><p>Sustainability is no longer a buzzword, but a core requirement for new developments. Buyers are prioritizing eco-friendly materials and energy-efficient designs. Additionally, the rise of remote work has changed the geographic landscape of property demand, with suburban and rural areas seeing unprecedented growth.</p>',
+    tag: 'Market Trends',
+    date: 'Oct 12, 2026',
+    readTime: '5 min read',
+  },
+  {
+    id: 'dummy-2',
+    title: 'Sustainable Living: Eco-Friendly Home Upgrades',
+    slug: 'sustainable-living-eco-friendly-upgrades',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'Discover easy and effective ways to make your home more energy-efficient, environmentally friendly, and sustainable.',
+    content: '<p>Sustainable living is easier than you think. Start with energy-efficient LED lighting and smart thermostats to drastically reduce your carbon footprint. Upgrading your insulation and windows can also lead to significant savings on utility bills.</p><p>For those looking for a larger impact, consider installing solar panels or an advanced water recycling system. Making these eco-friendly upgrades not only helps the planet but also significantly increases the resale value of your property.</p>',
+    tag: 'Sustainability',
+    date: 'Oct 05, 2026',
+    readTime: '4 min read',
+  },
+  {
+    id: 'dummy-3',
+    title: 'Top 10 Neighborhoods for Families in 2026',
+    slug: 'top-10-neighborhoods-for-families',
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'Looking to settle down? We break down the most family-friendly neighborhoods based on schools, safety, and amenities.',
+    content: '<p>Finding the perfect neighborhood for your family involves balancing a variety of factors. Proximity to top-rated schools, low crime rates, and access to parks and recreational facilities are at the top of most parents\' lists.</p><p>In 2026, we are seeing a trend towards master-planned communities that offer self-contained amenities like community pools, walking trails, and integrated retail centers, providing a safe and convenient lifestyle for growing families.</p>',
+    tag: 'Lifestyle',
+    date: 'Sep 28, 2026',
+    readTime: '6 min read',
+  },
+  {
+    id: 'dummy-4',
+    title: 'How to Maximize Your Property Value Before Selling',
+    slug: 'maximize-property-value-before-selling',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'Simple renovations and staging tips that can dramatically increase your home\'s market value before you list it for sale.',
+    content: '<p>Before putting your house on the market, minor investments can yield major returns. Focus on curb appeal by updating landscaping and painting the front door. Inside, kitchen and bathroom updates typically offer the best return on investment.</p><p>Don\'t underestimate the power of decluttering and professional staging. Buyers need to be able to envision themselves living in the space, and a clean, neutralized, well-lit home makes all the difference during an open house.</p>',
+    tag: 'Selling Tips',
+    date: 'Sep 20, 2026',
+    readTime: '7 min read',
+  },
+  {
+    id: 'dummy-5',
+    title: 'The Rise of Smart Homes: Integration and Automation',
+    slug: 'rise-of-smart-homes-automation',
+    image: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'From voice-controlled lighting to automated security systems, learn how smart technology is redefining modern living.',
+    content: '<p>Smart homes are no longer science fiction; they are the new standard. Automated lighting, smart locks, and connected appliances offer unprecedented convenience and security. Systems can now learn your routines and adjust the environment to your preferences automatically.</p><p>As these technologies become more affordable and easier to install, they are becoming expected features in modern homes, improving daily life while also offering better energy management.</p>',
+    tag: 'Technology',
+    date: 'Sep 15, 2026',
+    readTime: '5 min read',
+  },
+];
+
 export default function BlogDetailPage() {
   const params = useParams<{ slug: string }>();
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
@@ -70,31 +128,35 @@ export default function BlogDetailPage() {
     const fetchBlogs = async () => {
       try {
         const data: BlogApiItem[] = await fetchApi('/blogs', { cache: 'no-store' });
+        if (!isMounted) return;
 
-        if (!isMounted || !Array.isArray(data)) return;
+        if (Array.isArray(data) && data.length > 0) {
+          const formatted = data.map((post) => {
+            const apiTags = normalizeTags(post.tags || post.categories || []);
+            const tag = apiTags[0] || 'General';
+            const excerpt = post.excerpt || post.content?.replace(/<[^>]+>/g, '').slice(0, 180) || '';
+            const content = post.content || '<p>No content available.</p>';
 
-        const formatted = data.map((post) => {
-          const apiTags = normalizeTags(post.tags || post.categories || []);
-          const tag = apiTags[0] || 'General';
-          const excerpt = post.excerpt || post.content?.replace(/<[^>]+>/g, '').slice(0, 180) || '';
-          const content = post.content || '<p>No content available.</p>';
+            return {
+              id: post._id,
+              title: post.title,
+              slug: post.slug,
+              image: post.uploadImage || post.coverImage || '/images/blogimage/blog.png',
+              excerpt,
+              content,
+              tag,
+              date: formatDate(post.createdAt),
+              readTime: post.readTime ? `${post.readTime} min read` : '5 min read',
+            };
+          });
 
-          return {
-            id: post._id,
-            title: post.title,
-            slug: post.slug,
-            image: post.uploadImage || post.coverImage || '/images/blogimage/blog.png',
-            excerpt,
-            content,
-            tag,
-            date: formatDate(post.createdAt),
-            readTime: post.readTime ? `${post.readTime} min read` : '5 min read',
-          };
-        });
-
-        setBlogs(formatted);
+          setBlogs(formatted);
+        } else {
+          setBlogs(DUMMY_BLOGS);
+        }
       } catch (error) {
-        console.error('Error fetching blogs:', error);
+        console.error('Error fetching blogs, falling back to dummy data:', error);
+        if (isMounted) setBlogs(DUMMY_BLOGS);
       } finally {
         if (isMounted) setLoading(false);
       }
@@ -139,32 +201,32 @@ export default function BlogDetailPage() {
     <div className="bg-[#f5f3f3]">
       <div className="bg-[#f5f3f3] p-4">
         <section className="relative overflow-hidden rounded-2xl">
-          <div className="relative h-[260px] w-full md:h-[420px]">
+          <div className="relative h-[420px] w-full">
             <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
             <div className="absolute inset-0 bg-black/65" />
           </div>
 
-          <div className="absolute inset-0 flex items-center">
+          <div className="absolute inset-0 flex items-center pt-12 md:pt-0">
             <div className="w-full px-6">
               <div className="mx-auto w-full max-w-7xl">
                 <div className="max-w-3xl">
-                  <div className="flex items-center gap-2 text-sm font-semibold tracking-[0.2em] text-[#ffee50]">
+                  <div className="flex items-center gap-2 text-xs md:text-sm font-semibold tracking-[0.2em] text-[#ffee50]">
                     <Link href="/" className="hover:underline cursor-pointer">Home</Link>
                     <span>/</span>
                     <Link href="/blogs" className="hover:underline cursor-pointer">Blog</Link>
                     <span>/</span>
-                    <span className="text-white/70 truncate max-w-[200px]">{post.tag}</span>
+                    <span className="text-white/70 truncate max-w-[150px] md:max-w-[200px]">{post.tag}</span>
                   </div>
 
-                  <div className="mt-4 inline-flex rounded-md bg-[#ffee50] px-3 py-1 text-xs font-semibold text-[#3B3808]">
+                  <div className="mt-3 md:mt-4 inline-flex rounded-md bg-[#ffee50] px-3 py-1 text-xs font-semibold text-[#3B3808]">
                     {post.tag}
                   </div>
 
-                  <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl font-raleway">
+                  <h1 className="mt-2 md:mt-3 text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl font-raleway">
                     {post.title}
                   </h1>
 
-                  <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-white/70 font-raleway">
+                  <div className="mt-3 md:mt-4 flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm text-white/70 font-raleway">
                     <span className="flex items-center gap-1.5">
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

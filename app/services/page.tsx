@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import FAQ from '../components/FAQ';
 
 export default function ServicesPage() {
@@ -56,12 +57,16 @@ export default function ServicesPage() {
           <div className="w-full px-6">
             <div className="mx-auto w-full max-w-7xl">
               <div className="max-w-3xl">
-                <div className="text-sm font-semibold tracking-[0.2em] text-[#ffee50] font-sans uppercase">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+                  className="text-sm font-semibold tracking-[0.2em] text-[#ffee50] font-sans uppercase">
                   Home / Services
-                </div>
-                <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl font-sans">
+                </motion.div>
+                <motion.h1 
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+                  className="mt-4 text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl font-sans">
                   Our Services
-                </h1>
+                </motion.h1>
               </div>
             </div>
           </div>
@@ -119,10 +124,15 @@ export default function ServicesPage() {
           <div className="lg:w-3/4 space-y-24">
             
             {/* Service 1 */}
-            <div id="service-1" className="flex flex-col md:flex-row gap-8 lg:gap-12 items-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+              id="service-1" className="flex flex-col md:flex-row gap-8 lg:gap-12 items-center">
               <div className="w-full md:w-1/2 h-[260px] md:h-[320px] relative rounded-2xl overflow-hidden shadow-md">
                 <Image 
-                  src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&auto=format&fit=crop&q=80" 
+                  src="/images/service.png" 
                   alt="Selling Properties" 
                   fill 
                   className="object-cover hover:scale-105 transition-transform duration-700" 
@@ -145,13 +155,18 @@ export default function ServicesPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Service 2 */}
-            <div id="service-2" className="flex flex-col md:flex-row-reverse gap-8 lg:gap-12 items-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+              id="service-2" className="flex flex-col md:flex-row-reverse gap-8 lg:gap-12 items-center">
               <div className="w-full md:w-1/2 h-[260px] md:h-[320px] relative rounded-2xl overflow-hidden shadow-md">
                 <Image 
-                  src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format&fit=crop&q=80" 
+                  src="/images/service1.png" 
                   alt="Reselling and Purchasing" 
                   fill 
                   className="object-cover hover:scale-105 transition-transform duration-700" 
@@ -176,13 +191,18 @@ export default function ServicesPage() {
                   </ul>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Service 3 */}
-            <div id="service-3" className="flex flex-col md:flex-row gap-8 lg:gap-12 items-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+              id="service-3" className="flex flex-col md:flex-row gap-8 lg:gap-12 items-center">
               <div className="w-full md:w-1/2 h-[260px] md:h-[320px] relative rounded-2xl overflow-hidden shadow-md">
                 <Image 
-                  src="https://images.unsplash.com/photo-1504307651254-35680f356f58?w=800&auto=format&fit=crop&q=80" 
+                  src="/images/service2.png" 
                   alt="Construction Projects" 
                   fill 
                   className="object-cover hover:scale-105 transition-transform duration-700" 
@@ -198,7 +218,7 @@ Where third-party professionals or specialist approvals are required, customers 
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 

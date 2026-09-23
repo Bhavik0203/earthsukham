@@ -123,21 +123,23 @@ export default function HeroSection() {
           {/* Bottom Filters Row */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
             {/* Left Side Filters */}
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
               
               {/* Budget Dropdown */}
-              <div className="relative">
+              <div className="relative w-full md:w-auto">
                 <button 
                   onClick={() => setActiveDropdown(activeDropdown === 'budget' ? null : 'budget')}
-                  className={`flex items-center cursor-pointer gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'budget' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`w-full md:w-auto justify-between flex items-center cursor-pointer gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'budget' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
-                  <IndianRupee className={`w-4 h-4 transition-colors ${activeDropdown === 'budget' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
-                  {selectedBudget}
+                  <div className="flex items-center gap-2">
+                    <IndianRupee className={`w-4 h-4 transition-colors ${activeDropdown === 'budget' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
+                    {selectedBudget}
+                  </div>
                   <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${activeDropdown === 'budget' ? 'rotate-180 text-[#C19B54]' : 'text-gray-500'}`} />
                 </button>
                 
                 {activeDropdown === 'budget' && (
-                  <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
+                  <div className="absolute top-full left-0 mt-2 w-full md:w-56 bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
                     {budgetOptions.map(option => (
                       <button
                         key={option}
@@ -155,18 +157,20 @@ export default function HeroSection() {
               </div>
 
               {/* Property Type Dropdown */}
-              <div className="relative">
+              <div className="relative w-full md:w-auto">
                 <button 
                   onClick={() => setActiveDropdown(activeDropdown === 'type' ? null : 'type')}
-                  className={`flex items-center cursor-pointer gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'type' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`w-full md:w-auto justify-between flex items-center cursor-pointer gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'type' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
-                  <BedDouble className={`w-4 h-4 transition-colors cursor-pointer ${activeDropdown === 'type' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
-                  {selectedType}
+                  <div className="flex items-center gap-2">
+                    <BedDouble className={`w-4 h-4 transition-colors cursor-pointer ${activeDropdown === 'type' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
+                    {selectedType}
+                  </div>
                   <ChevronDown className={`w-4 h-4 ml-1 transition-transform cursor-pointer ${activeDropdown === 'type' ? 'rotate-180 text-[#C19B54]' : 'text-gray-500'}`} />
                 </button>
 
                 {activeDropdown === 'type' && (
-                  <div className="absolute top-full left-0 mt-2 w-56 cursor-pointer bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
+                  <div className="absolute top-full left-0 mt-2 w-full md:w-56 cursor-pointer bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
                     {typeOptions.map(option => (
                       <button
                         key={option}
@@ -184,18 +188,20 @@ export default function HeroSection() {
               </div>
 
               {/* Property Status Dropdown */}
-              <div className="relative">
+              <div className="relative w-full md:w-auto">
                 <button 
                   onClick={() => setActiveDropdown(activeDropdown === 'status' ? null : 'status')}
-                  className={`flex items-center gap-2 cursor-pointer px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'status' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`w-full md:w-auto justify-between flex items-center gap-2 cursor-pointer px-4 py-2.5 border rounded-lg text-sm font-medium transition ${activeDropdown === 'status' ? 'border-[#C19B54] bg-gray-50 text-gray-800' : 'border-gray-300 bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
-                  <BarChart3 className={`w-4 h-4 transition-colors ${activeDropdown === 'status' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
-                  {selectedStatus}
+                  <div className="flex items-center gap-2">
+                    <BarChart3 className={`w-4 h-4 transition-colors ${activeDropdown === 'status' ? 'text-[#C19B54]' : 'text-gray-500'}`} />
+                    {selectedStatus}
+                  </div>
                   <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${activeDropdown === 'status' ? 'rotate-180 text-[#C19B54]' : 'text-gray-500'}`} />
                 </button>
 
                 {activeDropdown === 'status' && (
-                  <div className="absolute top-full left-0 mt-2 cursor-pointer w-56 bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
+                  <div className="absolute top-full left-0 mt-2 w-full md:w-56 cursor-pointer bg-white border border-gray-100 rounded-lg shadow-xl z-50 overflow-hidden">
                     {statusOptions.map(option => (
                       <button
                         key={option}

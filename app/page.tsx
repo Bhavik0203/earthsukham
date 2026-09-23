@@ -9,6 +9,7 @@ import ProjectGallery from "../app/components/ProjectGallery";
 import FAQ from "../app/components/FAQ";
 import ExploreByLocation from "../app/components/ExploreByLocation";
 import DeveloperPartners from "../app/components/DeveloperPartners";
+import DeveloperPartnersmob from "../app/components/DeveloperPartnersmob";
 import CallToAction from "../app/components/CallToAction";
 import Footer from "./components/Footer";
 import KuberXBanner from "../app/components/KuberXBanner";
@@ -35,6 +36,7 @@ export default async function Home({
         <ExclusiveProjects />
         <FeaturedProjects />
         <DeveloperPartners />
+        <DeveloperPartnersmob/>
         <KuberXBanner />
   
 

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Search, ChevronDown, IndianRupee, Home, BarChart2, Heart, GitCompare, Share2 } from 'lucide-react';
 import { API_BASE_URL } from '../lib/api';
 import { usePropertyActions } from '../hooks/usePropertyActions';
+import EnquiryModal from '../components/EnquiryModal';
 
 export default function PropertyPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,6 +13,7 @@ export default function PropertyPage() {
   const [searchCategory, setSearchCategory] = useState("");
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
   
   const { toggleSave, toggleCompare, isSaved, isCompared } = usePropertyActions();
 
@@ -190,10 +192,9 @@ export default function PropertyPage() {
               </div>
             ) : filteredProperties.length > 0 ? (
               filteredProperties.map((property) => (
-                <Link 
-                  href={`/properties/${property.slug}`}
+                <div 
                   key={property.id} 
-                  className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 flex flex-col md:flex-row gap-6 transition-all hover:shadow-md hover:border-[#b38e41]/30 block group cursor-pointer relative"
+                  className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 flex flex-col md:flex-row gap-6 transition-all hover:shadow-md hover:border-[#b38e41]/30 block group relative"
                 >
                 {/* Save and Share Overlay icons on top right */}
                 <div className="absolute top-8 right-8 z-10 flex flex-col gap-2">
@@ -214,22 +215,24 @@ export default function PropertyPage() {
                 </div>
 
                 {/* Property Image */}
-                <div className="relative w-full md:w-[240px] h-[200px] md:h-[270px] shrink-0 rounded-xl overflow-hidden shadow-sm">
+                <Link href={`/properties/${property.slug}`} className="relative w-full md:w-[240px] h-[200px] md:h-[270px] shrink-0 rounded-xl overflow-hidden shadow-sm block">
                   <Image 
                     src={getImageUrl(property.multipleImages?.[0])} 
                     alt={property.propertyName || 'Property'}
                     fill
-                    className="object-cover"
+                    className="object-cover hover:scale-105 transition-transform duration-500"
                     unoptimized
                   />
-                </div>
+                </Link>
 
                 {/* Property Details */}
                 <div className="flex flex-col justify-between flex-1 pr-12">
                   <div>
-                    <h3 className="text-xl md:text-[22px] font-serif font-medium text-zinc-900 leading-snug mb-3">
-                      {property.propertyName}
-                    </h3>
+                    <Link href={`/properties/${property.slug}`} className="inline-block mb-3">
+                      <h3 className="text-xl md:text-[22px] font-serif font-medium text-zinc-900 leading-snug hover:text-[#b38e41] transition-colors">
+                        {property.propertyName}
+                      </h3>
+                    </Link>
                     <p className="text-[13px] text-gray-500 leading-relaxed mb-5 line-clamp-2">
                       {property.clientRemark || property.seoDescription || `Beautiful property at ${property.location}. Contact for more details.`}
                     </p>
@@ -252,20 +255,29 @@ export default function PropertyPage() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex items-center gap-4">
-                    <span className="inline-block bg-gradient-to-r from-[#c49a45] to-[#785921] group-hover:brightness-105 text-white text-sm font-semibold px-8 py-3 rounded-lg shadow-md transition-all active:scale-[0.98]">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link 
+                      href={`/properties/${property.slug}`}
+                      className="inline-block bg-gradient-to-r from-[#c49a45] to-[#785921] hover:brightness-105 text-white text-sm font-semibold px-6 py-2.5 rounded-lg shadow-md transition-all active:scale-[0.98] text-center"
+                    >
+                      View Details
+                    </Link>
+                    <button 
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsEnquiryModalOpen(true); }}
+                      className="inline-block bg-white border border-[#c49a45] text-[#c49a45] hover:bg-[#c49a45] hover:text-white text-sm font-semibold px-6 py-2.5 rounded-lg shadow-sm transition-all active:scale-[0.98] text-center cursor-pointer"
+                    >
                       Enquire Now
-                    </span>
+                    </button>
                     <button 
                         onClick={(e) => handleActionClick(e, () => toggleCompare(property.id))}
-                        className={`flex items-center gap-2 text-sm font-medium px-4 py-3 border rounded-lg transition-colors ${isCompared(property.id) ? 'bg-[#b38e41]/10 text-[#a37f37] border-[#b38e41]/50' : 'text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                        className={`flex items-center gap-2 text-sm font-medium px-4 py-2.5 border rounded-lg transition-colors cursor-pointer ${isCompared(property.id) ? 'bg-[#b38e41]/10 text-[#a37f37] border-[#b38e41]/50' : 'text-gray-600 border-gray-300 hover:bg-gray-50'}`}
                     >
                         <GitCompare size={16} />
-                        {isCompared(property.id) ? 'Added to Compare' : 'Compare'}
+                        {isCompared(property.id) ? 'Added' : 'Compare'}
                     </button>
                   </div>
                 </div>
-              </Link>
+              </div>
               ))
             ) : (
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-8 flex flex-col items-center justify-center text-center">
@@ -389,6 +401,10 @@ export default function PropertyPage() {
 
         </div>
       </div>
+      <EnquiryModal 
+        isOpen={isEnquiryModalOpen} 
+        onClose={() => setIsEnquiryModalOpen(false)} 
+      />
     </div>
   );
 }

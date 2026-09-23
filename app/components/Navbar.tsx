@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 import EnquiryModal from "./EnquiryModal";
 
 export default function Navbar() {
@@ -12,6 +13,18 @@ export default function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [user, setUser] = useState<any>(null);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
 
   const checkUser = () => {
     const storedUser = localStorage.getItem('webUser');
@@ -85,7 +98,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {user ? (
             <div 
-              className="relative"
+              className="relative hidden md:block"
               onMouseEnter={() => setActiveDropdown(1)}
               onMouseLeave={() => setActiveDropdown(null)}
             >
@@ -122,8 +135,11 @@ export default function Navbar() {
               Login
             </Link>
           )}
-          <button onClick={() => setIsModalOpen(true)} className="bg-[#B58A3D] cursor-pointer  text-white px-6 py-2 rounded text-sm font-semibold hover:bg-[#967132] transition shadow-md">
+          <button onClick={() => setIsModalOpen(true)} className="hidden md:block bg-[#B58A3D] cursor-pointer text-white px-4 py-2 md:px-6 md:py-2 rounded text-sm font-semibold hover:bg-[#967132] transition shadow-md">
             Enquiry Now
+          </button>
+          <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden text-white p-1 ml-1 cursor-pointer">
+            <Menu className="w-7 h-7" />
           </button>
         </div>
       </header>
@@ -156,7 +172,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {user ? (
             <div 
-              className="relative"
+              className="relative hidden md:block"
               onMouseEnter={() => setActiveDropdown(2)}
               onMouseLeave={() => setActiveDropdown(null)}
             >
@@ -193,13 +209,58 @@ export default function Navbar() {
               Login
             </Link>
           )}
-          <button onClick={() => setIsModalOpen(true)} className="bg-[#C19B54] text-white px-6 py-2.5 rounded text-sm font-semibold hover:bg-[#A88648] transition cursor-pointer">
+          <button onClick={() => setIsModalOpen(true)} className="hidden md:block bg-[#C19B54] text-white px-4 py-2 md:px-6 md:py-2.5 rounded text-sm font-semibold hover:bg-[#A88648] transition cursor-pointer">
             Enquiry Now
+          </button>
+          <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden text-[#2C2C2C] p-1 ml-1 cursor-pointer">
+            <Menu className="w-7 h-7" />
           </button>
         </div>
       </header>
       
       <EnquiryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center space-y-6 animate-in fade-in duration-200 overflow-y-auto py-10">
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-6 right-6 p-2 text-gray-500 hover:text-gray-900 cursor-pointer"
+          >
+            <X className="w-8 h-8" />
+          </button>
+          
+          <div className="flex flex-col items-center gap-5 text-[22px] font-medium text-[#2C2C2C] mt-8">
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">Home</Link>
+            <Link href="/about-us" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">About</Link>
+            <Link href="/properties" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">Properties</Link>
+            <Link href="/services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">Services</Link>
+            <Link href="/career" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">Career</Link>
+            <Link href="/blogs" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">Blogs</Link>
+            <Link href="/contact-us" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">Contact</Link>
+            
+            <div className="w-16 h-px bg-gray-200 my-1"></div>
+            
+            {user ? (
+              <>
+                <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">My Profile</Link>
+                <Link href="/saved-properties" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">Saved Properties</Link>
+                <Link href="/compareproperties" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">Compare Properties</Link>
+                <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="text-red-600 hover:text-red-700 transition cursor-pointer">Logout</button>
+              </>
+            ) : (
+              <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#C19B54] transition cursor-pointer">Login</Link>
+            )}
+
+            <button 
+              onClick={() => { setIsModalOpen(true); setIsMobileMenuOpen(false); }} 
+              className="mt-4 bg-[#B58A3D] text-white px-8 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-[#967132] transition cursor-pointer"
+            >
+              Enquiry Now
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

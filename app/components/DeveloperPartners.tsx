@@ -18,7 +18,7 @@ export default function DeveloperPartners() {
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-6 md:px-12 bg-[#FBF9F4]">
+    <section className="hidden md:block max-w-7xl mx-auto px-6 md:px-12 bg-[#FBF9F4]">
       {/* Section Headings */}
       <div className="space-y-2 mb-12">
         <span className="text-xs uppercase tracking-widest font-semibold text-[#B58A3D]">
@@ -30,7 +30,7 @@ export default function DeveloperPartners() {
       </div>
 
       {/* Concentric Arcs Container */}
-      <div className="relative max-w-3xl mx-auto h-[260px] md:h-[320px] border-b border-[#B58A3D]/30 mt-16 [clip-path:polygon(-100%_-100%,_200%_-100%,_200%_100%,_-100%_100%)]">
+      <div className="relative max-w-3xl mx-auto h-[160px] sm:h-[260px] md:h-[320px] border-b border-[#B58A3D]/30 mt-8 md:mt-16 [clip-path:polygon(-100%_-100%,_200%_-100%,_200%_100%,_-100%_100%)]">
         
         {/* --- ARC 1: OUTER LARGE RING - Clockwise --- */}
         <div className="absolute bottom-0 left-1/2 w-[85%] aspect-square -translate-x-1/2 translate-y-1/2 z-10 pointer-events-none">
@@ -38,7 +38,7 @@ export default function DeveloperPartners() {
             {/* Partner 1 */}
             <div className="absolute top-[0%] left-[50%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
               <div className="animate-[spin_40s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <Image src={getPartnerData(0).image} alt={getPartnerData(0).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
@@ -51,7 +51,7 @@ export default function DeveloperPartners() {
             {/* Partner 2 */}
             <div className="absolute top-[75%] left-[6.7%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
               <div className="animate-[spin_40s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <Image src={getPartnerData(1).image} alt={getPartnerData(1).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
@@ -64,7 +64,7 @@ export default function DeveloperPartners() {
             {/* Partner 3 */}
             <div className="absolute top-[75%] left-[93.3%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
               <div className="animate-[spin_40s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <Image src={getPartnerData(2).image} alt={getPartnerData(2).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
@@ -83,7 +83,7 @@ export default function DeveloperPartners() {
             {/* Partner 4 */}
             <div className="absolute top-[11.7%] left-[17.9%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
               <div className="animate-[spin_30s_linear_infinite] group-hover/ring:[animation-play-state:paused]">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <Image src={getPartnerData(3).image} alt={getPartnerData(3).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
@@ -96,7 +96,7 @@ export default function DeveloperPartners() {
             {/* Partner 5 */}
             <div className="absolute top-[97%] left-[32.9%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
               <div className="animate-[spin_30s_linear_infinite] group-hover/ring:[animation-play-state:paused]">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <Image src={getPartnerData(4).image} alt={getPartnerData(4).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
@@ -109,7 +109,7 @@ export default function DeveloperPartners() {
             {/* Partner 6 */}
             <div className="absolute top-[41.3%] left-[99.2%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
               <div className="animate-[spin_30s_linear_infinite] group-hover/ring:[animation-play-state:paused]">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <Image src={getPartnerData(5).image} alt={getPartnerData(5).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
@@ -128,7 +128,7 @@ export default function DeveloperPartners() {
             {/* Partner 7 */}
             <div className="absolute top-[11.7%] left-[82.1%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
               <div className="animate-[spin_20s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <Image src={getPartnerData(6).image} alt={getPartnerData(6).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
@@ -141,7 +141,7 @@ export default function DeveloperPartners() {
             {/* Partner 8 */}
             <div className="absolute top-[41.3%] left-[0.8%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
               <div className="animate-[spin_20s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <Image src={getPartnerData(7).image} alt={getPartnerData(7).name} fill sizes="100px" className="object-contain p-1" />
                   </div>
@@ -154,7 +154,7 @@ export default function DeveloperPartners() {
             {/* Partner 9 */}
             <div className="absolute top-[97%] left-[67.1%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto group/logo z-10 hover:z-50">
               <div className="animate-[spin_20s_linear_infinite_reverse] group-hover/ring:[animation-play-state:paused]">
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-white shadow-xl border border-amber-200/40 p-1 flex items-center justify-center transform group-hover/logo:scale-150 transition-all duration-300 relative">
                   <div className="w-full h-full rounded-full bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <Image src={getPartnerData(8).image} alt={getPartnerData(8).name} fill sizes="100px" className="object-contain p-1" />
                   </div>

@@ -69,6 +69,59 @@ const formatDate = (value?: string) => {
   });
 };
 
+const DUMMY_BLOGS: BlogPost[] = [
+  {
+    id: 'dummy-1',
+    title: 'The Future of Real Estate: Trends to Watch in 2026',
+    slug: 'future-of-real-estate-trends',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'Explore the latest innovations and market trends shaping the future of real estate development and investment across the globe.',
+    tag: 'Market Trends',
+    date: 'Oct 12, 2026',
+    readTime: '5 min read',
+  },
+  {
+    id: 'dummy-2',
+    title: 'Sustainable Living: Eco-Friendly Home Upgrades',
+    slug: 'sustainable-living-eco-friendly-upgrades',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'Discover easy and effective ways to make your home more energy-efficient, environmentally friendly, and sustainable.',
+    tag: 'Sustainability',
+    date: 'Oct 05, 2026',
+    readTime: '4 min read',
+  },
+  {
+    id: 'dummy-3',
+    title: 'Top 10 Neighborhoods for Families in 2026',
+    slug: 'top-10-neighborhoods-for-families',
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'Looking to settle down? We break down the most family-friendly neighborhoods based on schools, safety, and amenities.',
+    tag: 'Lifestyle',
+    date: 'Sep 28, 2026',
+    readTime: '6 min read',
+  },
+  {
+    id: 'dummy-4',
+    title: 'How to Maximize Your Property Value Before Selling',
+    slug: 'maximize-property-value-before-selling',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'Simple renovations and staging tips that can dramatically increase your home\'s market value before you list it for sale.',
+    tag: 'Selling Tips',
+    date: 'Sep 20, 2026',
+    readTime: '7 min read',
+  },
+  {
+    id: 'dummy-5',
+    title: 'The Rise of Smart Homes: Integration and Automation',
+    slug: 'rise-of-smart-homes-automation',
+    image: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&auto=format&fit=crop&q=80',
+    excerpt: 'From voice-controlled lighting to automated security systems, learn how smart technology is redefining modern living.',
+    tag: 'Technology',
+    date: 'Sep 15, 2026',
+    readTime: '5 min read',
+  },
+];
+
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,27 +133,33 @@ export default function BlogsPage() {
     const loadBlogs = async () => {
       try {
         const data = await fetchApi('/blogs');
-        if (!isMounted || !Array.isArray(data)) return;
+        if (!isMounted) return;
+        
+        if (Array.isArray(data) && data.length > 0) {
+          const formatted = data.map((post: BlogApiItem) => {
+            const apiTags = normalizeTags(post.tags || post.categories || []);
+            const tag = apiTags[0] || 'General';
+            const excerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]+>/g, '').slice(0, 180) : '');
 
-        const formatted = data.map((post: BlogApiItem) => {
-          const apiTags = normalizeTags(post.tags || post.categories || []);
-          const tag = apiTags[0] || 'General';
-          const excerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]+>/g, '').slice(0, 180) : '');
-
-          return {
-            id: post._id || post.slug,
-            title: post.title,
-            slug: post.slug,
-            image: post.uploadImage || post.coverImage || '/images/blogimage/blog.png',
-            excerpt,
-            tag,
-            date: formatDate(post.createdAt),
-            readTime: post.readTime ? `${post.readTime} min read` : '5 min read',
-          };
-        });
-        setBlogs(formatted);
+            return {
+              id: post._id || post.slug,
+              title: post.title,
+              slug: post.slug,
+              image: post.uploadImage || post.coverImage || '/images/blogimage/blog.png',
+              excerpt,
+              tag,
+              date: formatDate(post.createdAt),
+              readTime: post.readTime ? `${post.readTime} min read` : '5 min read',
+            };
+          });
+          setBlogs(formatted);
+        } else {
+          // Fallback to dummy blogs if API returns empty array
+          setBlogs(DUMMY_BLOGS);
+        }
       } catch (error) {
-        console.error('Failed to load blogs:', error);
+        console.error('Failed to load blogs, falling back to dummy data:', error);
+        if (isMounted) setBlogs(DUMMY_BLOGS);
       } finally {
         if (isMounted) setLoading(false);
       }

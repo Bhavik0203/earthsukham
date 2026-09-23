@@ -202,51 +202,41 @@ const BenefitsSection = () => {
 
   return (
     <div className="min-h-screen bg-[#FBF9F4] text-[#2C2C2C] font-sans antialiased">
-      {/* Hero Section */}
-      <section id="top" className="relative min-h-screen">
-        <div className="absolute inset-0 z-0">
+      {/* --- HERO BANNER --- */}
+      <section className="relative overflow-hidden rounded-2xl m-2">
+        <div className="relative h-[420px] w-full">
           <Image
-            src="/images/aboutbanner.jpg"
-            alt="Luxury Property"
+            src="/images/aboutbanner.jpg" 
+            alt="Careers Background"
             fill
-            style={{ objectFit: "cover" }}
             priority
+            className="object-cover"
           />
-          <div className="absolute inset-0 bg-black opacity-40"></div>
+          <div className="absolute inset-0 bg-black/70" />
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
-          <div className="text-center max-w-3xl mx-auto text-white">
-            <p className=" uppercase  tracking-wider  mb-4"
-
-              style={{ fontSize: '18px', fontFamily: 'Lato', letterSpacing: '0.5px' }}>CAREERS</p>
-
-            <h1
-              className="text-white mb-6 font-[400] text-[56px] leading-[140%] tracking-[1px] font-[Ivy Mode] 
-                max-sm:text-[42px]"
-              style={{ fontSize: '56px', fontFamily: 'Ivy Mode', letterSpacing: '1px' }}
-            >
-              Join Our Mission to Elevate <br /> Real Estate Innovation
-            </h1>
-
-            <p className=" mb-8 max-w-xl mx-auto">
-              We're building a future where technology, vision, and real estate come together. Explore roles that match your passion and be part of a team shaping the industry.
-            </p>
-
-            {/* CTA Button */}
-            <div className="flex justify-center">
-              <Link
-                href="#open-roles"
-               className="cursor-pointer">
-                <button className="bg-[#B58A3D] rounded-[4px] text-white hover:bg-white hover:text-[#B58A3D] hover:border hover:border-[#B58A3D] px-6 py-3 flex items-center justify-center gap-2 transition-colors cursor-pointer">
-                  View Open Roles
-
-                </button>
-              </Link>
-
+        <div className="absolute inset-0 flex items-center pt-10 md:pt-0">
+          <div className="w-full px-6">
+            <div className="mx-auto w-full max-w-7xl">
+              <div className="max-w-3xl">
+                <div className="text-xs md:text-sm font-semibold tracking-[0.2em] text-[#ffee50] font-sans uppercase">
+                  Home / Careers
+                </div>
+                <h1 className="mt-3 md:mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight text-white font-sans">
+                  Join Our Mission to Elevate <br className="hidden md:block" /> Real Estate Innovation
+                </h1>
+                <p className="mt-3 md:mt-6 text-[13px] md:text-base text-gray-200 max-w-xl font-medium leading-relaxed">
+                  We're building a future where technology, vision, and real estate come together. Explore roles that match your passion and be part of a team shaping the industry.
+                </p>
+                <div className="mt-6 md:mt-8">
+                  <Link href="#open-roles" className="cursor-pointer">
+                    <button className="bg-[#B58A3D] rounded shadow-md text-white hover:bg-white hover:text-[#B58A3D] px-5 py-2.5 md:px-6 md:py-3 flex items-center justify-center transition-colors cursor-pointer font-semibold text-sm">
+                      View Open Roles
+                    </button>
+                  </Link>
+                </div>
+              </div>
             </div>
-
           </div>
         </div>
       </section>
