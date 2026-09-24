@@ -8,6 +8,8 @@ import CalculatorButton from "./components/CalculatorButton";
 import FloatingActionButtons from "./components/FloatingActionButtons";
 import Chatbot from "./components/Chatbot";
 
+import DummyDataInterceptor from "./components/DummyDataInterceptor";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -36,6 +38,7 @@ export default function RootLayout({
     >
 
       <body className="min-h-full flex flex-col overflow-x-hidden w-full">
+        <DummyDataInterceptor />
         <Navbar/>
          {children}
          <Footer/>

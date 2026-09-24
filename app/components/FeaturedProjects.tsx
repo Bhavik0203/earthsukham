@@ -58,7 +58,7 @@ function FeaturedProjectsContent() {
             config: `${p.configuration || p.propertyType || 'Apartments'} | ${p.carpetArea ? p.carpetArea + ' sq ft' : 'Area on request'}`,
             builder: p.builder ? `By ${p.builder}` : '',
             status: p.possession ? `Possession: ${p.possession}` : 'Launch',
-            img: p.multipleImages?.[0] ? `http://localhost:8000${p.multipleImages[0]}` : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=600",
+            img: p.multipleImages?.[0] ? (p.multipleImages[0].startsWith('http') ? p.multipleImages[0] : `http://localhost:8000${p.multipleImages[0]}`) : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=600",
             slug: getPropertySlug(p)
           }));
           setCards(mapped);

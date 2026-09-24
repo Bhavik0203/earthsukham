@@ -23,7 +23,7 @@ export default function ExclusiveProjects() {
             type: p.propertyType || "Apartment",
             price: p.tentativeBudget || 'Price on Request',
             area: p.carpetArea ? `${p.carpetArea} sq ft` : 'Area on request',
-            image: p.multipleImages?.[0] ? `http://localhost:8000${p.multipleImages[0]}` : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1200",
+            image: p.multipleImages?.[0] ? (p.multipleImages[0].startsWith('http') ? p.multipleImages[0] : `http://localhost:8000${p.multipleImages[0]}`) : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1200",
             slug: p.slug
           }));
           setProjects(mapped);

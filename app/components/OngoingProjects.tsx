@@ -47,7 +47,7 @@ function OngoingProjectsContent() {
             type: p.propertyType || "Apartment",
             category: p.propertyCategory || "Residences",
             price: p.tentativeBudget || 'Price on Request',
-            image: p.multipleImages?.[0] ? `http://localhost:8000${p.multipleImages[0]}` : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800",
+            image: p.multipleImages?.[0] ? (p.multipleImages[0].startsWith('http') ? p.multipleImages[0] : `http://localhost:8000${p.multipleImages[0]}`) : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800",
             status: p.possession ? `Possession: ${p.possession}` : 'New Launches',
             slug: p.slug
           }));

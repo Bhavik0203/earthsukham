@@ -137,7 +137,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, hasSearched, activ
             details: `${p.propertyType || ''} ${p.location ? `in ${p.location}` : ''} ${p.city ? `, ${p.city}` : ''}`.trim(),
             price: p.tentativeBudget || 'Price on Request',
             numericPrice: parseInt(p.tentativeBudget?.replace(/\D/g, '')) || 0,
-            image: p.multipleImages?.[0] ? `http://localhost:8000${p.multipleImages[0]}` : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80",
+            image: p.multipleImages?.[0] ? (p.multipleImages[0].startsWith('http') ? p.multipleImages[0] : `http://localhost:8000${p.multipleImages[0]}`) : "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80",
             status: p.possession ? `Possession: ${p.possession}` : "Ready Possession",
             type: p.propertyType,
             rera: !!p.reraNumber,

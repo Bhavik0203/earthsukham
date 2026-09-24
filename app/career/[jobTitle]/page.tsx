@@ -3,7 +3,7 @@
 import { useState, FormEvent, ChangeEvent, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import heroBackground from '@/public/images/7578550-uhd_3840_2160_30fps 1.png';
+const heroBackground = "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80";
 import { ArrowRight } from 'lucide-react';
 import { useEffect } from 'react';
 
