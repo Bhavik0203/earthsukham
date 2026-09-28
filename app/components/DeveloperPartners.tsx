@@ -11,8 +11,19 @@ export default function DeveloperPartners() {
         image: partners[index].photoUrl || `/images/partner (${index + 1}).png`
       };
     }
+    const fallbackNames = [
+      "Hiranandani",
+      "Shapoorji Pallonji",
+      "Trade Centre",
+      "Trump Towers",
+      "Godrej",
+      "Kolte Patil",
+      "Lodha",
+      "VTP Realty",
+      "Omaxe"
+    ];
     return {
-      name: index === 0 ? "Kolte Patil" : index === 1 ? "Shapoorji" : index === 3 ? "Trade Centre" : index === 6 ? "Godrej" : `Developer Partner ${index + 1}`,
+      name: fallbackNames[index] || `Developer Partner ${index + 1}`,
       image: `/images/partner (${index + 1}).png`
     };
   };

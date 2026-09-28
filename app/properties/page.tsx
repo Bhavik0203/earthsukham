@@ -239,40 +239,40 @@ export default function PropertyPage() {
                   </div>
 
                   {/* Specification Box */}
-                  <div className="grid grid-cols-3 border border-[#b38e41]/30 rounded-xl overflow-hidden mb-5 bg-white">
-                    <div className="p-3.5 border-r border-[#b38e41]/20 text-left">
-                      <span className="block text-[11px] uppercase tracking-wider text-[#b38e41] font-bold mb-1">Type</span>
-                      <span className="text-xs md:text-[13px] font-semibold text-zinc-800 leading-tight block">{property.propertyType || 'N/A'}</span>
+                  <div className="flex flex-col border border-[#b38e41]/30 rounded-xl overflow-hidden mb-5 bg-white">
+                    <div className="px-4 py-3 border-b border-[#b38e41]/20 flex justify-between items-center">
+                      <span className="text-[11px] uppercase tracking-wider text-[#b38e41] font-bold">Type</span>
+                      <span className="text-[13px] font-semibold text-zinc-800">{property.propertyType || 'N/A'}</span>
                     </div>
-                    <div className="p-3.5 border-r border-[#b38e41]/20 text-left">
-                      <span className="block text-[11px] uppercase tracking-wider text-[#b38e41] font-bold mb-1">Location</span>
-                      <span className="text-xs md:text-[13px] font-semibold text-zinc-800 leading-tight block truncate" title={property.location}>{property.location || 'N/A'}</span>
+                    <div className="px-4 py-3 border-b border-[#b38e41]/20 flex justify-between items-center">
+                      <span className="text-[11px] uppercase tracking-wider text-[#b38e41] font-bold">Location</span>
+                      <span className="text-[13px] font-semibold text-zinc-800 text-right truncate max-w-[70%]" title={property.location}>{property.location || 'N/A'}</span>
                     </div>
-                    <div className="p-3.5 text-left">
-                      <span className="block text-[11px] uppercase tracking-wider text-[#b38e41] font-bold mb-1">Price</span>
-                      <span className="text-xs md:text-[13px] font-semibold text-zinc-800 leading-tight block truncate" title={property.quotation ? `₹${property.quotation}` : 'Price on Request'}>{property.quotation ? `₹${property.quotation}` : 'On Request'}</span>
+                    <div className="px-4 py-3 flex justify-between items-center">
+                      <span className="text-[11px] uppercase tracking-wider text-[#b38e41] font-bold">Price</span>
+                      <span className="text-[13px] font-semibold text-zinc-800">{property.quotation ? `₹${property.quotation}` : 'On Request'}</span>
                     </div>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex flex-row items-center gap-2 w-full">
                     <Link 
                       href={`/properties/${property.slug}`}
-                      className="inline-block bg-gradient-to-r from-[#c49a45] to-[#785921] hover:brightness-105 text-white text-sm font-semibold px-6 py-2.5 rounded-lg shadow-md transition-all active:scale-[0.98] text-center"
+                      className="flex-1 flex items-center justify-center bg-gradient-to-r from-[#c49a45] to-[#785921] hover:brightness-105 text-white text-[11px] sm:text-sm font-semibold px-1 sm:px-6 py-2.5 rounded-lg shadow-md transition-all active:scale-[0.98] text-center whitespace-nowrap"
                     >
                       View Details
                     </Link>
                     <button 
                       onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsEnquiryModalOpen(true); }}
-                      className="inline-block bg-white border border-[#c49a45] text-[#c49a45] hover:bg-[#c49a45] hover:text-white text-sm font-semibold px-6 py-2.5 rounded-lg shadow-sm transition-all active:scale-[0.98] text-center cursor-pointer"
+                      className="flex-1 flex items-center justify-center bg-white border border-[#c49a45] text-[#c49a45] hover:bg-[#c49a45] hover:text-white text-[11px] sm:text-sm font-semibold px-1 sm:px-6 py-2.5 rounded-lg shadow-sm transition-all active:scale-[0.98] text-center cursor-pointer whitespace-nowrap"
                     >
                       Enquire Now
                     </button>
                     <button 
                         onClick={(e) => handleActionClick(e, () => toggleCompare(property.id))}
-                        className={`flex items-center gap-2 text-sm font-medium px-4 py-2.5 border rounded-lg transition-colors cursor-pointer ${isCompared(property.id) ? 'bg-[#b38e41]/10 text-[#a37f37] border-[#b38e41]/50' : 'text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                        className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 text-[11px] sm:text-sm font-medium px-1 sm:px-4 py-2.5 border rounded-lg transition-colors cursor-pointer whitespace-nowrap ${isCompared(property.id) ? 'bg-[#b38e41]/10 text-[#a37f37] border-[#b38e41]/50' : 'text-gray-600 border-gray-300 hover:bg-gray-50'}`}
                     >
-                        <GitCompare size={16} />
+                        <GitCompare size={14} className="hidden sm:block" />
                         {isCompared(property.id) ? 'Added' : 'Compare'}
                     </button>
                   </div>

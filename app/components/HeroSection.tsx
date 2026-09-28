@@ -63,7 +63,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center bg-black flex-col mb-24">
+    <section className="relative min-h-[80vh] flex items-center justify-center bg-black flex-col mb-72 md:mb-24">
       {/* Background Video Overlay */}
       <video
         autoPlay
@@ -239,7 +239,7 @@ export default function HeroSection() {
 
         {/* Live Search Results Dropdown */}
         {(searchQuery.trim().length > 0 || selectedBudget !== "Budget" || selectedType !== "Property Type" || selectedStatus !== "Property Status") && (
-          <div className="mt-4 w-full bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden border border-gray-100 relative">
+          <div className="absolute top-full left-0 mt-4 w-full bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden border border-gray-100 z-50">
             <button 
               onClick={() => {
                 setSearchQuery("");

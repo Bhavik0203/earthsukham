@@ -349,12 +349,12 @@ export default function PropertyDetailsPage() {
         
       </div>
       {/* Top Navigation Bar */}
-      <div className="sticky top-0 z-50 max-w-7xl mx-auto mt-8 bg-[#b38e41] rounded-t-xl px-6 py-4 flex flex-wrap gap-x-8 gap-y-3 text-white font-medium text-[15px] shadow-md">
+      <div className="sticky top-0 z-50 max-w-7xl mx-auto mt-8 bg-[#b38e41] rounded-t-xl px-3 sm:px-4 md:px-6 py-3 md:py-4 flex flex-wrap justify-center md:justify-start gap-x-3 sm:gap-x-4 md:gap-x-8 gap-y-2 md:gap-y-3 text-white font-medium text-[11.5px] sm:text-[13px] md:text-[15px] shadow-md">
         {['Overview', 'Location', 'Video', 'Pros & Cons', 'Amenities', 'Master & Floor Plans', 'Pricing & Unit Plans', 'Calculators'].map((tab) => (
           <span 
             key={tab}
             onClick={() => handleScrollTo(tab)}
-            className={`cursor-pointer transition-colors ${activeTab === tab ? 'border-b-[3px] border-white pb-1 font-semibold' : 'hover:text-gray-200'}`}
+            className={`cursor-pointer transition-colors whitespace-nowrap ${activeTab === tab ? 'border-b-[2px] md:border-b-[3px] border-white pb-1 font-semibold' : 'hover:text-gray-200'}`}
           >
             {tab}
           </span>
